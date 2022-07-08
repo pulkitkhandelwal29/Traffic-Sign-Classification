@@ -1,0 +1,763 @@
+Kali linux is a debian OS
+Linux is case sensitive command line
+
+$--indicates normal user
+#--indicates root user
+~									//home directory(other user home) Your home directory (~) is the directory where 
+									your terminal always starts.(for root home it is the root folder)
+/									//root directory(contains all the files and folders on your computer)The root directory 	
+									contains all other directories, and is represented by a slash (/).
+
+Ctrl + L --to clear the screen
+
+
+
+3. Running Linux
+In terminal ,we have username@hostname
+~ -- home directory
+cp, rm, mv
+
+
+
+
+1.Understand about the GUI of kali linux
+TO zoom in the terminal 				//ctrl+ shift + "="
+To zoom out in terminal					//ctrl+ "-"	
+
+
+2.Directory structure--
+/										--root "directory"
+/bin									--user binaries where the command runs on terminal
+/etc									--all the configuration files
+/home									--user's homes(different users)
+/sbin									--system binaries(helps to make changes to system)
+/tmp									--temporary files
+/root									--this is the root user "home" unlike others and can't be accessed by the other users
+
+
+3.Basics of Commands--
+
+ls -la								//here "la" is the command option(ls -a (hidden files) 		//ls -l (long listing of files 
+									  with permissions))
+ls -l /desktop						//here "desktop" is the command arguement
+less								//show file content
+head -n[no.]						//default it shows first 10 lines
+tail -n[no.]						//default it shows last 10 lines
+tail -f								//follows the end of the changing file (like log being updates continuously)
+cd -								//this will bring back to the last directory we were in(just like hitting a backspace)
+mkdir -p /testdir/dir1				//this will create the tesdir and then inside it "dir1"
+nc [ip address] [port no.]			//to connect to the other user
+hostname							//displays the computer name over the network
+man [ls]							//helps to get info
+passwd								//Helps to change the password
+cp /tmp/testfile.txt documents		//this will copy the file to the "documents" file and it is just as copying and renaming the 
+										file
+cp -r Journal Documents				//copy the directory recursively to the Documents 
+cp -i /tmp/testfile Documents		//this will ask for the user to overwrite the file if there exists such a file
+mv /tmp/textfile  .					//this means that move the file to my current directory where i am right now, (.)dot is the 
+									  representation of the current directory
+rm -r /tmp/dir1						//it will delete the directory even if it is not empty
+rm -rf	/dir1						//it will remove the forecefully even if another program is using it
+history								//retains the last lines executed by a user. It is hidden and available in user's home(also 
+										up arrow)
+history -c							//clears the history commands
+file [filename]						//determines the format of file
+apropos	gzip						//this will tell you what command u can use with this particular keyword
+wget http://192.168.10.2/downloadme	//this will get the file onto the host machine and it should have protocol defined like 
+									  http,https,ftp
+git clone "link"					//clones the file from the git
+chmod +x "file_name"				//makes the file executable
+uname -a 							//OS-info
+sudo 								//super user do(To become a root user----   sudo - root	and type the password, "exit" to 
+                                       exit the root user)
+cp/mv/rm [copy/move/del files]		//mv copy.txt myfile.txt (if it is in the same folder,then it will rename it)
+pwd									//print working dir
+echo 								//print to screen, > to file
+nano 								//text editor
+more 								//show contents of file
+find -name [find file by name]		//and we can view the other user content also //find -name Desktop
+locate 								//locate after updatedb
+ping/ifconfig 						//network
+env 								//show all environment vars,to interact with the variables we can use "$" signbefore variables
+touch a{1..10}.txt					//will create files with a1,a2,a3 and so on with a10.txt
+wc abc.txt							//word count in abc.txt(wc command displays the number of lines in a file followed by the 
+									number of words and then the number of characters. (3 14 70 abc.txt)
+stat test.txt						//info about the file--size,last modified, owner, changing the permission of file
+
+
+4.Linux extra commands
+cal			//calendar
+date		//current date
+uptime		//uptime of the user
+dmesg		//kernel ring buffer
+df -h		//disk space usage
+fdisk -l	//disk partition table
+free		//memory usage
+
+
+5.User information:-
+whoami	
+w				//which user is online
+history			//terminal history commands
+last			//when did the user login
+	
+
+6.Network utilities commands:-
+ping 								//for finding the host online
+whois www.google.com				//information about the host
+dig www.google.com					//dns information about the host
+nslookup www.google.com				//nameserver information
+netstat -r							//ip routing table
+arp -a 								//arp information
+
+
+7. ls command options--
+-l						//long listing
+-a 						//listing hidden files
+-t 						//new files first
+
+ls /tmp/dir1			//we can view the directory or files under "dir1" even if we are not in the particular path and we are just retrieving information from the other directory
+>>Whenever we list the hidden files, it comes with green color and a dot in front of the name<<
+
+
+8.Process Command and keyboard shortcuts
+Whenever we want to put the job running like ping in the background and we do not want it to be stopped then we use "ctrl+z"
+This will allow it to run in the background and we can then use the terminal
+This will give a no. and then if we want to again bring it to the foreground "fg [number]" 
+
+To scroll the mouse up						//shift + PgUp
+To scroll the mouse down					//shift + PgDown
+To search in the command history			//ctrl+r
+To bring the cursor to front				//ctrl+a
+To bring the cursor to end					//ctrl+e
+To cut the line from where the cursor is 	//ctrl+k
+To paste it from where the cursor is 		//ctrl+y
+To clear the screen							//ctrl+l
+
+
+
+
+9.Package Management--Installing and removing software
+In linux packages=software
+These package often require dependencies
+Different linux distributions have different package management software
+eg-Red hat has "yum" , Debian has "apt(advanced packaging tool)"
+
+Now the Debian OS has merged "apt-get" and "apt-cache" with just one tool "apt", so we can just use--
+apt install							//installs the package
+apt search							//search for package
+apt autoremove						//just removes the files and packages that are not in use by any of the program
+apt remove							//remove the package(but leaves the configuration)
+apt purge							//remove packages and configs
+
+>>try the habit of using just "apt"<<
+apt update ==	apt-get update
+apt upgrade==	apt-get upgrade
+apt full-upgrade==apt-get dist-upgrade
+apt edit-sources==nano /etc/apt/sources.list
+
+apt list --installed						//list all the installed packages
+dpkg -l										//same as above(just with version number)
+dpkg -l cron								//shows the program is installed or not
+
+lsb_release -a				//this will tell the codename so that we can find the required list of packages(ubuntu)
+apt update					//updates the database of the package repository
+apt upgrade					//it will see in our system and tell which package is not upgraded and will upgrade it to the latest 
+                            version based upon the package repository
+apt clean					//remove the compressed archives from the system as whenever we dowload any of the repository it 
+							first downloads to the archive and then unpacks it to install it on the system--/var/cache/apt/archives
+
+
+10.Archiving  and Compression
+Archiving just putting it in a container with the same size of the directories
+Compression is the process of compressing the files and then archiving
+
+Archiving--Tar(tape archiving)
+tar c					//create archive
+tar r					//append to archive
+tar t					//list contents of archive without extracting
+tar x					//extract archive
+tar v					//verbose
+tar f [file to use]		//file to use
+
+
+Compression--
+gzip					//classic compression in linux
+bzip2					//more compression than gzip but takes much more time	
+
+
+Creating tar from files--tar cvf archive.tar file1 file2 file3
+List content of archive--tar tvf archive.tar
+Add to file or dir to archive-- tar rvf archive.tar file3
+Extract archive-- tar xvf archive.tar
+Extract archive in a different directory	-- tar xvf archive.tar -C /tmp/extracted
+
+>>z for gz and j for bz2<<
+>>tar -xJf abc.tar.xz				//xz uses -J for reference
+
+
+gzip [filename]								--file has been compessed
+gunzip [compressedfile name]				--unzip the compressedfile (gz files) (eg:-a.txt.gz)
+
+tar -cvf [tar file name] [file to be tarred] 		----(create,verbose,filename) (create archive file) (-t for table of contents)
+tar -xvf file.tar (extract file)
+
+
+Archving and Compression of "gz" and "bz2" files--
+tar zcvf compressed.tar.gz file1 file2
+tar jcvf compressed.tar.bz2 file1 file2
+
+List the compressed file--
+tar ztvf compressed.tar.gz
+tar jtvf compressed.tar.bz2
+
+Extracting the compressed files--
+tar zxvf compressed.tar.gz
+tar jxvf compressed.tar.bz2
+
+
+
+
+
+
+11.Wildcards			//pattern matching and Used in the terminal and also while organizing the files
+Increase the flexibility of search
+
+*			//matches zero or all characters
+?			//matches exactly one character
+[]			//matches any of the characters enclosed in the brackets
+\			//escape character
+
+>ls 2017* ---list all of the files in my directory which have a name that starts with “2017” 
+>ls *.jpg ---list only the files with names ending in .jpg
+>ls *01.* ---List the files that have "01" in the filename
+
+
+
+
+
+12.Administration
+cat /etc/resolv.conf							//tells us about the dns nameserver
+cat etc/os-release							//state the version of OS currently running
+
+Shows all the program listening--
+netstat -antp		
+-a 					//all running programs
+-n 					//shows numerical address
+-t					//tcp
+-p 					//shows the name of the program
+
+Use of apache web server and ssh server
+service apache2 start
+service ssh start			,			nano /etc/ssh/sshd_config
+
+
+##To run the ssh server--
+/etc/ssh							//changing to the ssh directory
+put all the keys into a directory
+dpkg-reconfigure openssh-server				//this will generate new keys
+>>Note:-we need to do only once in OS <<
+
+>>To connect from windows we need a software called "Putty" and then just connect
+>>To copy files from linux to windows or from windows to linux and make changes use a tool in windows called "WinSCP"
+
+To connect from linux to any other linux--ssh james@192.168.10.11
+scp(secure copy)							//read and know how to copy files from one linux to another
+scp -r(recursive,if directory) -P 1234(ssh port, with a capital P) testers@192.168.10.11(user of another machine with its ip address or domain name):[full_path of the directory/file] /root/Desktop(to location)
+
+
+
+
+
+13.Users and Groups
+Every user has an ID
+user root has ID 0
+New users ID starts from ID 1000,1001 etc.
+
+whoami				//lets you know the user
+w					//show who's logged on and what they are doing
+cat /etc/passwd		//see a list of users and jiske last mai /bin/bash likh hota hai na use remotely connect kiya ja sakta hai
+cat /etc/shadow		//shows encrypted passwords
+id					//displays group of your username
+groups tom			//shows which grp tom belongs to
+cat /etc/group		//sees a list of groups
+
+
+##Add/Delete users
+adduser tom						//create a new user tom with home dir
+useradd tom						//create a new user but without home dir
+userdel tom						//deletes a user tom
+deluser --remove-home tom		//deletes user tom and remove home dir
+su tom							//to swtich between users in linux
+
+##Add/delete groups
+addgroup cats						//create a new group cats
+usermod -g cats tom					//change tom's group
+delgroup tom						//delete group tom
+cat /etc/group						//tells the groups available
+chgrp cats sample10					//change the grp of the sample10 directory
+
+
+>>There is a root directory, and that is for all the users and the specific root user is different and the home users are different.When we login with the other user, the Desktop,download appears for their user and when we login with the root user, then the Desktop,download appears for the root user.From the "root user" we can access every thing of the other user but the "other user" can access file but can't modify.<<
+
+
+##Users Permission
+[users permissions,grp persmissions,owner permissions]	then comes [owner,group]
+
+##Chmod permissions
+"d"			for the directory
+"-" 		for the file
+First "root" is the file owner and second "root" for the file group
+
+After "d or -", First 3 are for the owner, next 3 for the file group, next 3 for the any other user apart from owner and file grp
+r	w	x
+4	2	1
+chmod -R(Recursive) 774	test.txt
+
+sudo -l										//list of programs you can run as root
+sudo nmap									//run program as root
+>>We can define what users can run as root in the file--"/etc/sudoers" and we change them according to our wish and tell them what you can execute as root<<
+
+
+
+ls -l 					(shows files and folder permissions)   or "stat a.txt"
+eg:  -rw-rw-r-- 1 user1 user 1099 jan  1 15:30 myfile.txt
+
+the first dash stands for that it is a file whereas if it was the directory it would be 'd'.
+ the first 'rw' stands for users and the next for groups and last for others.
+ user 1 belong to user and 'user' belongs to grp. 1099 is the size in bytes.
+ 
+
+chmod									-modifies files and folders permissions
+eg:chmod u-x myfile 					(removes executable bit from user permissions)
+eg:-chmod o+r myfile 						(adds the readable bit on other permissions)
+chmod +w 								(adding the write bit)
+chmod -R g+r /home/user 				(changes recursively in whole directory)
+
+chmod u+x,g+w,o-r a.txt
+
+chown									--modifies the owner,grp,or both for files and directories
+eg: chown user1 myfile
+chown user1:users myfile
+chown -R user2 /home/user 				(Same as above like in chmod)
+
+
+suid for user and sgid for grp allows regular users to execute tasks with the root permission
+
+chmod u+s [file name]							--gives root permission to regular users
+
+
+chattr and lsattr used to change and view file attributes (-i for immutable)
+
+ll for file information--same like ls- l
+
+-R for recursion
+
+sticky bit					--protects files and directories so that only the owner and root can rename and delete them
+eg:- chmod +t [file name] 					(-t to remove it)
+
+
+Maximum file permission is 666
+Maximum folder permission is 777
+
+umask							---sets the defaut permissions for new files
+#list the mask no., for file the max. permission is 666-022 (umask value) =644 leading to the file permission
+eg:- umask u=rw,g=r,o=r
+umask -S (check the default permissions)
+
+All the permissions of the file and folder depends upon the umask value
+But as soon as we logout and login in root again, everthing back to normal
+To change it permanently--nano /etc/login.defs and then change the umask value
+Exit the root and then login it again. It will change the umask value
+
+> whereis sudo--tells where the sudo command is located
+
+**Special Permissions** (setuid)
+s-for the normal user, t for the sticky bit for the other user, s for the group user
+
+chmod u+s /usr/bin/sudo					//create the special permission
+chmod u-s /usr/bin/sudo					//Removes the special permission from the sudo file
+
+chmod o+t /usr/local/tmp				//sticky bit helps to protect the folder. Anyone can view but file can be deleted by the specific user.
+
+
+
+
+
+
+14.Process Management
+A process is a running instance of command
+Process can be viewed,paused,stopped,put in the background,brought back to foreground
+Every process has a unique id
+Every process is assosciated with a user and group
+
+ps 								//list process of current session
+ps -f							//list process with full formatting
+ps -e							//list all the process of the system also
+ps -u [username]				//list process of username
+ps -p [pid]						//display information of pid
+kill [pid]						//kill all the process,we can kill the process of the different users too.  //ps -u tom
+kill -9 [pid]					//forcefully kill	(careful)
+top								//allows for real time interactive view as the task manager does
+
+##Process foreground/background--
+command &						//puts the process in the background
+jobs							//list jobs running in the background
+fg [n]							//foreground job number
+bg [job num] 					//background the job
+nohup(no hangup) 				//command allows the program to run after logout
+
+
+ctrl+z										--stops the process
+ctrl+c										--kills the process
+kill %1										--kills the job 1
+
+
+>att 8:37				//helps to schedule the task						//not much used (does not allow repetitive task)
+It will give a prompt and then we can write the command
+>atq  	--displays all the scheduled tasks
+
+
+Crontab								//lets you schedule your tasks
+>crontab -e 			(opens up the file) and then you can type the command provided with min,hour,date,dow,dom
+>crontab -l 			//list the contrab entries
+>crontab -r 			//removes the crontab entries
+
+**command tty --is the terminal path (unique to each terminal)
+
+Redirection--Output of one command and inputting to another command/file
+>								//directs command output to file
+>>								//append command output to file
+<								//directs content of file to command
+
+##Piping--it pipes all the output of a command to another command
+ls /usr/share/nmap/scripts | grep brute					//this will search for the scripts and then the grep command will search for the brute in all the listing and will display those which have the word "brute"
+
+wc -l targets.txt							//this will calculate the no. of lines in text file
+grep 10.10.10 targets.txt > file.txt		//this will search for only 10.10.10 in targets.txt and then will write into text file
+
+.nmap file						//is the file which is formatted for simple reports of nmap
+.gnmap file						//formatted specifically for grep command
+
+##Grep---(very useful)
+eg--grep 25/open output.gnmap | cut -d(delimmeter) " " -f(field) 2 | sort -u(unique)			//sorting in asc. and only unique records will be taken
+
+##Locate Command--locate command searches for the keyword in its database and the database updates daily
+eg-locate *.conf			//case sensitive search
+locate -i *.CONF			//incase sensitive search
+locate -S					//info about the database
+locate -e *.conf			//this will check whether the file is present in the system before reporting it directly from the database
+sudo updatedb				//To update the locate database whenever we like
+
+##Find Command
+find  . -name "5.txt"			//finds in the present working directory
+find / -name "5.txt" 			//will find in the entire disk
+
+find . -type f -name "5.txt"		//will only search file (-f)
+find . -type d -name "abc"			//will only search directory (-d)
+
+find . -type f -empty -exec rm -f {} \;		//will search for the empty file and then execute the command rm-f and these braces and backslash  and colon means that it is the end of the command
+
+find / -mtime 50				//that is modified in the last 50 days
+
+find /tmp -name *.conf				---finds all the conf file from the tmp directory
+find /usr -depth 				--find sub directories and files in depth
+find /tmp -user root 				--find directories owned by root
+
+find . -type f -size 1048576c			//finding the files of size 1M
+find . -type f -size +1M -size -3M		//filesize range
+
+##Create file of fixed size
+fallocate -l 1M test.txt 
+
+##check the file size
+du -h test.txt
+
+
+##Sort command
+sort -r file.txt						//sorting in reverse order
+sort file.txt							//sorting in ascending order
+
+##How to define shabang
+which bash						/bin/bash
+which python3					/usr/bin/python
+
+##Creating bash scripts--bash(bourne again shell script)
+>>Type the commands that you write in the terminal<<
+#!/bin/bash								//shabang
+mkdir ~/Desktop/magic
+cd ~/Desktop/magic
+touch file{1..100}
+ls -la ~/Desktop/magic > ~/Desktop/magic.log
+
+and run in the terminal "bash script.sh"
+
+
+
+
+15.Create Partitions and Filesystems:-
+lsblk								--will show all the block partitions
+fdisk								--is used to create and manipulate partition tables
+
+fdisk -l /dev/sda						 ---list the no. of partitions in the particular hard disk
+
+fdisk [sda name i.e. /dev/sda]						--and then options and then can create the partition
+
+mkfs									-used to build a filesystem on a storage device (mke2fs) (make filesystem)
+
+mkswap 										--make the disk swap
+
+swapon 										--starts the swap memory
+
+swapoff 										--stops the swap memory
+
+guid											--globally unique identifier 
+
+gpt 									--guid partition tables
+
+parted -l 								(displays the drives)
+
+
+
+
+
+16.Create and Change Hard-Symbolic Links:-
+link (ln) command creates a link to a file which points to a file in the different directory
+eg:-ln myfile.txt /tmp/myfile								--hardlink.txt 
+
+soft link								--eg:-  ln -s root/myfile.txt mydata/myfile.txt 
+
+hardlink in the same filesystem while soft link in differernt filesystem
+
+
+
+
+
+
+17.Advanced Linux commands
+lscpu							//stating the cpu architecture->piping to more(lscpu|more)
+
+lspci							//pci bus details(lspci is a utility for displaying information about PCI buses in the system 
+								  and devices connected to them.)(PCI---Peripheral Component Interconnect)
+								  
+lsusb							//usb details ( lsusb is a utility for displaying information about USB buses in the system and
+								the devices connected to them)        
+
+lsmod							//kernel modules that are compiled for running the os (lsmod is a command on Linux systems. It
+								shows which loadable kernel modules are currently loaded.)
+
+grep							//for searching the text from the starting (Use grep to search for lines of text that match one
+								or many regular expressions, and outputs only the matching lines)
+
+modprobe						//allows to create or delete kernel modules
+
+dmidecode						//bios information(This table contains a description of the system's hardware components as well
+								as other useful pieces of information such as serial numbers and BIOS revision)
+
+biosdecode						//bios information(The main function of Basic Input Output System (BIOS) is to initialize and
+								test all hardware components attach to the computer and load the part of operating system. BIOS also provide a medium which facilitates the application programs and operating system to interact with the keyboard, display and other I/O devices.)
+
+dmesg							//info of os and hardware
+
+lsblk							//view block devices ( The command displays details about all block devices excluding except RAM
+								disks in a tree-like format by default.)
+
+df 								//view filesystem usage (df is a standard Unix command used to display the amount of available 
+								disk space for file systems on which the invoking user has appropriate read access.)
+
+.
+
+
+
+
+18.Grep command--most popular tools for searching through text files is grep. The simplest use of grep requires two arguments: a regular expression and a text file to search.
+>grep "x" states.txt				#New Mexico ## Texas
+>grep "new" states.txt
+
+* Grep Commands
+The grep filter searches a file for a particular pattern of characters, and displays all lines that contain that pattern. The pattern that is searched in the file is referred to as the regular expression (grep stands for globally search for regular expression and print out).
+grep [options] pattern [files]
+
+-c : This prints only a count of the lines that match a pattern
+-i : Ignores, case for matching
+-l : Displays list of a filenames only.
+-n : Display the matched lines and their line numbers.
+-v : This prints out all the lines that do not matches the pattern
+-e exp : Specifies expression with this option. Can use multiple times.
+-f file : Takes patterns from file, one per line.
+-E : Treats pattern as an extended regular expression (ERE)
+-w : Match whole word
+-o : Print only the matched parts of a matching line, with each such part on a separate output line.
+ 
+
+
+
+
+19.Egrep command--metacharacters are characters that can be used to represent other characters.
+The first metacharacter we should discuss is the "." (period) metacharacter, which represents any character. If for example I wanted to search states.txt for the character “i”, followed by any character, followed by the character “g”
+>egrep "i.g" states.txt				#Virginia
+>egrep "s*as" states.txt            "*" (star) metacharacter which represents zero or more occurrences of the preceding 
+									expression(i.e. s)     #Alaska #Massachusetts
+>egrep "s{2}" states.txt			curly brackets ({ }) to specify an exact number of occurrences of an expression. For example 
+									the regular expression "s{2}" specifies exactly two occurrences of the character “s”.Regular expression "s{2}" is equivalent to the regular expression "ss".
+									#Massachusetts #Mississippi
+>egrep "(iss){2}" states.txt        create capturing groups within regular expressions by using parentheses ("( )"). For example 
+									if I wanted to search states.txt for the string “iss” occurring twice in a state name I could use a capturing group   #Mississippi
+>egrep "\w" small.txt				#abcdefghijklmnopqrstuvwxyz  (The \w metacharacter corresponds to all “word” characters, the 
+									\d metacharacter corresponds to all “number” characters)
+>egrep "\d" small.txt				#0123456789
+>egrep "[aeiou]" small.txt			create specific character sets using square brackets ([ ]) and then including the characters 
+									we wish to match in the square brackets
+>egrep "[^aeiou]" small.txt			the regular expression [^aeiou] matches all characters that are not vowels.Every line in the 
+									file is printed, because every line contains at least one non-vowel
+>egrep "\+" small.txt				#tragedy + time = humor (earch for certain punctuation marks in text considering that those 
+									same symbols are used as metacharacters)
+>egrep "^M" states.txt				#Maine #Maryland ( the caret (^), which represents the start of a line, and the dollar sign 
+									($) which represents the end of line. These “anchor characters” only match the beginning and 
+									ends of lines when coupled with other regular expressions.)
+>egrep "North|South" states.txt		#North Carolina #South Dakota (the “or” metacharacter (|), which is also called the “pipe” 
+									character. This metacharacter allows you to match either the regex on the right or on the left side of the pipe.)
+>egrep "New" states.txt canada.txt	(At multiple files)
+>egrep "^[AEIOU]{1}.+[aeiou]{1}$" states.txt  (search for all of the state names that both begin and end with a vowel)
+>egrep "^[AEIOU]" states.txt		//word starting with first letter vowel
+
+
+20.Find
+>find . -name "states.txt"			start by looking for a file called states.txt
+>find . -name "*.jpg"				searching for all .jpg files
+
+
+21.History
+We’ve had our terminal open for a while so there are tons of commands in our history! Whenever we close a terminal our recent commands are written to the ~/.bash_history file
+>head -n 5 ~/.bash_history			//first 5 lines in bash history file
+>grep "canada" ~/.bash_history		#egrep "New" states.txt canada.txt (The ~/.bash_history file is just a regular text 
+									file, so you can search it with grep)
+
+22.Writing own commands in Bash
+The ~/.bash_profile is a list of Unix commands that are run every time we open our terminal, usually with a different command on every line. One of the most common commands used in a ~/.bash_profile is the alias command, which creates a shorter name for a command.
+alias docs='cd ~/Documents'				//Now entering docs into the command line is the equivalent of entering cd ~/Documents 
+										into the comamnd line.
+In order to make the changes to our ~/.bash_profile take effect we need to run "source ~/.bash_profile" in the console:
+>docs						//will change the working directory to Documents
+
+
+* the line that we can add as another command, alias edbp='nano ~/.bash_profile' creates the command edbp (edit bash profile) so that you can quickly add aliases.
+
+
+
+
+
+23. Differentiate
+>diff four.txt six.txt				//look at which lines in these files are different
+>sdiff four.txt six.txt				//compare differing lines in a side-by-side comparison
+
+In a common situation you might be sent a file, or you might download a file from the internet that comes with code known as a checksum or a hash. Hashing programs generate a unique code based on the contents of a file. People distribute hashes with files so that we can be sure that the file we think we’ve downloaded is the genuine file. One way we can prevent malicious individuals from sending us harmful files is to check to make sure the computed hash matches the provided hash. There are a few commonly used file hashes but we’ll talk about two called MD5 and SHA-1.
+Hashes can be used to ensure that a file is genuine.
+
+>md5 states.txt				//compute the MD5 hash of a file 
+>shasum states.txt			//compute the SHA-1 hash
+
+
+
+
+24.Pipe
+The pipe allows us to take the output of a command, which would normally be printed to the console, and use it as the input to another command. It’s like fitting an actual pipe between the end of one program and connecting it to the top of another program
+>cat canada.txt | head -n 5		//output from cat canada.txt will go into our pipe, and we’ll attach the dispensing end of the 
+								pipe to head, which we use to look at the first few lines of a file
+>grep "[aeiou]$" states.txt | wc -l		//could use grep and regular expressions to list all of the state names that end with a 
+									vowel, then we could use wc to count all of the matching state names
+
+The pipe (|) takes the output of the program on its left side and directs the output to be the input for the program on its right side
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Extra
+"Terminator" 						//program allows to split horizontal and vertical of the terminal
+
+"nano" or "gedit" 					//helps in editing the files 
+
+
+
+Setup "Conky" 						//lets you know the information on the desktop..looks like theme(for linux)
+
+Add 32bit architecture support		//dpkg --add-architecture i386 and then apt update
+
+Bleachbit(Cleaner for linux)		//apt install bleachbit
+
+lm-sensors and fancontrol			//apt install lm-sensors fancontrol (used for control fan speed in cpu and gpu)
+
+cmatrix								//gives a look of falling matrix
+
+oneko								//cursor's pet
+
+espeak "hello"						//text to speech
+
+gnome-terminal						//lets you open a new terminal
+
+keyboard shortucts					//we can cutomize the shortucts to open anything in kali linux even,the terminal
+
+gnome-system-monitor				//lets you open the task manager
+
+"etcher" tool 						//lets you make bootable USB drive on kali linux
+
+speedtest-cli						//apt install speedtest-cli 		(cli version of speedtest.net)
+
+No-more-secrets(github)				//it allows to decrypt the text in a fashionable manner
+
+rm -rf / --no-preserve-root			//this will delete the whole linux distro as the root is deleted
+
+
+##Check for the rootkits in the linux---
+chkrootkit
+rkhunter
+
+"Root" directory is also denoted by '/'
+"bin" directory is the directory which have all the commands that are being executed on the terminal
+"tmp" directory having all the temporary data
+"var" directory (variable) where the data is changed over the time
+"proc" process information pseudo-file system all the details regarding virtual hardware
+"dev" devices filesystem
+"sys"- allows you to get information about the system and its components (mostly attached and installed hardware) in a structured way
+
+
+
+#Use RPM and YUM Package Management:-
+rpm-stands for redhat package manager
+rpm -i [pkg name] (install)
+rpm -e [pkg name]  (remove)
+rpm -qa (list all files)
+
+yum-yellowdog updater modified   
+yum install [pkg name] 					(install)
+yum remove [pkg name]					(remove)
+yum update [pkg name]					(update)
+yum list
+yum info [pkg name]
+
+
+
+#shutdown system-----init 0,telinit 0,shutdown,poweroff,halt
+reboot system----init 6,telinit 6,shutdown -r
+shutdown -h ---shutdown immediately
+shutdown -h/r +5 "Server shut down in 5 minutes"
+
+
+#Breaking the Linux password----https://www.maketecheasier.com/reset-root-password-linux/
+
+#ends
