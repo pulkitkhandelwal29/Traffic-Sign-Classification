@@ -1,0 +1,46 @@
+1.Tools for Creating Android Backdoor--
+>The Fatrat(application for creating android backdoor)
+Installation:--
+./setup.sh
+fatrat
+
+2. Mobile Hacking Exploits(metasploit)
+"Stagefright" exploit is the most advanced one to attack on
+search stagefright        and then fill all the options and execute
+
+3.Hacking using Mobile
+>"Network spoofer" tool best for redirection and changing images and etc.
+>"Dsploit" tool almost same as Network spoofer but network spoofer is best
+and many more..search for them
+
+
+
+4.Apple ios security
+1.app has to be signed by the apple code signing mechanism(app needs to be verified)
+2.Runtime security--all 3rd party apps are sandboxed and each app has its own home directory.If the app needs to get access to any other app it is performed by the ios
+
+Hacking IOS--
+1.Pangu Jailbreak and using this the phone will be jailbreaked and thus we can then download any of the app using "cydia".An store which was created after this jailbreak
+
+Secure all hatches of ios--
+Use "find my iphone" feature
+Protect data using itunes appleID
+Disable icloud..seriously
+Know your possible consequences of jailbreaking
+Passcode..always
+No java please..addons
+Limit to secured wifi
+Careful of links in attachments
+Only trusted 3rd party apps
+
+
+**Instructions**
+Payload can be injected with the original apk files using Fatrat tool
+We can also use the GUI version of metasploit i.e. Armitage
+Uploading of the backdoor apk on anonfile.com					//free file hosting website
+URL can be changed using bit.ly shortener
+We also need to enable port forwarding so that all the serivces comes to the Kali linux
+Hacking with beef over WAN---we just need to put the public ip instead of private ip address
+
+
+#ends
