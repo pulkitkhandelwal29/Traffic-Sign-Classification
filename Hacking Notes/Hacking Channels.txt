@@ -1,0 +1,94 @@
+// Hacking Channel
+The PC Security Channel 			//https://www.youtube.com/channel/UCKGe7fZ_S788Jaspxg-_5Sg
+Black Hat							//https://www.youtube.com/channel/UCJ6q9Ie29ajGqKApbLqfBOg
+HackerSploit						//https://www.youtube.com/c/HackerSploit/featured
+Semi Yulianto						//https://www.youtube.com/channel/UCXCz2ZdxkXpFyHFJgMy-pJw
+
+#Extra stuff
+https://www.includehelp.com/data-structure-tutorial/
+
+
+http://www.learncbse.in/introduction-to-economics-cbse-notes-for-class-12-micro-economic
+
+
+http://www.learncbse.in/ncert-solutions-class-12-micro-economics-introduction-economics/
+
+
+
+https://www.youtube.com/watch?v=bYDhQX4Rti4
+
+https://www.wikigain.com/install-macos-high-sierra-vmware-windows/
+
+00:17:7C:2E:3B:0F
+38:E6:0A:D3:35:48
+
+
+
+RSA token
+smz
+sccm
+tunneling
+
+
+
+https://www.youtube.com/user/learnexmumbai/videos
+
+https://www.youtube.com/channel/UCC3UrdqNf6rpWZoTiYbYk4A/playlists
+
+
+http://www.learnex.in/c/skillopedia/
+
+
+https://www.youtube.com/channel/UCLHnFNYLioT5ALOapnfZ7dw/playlists   (hacking)
+
+
+https://www.youtube.com/user/Computerphile/videos
+
+https://www.youtube.com/watch?v=YA96jj9JBMA&index=1&list=PLUtTaqnx2RJK5rz5yjqgrJ7uDMvLgjVrb	(data structures)
+
+
+https://www.studytonight.com/
+
+
+https://www.youtube.com/user/itfreetraining/playlists
+
+https://www.youtube.com/user/adityakrgaur/playlists
+
+https://www.youtube.com/watch?v=YFkO_axsrks
+
+
+///Krish naik
+
+KGP Talkie https://www.youtube.com/watch?v=nVvhkVLh60o&list=PLc2rvfiptPSR3iwFp1VHVJFK4yAMo0wuF (tensorflow)
+
+
+
+
+The cyber mentor(hacking)https://www.youtube.com/c/TheCyberMentor/videos
+Network heros(hacking)https://www.youtube.com/channel/UChpQhLpQtPA_jLXh0qwYczg
+
+
+
+onworks.net			//let u run the different distribution online
+
+Running 4gb of movie into 2gb of RAM--paging and segmentation
+
+
+How ls(or any command works)--alias ls="etc/ls.sh" (It means that for every command the shell script is running)
+
+
+Make the shell script file and then make the file executable and save it into /usr/bin and it will work same like command
+
+
+
+
+
+
+
+
+
+
+
+
+
+

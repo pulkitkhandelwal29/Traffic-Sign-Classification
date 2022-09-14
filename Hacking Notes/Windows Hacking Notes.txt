@@ -1,0 +1,63 @@
+#Hacking windows when we are at lock screen
+Shut down the computer
+Restart it 
+shut down again abruptly
+Click on "Launch Repair recommended"
+Let the process run
+Click on the "View problem tasks"
+Click on the last link of the file
+This will open a text file
+click on open
+select c:/windows/system32
+Rename the file "sethc" to anyname
+select cmd and make a copy of it and rename the copy of file to "sethc"
+Now close everything and shut down the system
+Now when it comes to enter the password enable the sticky keys
+this will open a cmd 
+type "net user"
+then type "net user [account_name] * "
+this will ask for password typing and its confirmation and thus the password got changed
+
+
+#Recover files from the hard disk
+Files can be recovered from the hard disk using "recuva" free tool
+
+#Windows hacking when we are logged in the PC
+To change the password without knowing the current password, just go to manage this pc and under local users and groups , select the user and right click to set the password and u can change it whatever you want and the password will get changed.
+
+
+#Password of windows
+c:/windows/system32/config						//SAM file
+we can't copy the SAM file
+
+@echo off
+reg SAVE HKLM\SAM c:\SAM
+reg SAVE HKLM\SYSTEM c:\SYSTEM
+exit												//this code helps in copying the file
+
+#Cracking the windows password
+>To crack the windows password we need to use "CAIN and ABEL" and bruteforce the password using the provided wordlist
+>"opcrack" tool can also be used
+
+
+>>To remove malware from windows we can use malware bytes
+
+#Helpful Windows Commands:
+dir [list files in directory]
+cd [chang dir, cd .. ]
+ver [OS info]
+doskey /h [also up arrow]									//history of commands
+mkdir/rmdir [also md/rd]
+copy/move/del [copy files]							//move abc.txt /myfiles/dude
+help [help or cmd /?]
+cd [print current dir]
+echo [print to screen, > to file]
+notepad [text editor]
+more [show contents of file]
+find [no exact equivalent]
+ping [ping an address/host]
+ipconfig [network info]
+set [show all environment vars]				//"%"is used to interact with the variables
+
+
+#ends

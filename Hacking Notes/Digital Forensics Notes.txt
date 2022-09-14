@@ -1,0 +1,1402 @@
+Lesson 1:-Introduction to Digital Forensics
+Learning Objective--
+Why Forensics?
+Cyber Crime
+Introduction to Digital Forensics
+
+
+What can Forensics do?
+Recover Deleted files
+Determine system has malicious files/launched an attack
+Investigate footprint attack
+Track malware signature
+Determine time,place and device for an event
+Track physical locations and websites used
+Crack passwords
+
+
+Why learn Forensics?
+Textbook-Techniques and procedures for gathering evidence that could be used in a court of law
+Engineers-Hunting for breaches in my network
+Leadership-Understand breach impact and required remediation
+Legal-Arrest the criminals involved with cyber crime
+Human Resources-Investigate internal legal matters
+Personal-Find out if a significant other is cheating on them
+Criminals-Identify data of value
+
+
+Who is a Target?
+Small Business- as they do not have their own security operation center.
+They are easy target
+THE average time between an attacker's initial breach of a network and its owner noticing the intrusion is 205 days
+
+
+We continue to Fail?
+Not a fair fight
+Bad guys economic advantage
+Rise of hacking people
+People,process, technology issues
+
+
+
+Cybercrime--
+Examples-
+Spreading Malicious Software
+Identity theft
+Child Pornography
+Denial of Service attacks
+Stealing Money
+Cyber Stalking
+Software Privacy
+Credit Card fraud
+Defamation
+Drug Sales
+Spoofing
+Hijacking web services
+
+
+
+Cyber Criminals--
+1.Graffiti and Activism--Want fame and make a point,Nuisance and lead to bigger problems
+2.Organized crime--Money focused and must be profitable,Typically smash and grab style or drive by
+3.State Sponsored Cyber Warfare--Extremely advanced, Companies are generally at a disadvantage,Hard to defend
+4.Espionage--Somewhere b/w Organized Crime and Military, Could be state sponsored and replicating Intellectual Property
+
+
+Digital Attacks--
+Nmap
+Nexpose
+Metasploit
+Beef
+
+AMP(Advanced malware protection) by cisco, which allows to prevent from data being encrypted by ransomware
+
+Ransomware--
+Cryptolocker
+CryptoWall
+Locky
+Petya
+
+
+Introduction to Digital Forensics--
+Objectives of Cyber Forensics-
+Technics and procedures for gathering evidence that could be used in the court of law
+Repeatable to prove something
+
+Cyber crime investigation process-
+Identify a crime
+Obtain a court warrant for seizure if required
+Perform first responder procedures
+Seize evidence at the crime scene
+Transport evidence to forensic laboratory
+Create copies of evidence
+Generate images and exam for evidence
+
+Forensics Methodologies--There are many but generally this is followed
+Acquire evidence without altering or damaging the original(Raw copies of original)
+Prove what you recovered is the same as what is on the originally siezed data(Validate with hashes and procedures)
+Analyze the data without modifying it(write protect)
+Use findings to accomplish a goal
+
+Summary-
+Cyber crime is increasing in demand and difficult to defend
+IOT and scripted attack options impact the future of cyber crime
+Many companies lack proper security
+Complexity continues to increase for defenses
+Forensics has many use cases
+Demand for forensic skillsets is high
+Job options include professional services,support existing companies, expert witness
+Many tools available
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 2:-Digital Forensic Investigations
+Digital Forensics is the preservation,identification,extraction,interpretation and documentation of computer evidence which can be used in the court of law
+Branches of Digital Forensics--
+Network forensics
+Firewall forensics
+Database Forensics
+Mobile Device Forensics
+
+
+Why shoud i learn Forensics?
+Understand Malware
+Understand how attackers steal data
+Create better defensive IT architectures
+Maintain current system for optimal performance
+Design and implement security policy
+
+How Forensics investigators fight crime?
+Information lost or deleted from computers will be able to be uncovered or restored and be used as evidence
+Digital Forensics will allow the tracing of criminal activites and personnel online
+
+Challenges of Digital Forensics--
+The amount of data needed for collection and storage makes it a very difficult and expensive process
+Encryption and mobile data is very hard to collect.
+Lack of physical evidence makes crime harder to prosecute.
+Hacking tools make it easier for criminals to hide their tracks.
+
+
+Search and Seizure--
+Chain of custody refers to the chronological documentation and paper trail showing the seizure, custody, control, transfer, analysis and disposition of evidence, physical or electronic.
+
+Legally seizing evidence--
+Assume every device is rigged to destroy data
+Use chain of custody
+Details should include where you are taking the equipment and the work you will be doing
+Secure equiment in your possession until it can be securely stored
+Keep a forensics journal-many professionals use a tape recorder
+use a digital camera to document the crime scene
+If systems are turned on, take pictures of the screen/display
+
+
+Jump bag that every Digital Forensic Investigator must have--
+Powerful laptop with windows and linux
+Hard Drives
+USB memory sticks
+Hard drive write blockers
+Digital camera
+Kali live CD and live USB
+4 port hub-not switch
+Chain of custody,disclosure and permission forms
+Portable label printer, notebook, voice recorder, pens
+
+
+Computer and network Reuqirements--
+Hubs
+Multiple Networks and VLANs
+Internet and not internet machines segmented
+VPNs and anonymizers
+Analyst workstation/research workstation
+Tools preloaded
+
+
+Forensics Tools(windows)-
+1.EnCase-Gold standard in forensic tool,full forensic suite,collect,decrypt, investigate and store,$1000 license,plus training, conference
+2.FTK-Recognized around the world as a standard, Malware triage capabilites, Multiple decryption tools and capabilites, $3000 for license
+3.FTK imager-Windows tool for imaging hard drives, Saves images in raw and DD formats,free version can only clone local images,Full version can create local and remote images, can acquire images from storage devices,hard drives,CD, drives, folder etc.
+
+Forensics Tools(Linux)--
+1.Volatility-Normally used for memory forensics,Memory sumps can be in raw format, a Microsoft crash dump, hibernation file or virtual machine snapshot
+2.Autopsy-Case management tool,Calibration tool, keep tracks of notes and investigation
+
+
+Collecting Evidences--
+Understand Order of volatility-
+CPU,cache and register content
+Routing table, ARP cache, process table, kernel statistics
+Memory
+Temporary file system/ swap space
+Data on hard disk
+Remotely logged data
+Data contained on archival media
+
+Collecting evidence from a computer-
+Photograph the computer and scene
+If the computer is off, do not turn it on
+If the computer is on, photograph the screen
+Collect live data-start with RAM image and then collect other live data "as required" such as network connection state, logged on users,currently executing processes etc.
+If hard disk encryption detected(using a tool like Zero-view) such as full disk encryption i.e. PGP disk-collect "logical image" of hard drive using dd.exe, Helix-locally or remotely via F-Response
+Unplug the power cord from the back of the tower-if the computer is a laptop and does not shut down when the cord is removed then remove the battery
+Diagram and label all cords
+Document all device model numbers and serial numbers
+Disconnect all cords and devices
+Check for HPA, then image hard drives using a write blocker,Helix or a hardware imager
+Package all components
+Seize all aditional storage media(create respective images and place original devices in anti-static evidence bag)
+Keep all media away from magnets,radio transmitters and other potentially damaging elements
+Collect instruction manuals,documentation and notes
+Document all steps used in the seizure
+
+
+Steganography and images(display abc.jpeg--displays image in kali)--
+Steganography is the practise of concealing a file,message, image or video within another file,message, image or video.
+Install steghide in Kali Linux
+>>steghide embed -ef my_secret.txt -cf abc.jpeg
+steghide extract -sf abc.jpeg
+
+When we want the passphrase to be embedded in the metadata-
+exiftool -comment="secret" abc.jpg
+exiftool abc.jpg
+
+
+Rules of Evidence-
+1.Admissible
+2.Authentic
+3.Complete
+4.Reliable
+5.Believable
+
+Examining backups-
+Backup data can be good to examine and recreate history or lost files
+Understand how the backup works such as full and incremental
+Understand the backup windows,schedule and time
+Understand what is not being backed up
+
+
+Purpose of a report-
+Present your findings
+Present defendable conclusions
+Address technical nature of evidence and conclusion
+Must present the findings in an easy, non-technical manner
+
+Style of report-
+It is recommended the report be written in passive voice
+Check out the grammar
+
+Basic structure-
+Title page
+Table of contents
+Executive summary
+Objectives
+Evidence analyzed
+Steps taken
+Relevant findings
+Timeline
+Conclusion
+Signature
+Exhibits--pictures of all your findings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 3:-Forensic Linux workstation
+Downloading Kali linux--
+We recommended a dedicated machine dual boot with Windows and Kali
+
+shasum -a 256 kali-linux-2017.1-amd64.iso						//helps to cross-validate the sha256 sum as mentioned on the kali.org website
+
+Guided-use entire disk and set up encrypted LVM				//this allows the partitions to be edited and this option helps the disks to be encrypted
+Set the network mirror to be "Yes"			//it allows the software to be updated in the kali linux
+Install the GRUB bootloader to the master boot record to "Yes" 		
+
+
+Live Boot image--(Live forensic mode)
+Hard drive is readable but not writable
+Auto mounting of media is disabled
+
+
+Updating and installing Kali packages--
+apt-get update							//updates the package repositories. It will use mirror closest to you
+apt-get upgrade							//upgrades the packages that have update
+
+
+Kali linux as forensic workstation--
+linux uses "sd" as SCSI hard drives, so that the first SCSI hard drive will be sda, the second sdb and so on
+If the hard drive is partitioned, then the first partition is sda1, the second partition is sda2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 4:-
+Data Duplication and Data protection--
+
+Duplication Preparation best practises-
+Authorise access only
+Document all access
+Proper packaging and labeling of media
+Safe and secure storage
+Preserve all data if possible
+Validate legally able to proceed
+Know associated risks
+
+It is important that the state of the system is not changed. If it is on, then remain it on and if it off, then make the copy from the off state only
+
+
+Tools-
+DumpIT -- A simple dump program that dumps all the data from the RAM
+
+To further process it, we use the software "volatility"
+volatility-2.5.standalone.exe -f abc.raw(ram file from dumpIT)
+volatility-2.5.standalone.exe -f abc.raw --profile [windows_version] cmdscan/hashdump/processlist
+
+Never work with original data!!!!
+Make two or more Bitlevel copies of anything that will be investigated
+Secure original and ensure zero tamper
+
+
+Data acquistion formats--
+1.Raw format--Fast, ignores errors and widely supported, Heavy storage requirements
+2.Advanced Forensics Format(AFF)--No size restrictions and compression options
+3.Encase Evidence File format--Expert witness format(E01)
+
+
+Bit-Stream Disk Options--
+1.Disk-to-image				//Most common method,Bit copy replication of original drive
+2.Disk-to-disk				//Copies everything from one hard drive to another. Available in tools such as EnCase,SafeBack etc.
+
+
+All files Matter-
+Forensic Image must contain all the file including slack space and unallocated space
+Slack Space--space between file clusters
+Unallocated space--Space where files are not written to according to the OS
+Artifacts such as deleted files, fragments and hidden data could be identified in slack space and unallocated space
+
+
+***Foremost tool in kali Linux helps to retrieve data back after deleted as data is not deleted from the drive until the deleted space is overwritten by some another data.
+foremost -t all -v -i /root/Pulkit -o /root/Desktop/bunny
+
+
+
+Potential Duplication Problems--
+Data Contamination
+Tampering
+Data fragments or overwriting
+Wrong cable,connection issues,early kill
+Challenges to authorized/legal copies
+Encrypted Drives
+
+**Not every device data can be cloned, like smart doorbell and thermostat these devices are not easy to clone them
+
+RAID(Redundant Array of Independent Disks) is a configuration involving two or more disks, used for data-redundancy and increased storage needs 
+
+
+
+
+Kali Linux Disk Duplication--
+To make a clone of hard drive, first we need to mount it-
+fdisk -l							//list the drives
+mkdir /mnt/sdb1						//creating a directory where we want to mount it
+/dev/sdb1 /mnt/sdb1 vfat deafults 0 0		//telling hard drive where to mount
+mount -a								//mounting the hard drive
+
+Other mounting options(automated)--
+EnCase,C.A.IN.E, Ewfmount, Xmount
+
+>>Most forensic investigators use forensic suite where mounting is performed automatically
+
+
+
+Kali bit Stream Copies--
+dd-already installed and old school copy option
+eg--	dd if=/media/root/Bashbunny of=/root/Desktop/bunny		(first we need to specify the file which is to be copied and where it is to be copied)
+
+dcfldd--developed by defence computer forensics lab--found under forensic tools category, fork of dd and faster
+eg--	dcfldd if=/root/Desktop/abc.txt hash=md5 of=/root/Desktop/abc.txt bs=512		(here we can define the hash and bit size also)
+
+Dc3dd--developed by defence cyber crime center--Uses dd, adds other capabilites, Also faster than dd and found under forensics tool in Kali
+
+
+Tool for making forensic image--(Kali linux)
+1. GUYMAGER--It is used to make forensic image of hard drive
+2.FTK Imager
+
+
+
+Windows Disk Duplication--
+1.Arsenal Image Mounter(AIM)--Free tool that can mount various formats including split files and Encase Files
+2.FTK Imager--Offers image mounting but not latest Encase files
+3.OSFMount,OSF Clone
+4.P2-eXplorer--Free version available that mounts DD and Encase Images
+
+
+>> Treat systems powered ON and OFF differently, All data matters..including unallocated, slack space or corrupted data, Never work with original data, Use bit level copies, Make atleast three copies (One for discloser and backup, others for discovery)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 5--Collecting and preserving Evidence-
+Data contamination-
+Using results from forensics must be repeatable and without modification to the data
+Any modification can be seen as YOUR contamination
+
+Test your copies-
+All copies are validated using Hash
+Original evidence is secured
+Hashing done on actual data and non-reversible
+Any changes modify the entire hash results
+
+
+
+Hashing--
+Generating a hash value
+
+Three rules for Hashes--
+You can't predict the hash value of a file
+No two hash values can be the same
+If anything changes in the file or device, the hash value must change
+
+SHA algorithms(SHA)-				//md5 will soon become obsolete
+National security Agency developed hash functions
+Five algorithms---- SHA-1,SHA-224,SHA-256, SHA-384 and SHA-512
+SHA-1 produces a message digest that is 160 bits long;
+SHA--224 produces a 224 and others represented by number.
+
+Hash Collisions--
+MD5 and SHA-1 have seen collisions
+SHA-128 recently saw its first collision
+Computer forensic hashing should use a non-keyed hash set
+"Goal is to obtain unique hash number generated by software"
+
+Checking hash of a file--
+hashdeep abc.txt
+
+Splitting the file into chunks--
+split -l 10 abc.txt abcCUT					//this will split the file into 10 chunks starting with the file name "abcCUT"
+
+Combining the file--
+cat abcCUT* > abc.txt			//and after combining, if we check the hash value it will be same as original value
+
+
+
+Preserving Data--
+Ensure changes are not made to copies
+True results must be on preserved copy(accomplished wuth WRITE BLOCK enabled)
+Use Hardware blocker to make the disk read only
+Mostly software blockers are used.(Forensic Soft, Discovery)
+
+Linux Tools--
+1.MD5deep/Hashdeep--Hashing tool in kali linux
+2.md5sum/sha256sum--Hashing tool
+3.DFF(Digital Forensic Framework)--Open source software with GUI and CLI in Kali(Software write blocker,cryptographic hash calculation,Recover hidden and deleted artifacts, volatile memory forensics)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 6:-Cracking Passwords
+Types of Password attacks-
+1.Dictionary attack
+2.Brute force attack
+3.Rainbow table attack
+4.Phishing
+5.Social Engineering
+6.Malware
+7.Offline Cracking
+8.Guess
+
+
+Password cracking types--Offline cracking
+We have enough time to break the password
+Usually take place for big data
+Or very strong and complicated password
+After attack->Forensics investigation
+
+
+Password Cracking tools--
+1.Cain and Able
+2.John the Ripper
+3.Hydra					// hydra -t 1 -l DrChaos -P /root/drpass.txt -vV 192.168.99.132 ftp
+
+Scanning the Hosts-
+namp 192.168.99.132
+
+>>cewl www.drchaos.com -w drpass.txt				//"cewl" tool makes a list of words that are used in the website and then we can use it for password attacks
+
+
+Linux/OSX passwords--
+Gmail Password Cracking-
+DumpIT(free windows tool)				//Dumping physical memory
+Strings(it is a normal command by which you can search for the strings in the program)  and Grep
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 7:-Windows Forensics
+File System-(WinHex to recover data)
+1.FAT--Most widely used, works extensively with clusters and sectors
+FAT12,FAT16,FAT32	(Major file versions)
+2.NTFS--More stable and secure, performs with greater speed, used in windows OS such as XP,Vista and Windows 10.
+
+File system Forensic Artifacts--
+1.Active Files
+2.Deleted Files
+
+
+Shortcut Files(Shortcut is made of the main file)
+Recycle Bin
+
+Spool Files--
+.shd--File contains information about the file being printed
+.spl--File contains info to render the contents of the file to be printed
+
+Registry Part 1--
+1.HKEY_CLASSES_ROOT--Information stored here ensures that the correct program opens when it is executed in Windows Explorer.It also contains further details on drag and drop rules, shortcuts and information on the user interface.
+2.HKEY_CURRENT_USER--Contains configuration information for the user who is currently logged into the system, including users folders, screen colors, and control panel settings
+3.HKEY_LOCAL_MACHINE--Contains machine hardware-specific information that the OS runs on.It includes a list of drives mounted on the system and generic configurations of installed hardware and applications
+4.HKEY_USERS--contains configuration information of all user profiles on the system, which concerns application configurations and visual settings
+5.HKEY_CURRENT_CONFIG--Stores information about the systems current configuration.
+
+
+Registry--The windows Registry 1 is a hierarchal database used to store information about the system. The Registry takes the place of the configuration files(config.sys,autoexec.bat, win.ini, system.ini)
+
+Autostart--
+Used by a great many pieces of malware to remain persistent on the victim system.
+eg--HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+
+
+Registry--A wealth of information
+Information that can be recovered includes--
+System configuration
+Devices on the system
+User names
+Personal Settings and Browser Preferences
+Web Browsing activity
+Files opened
+Programs Executed
+Passwords
+
+Security ID--It is used to identify the computer system
+Relative ID--It is used to identify the specific user on the computer system
+
+**MRU(Most recently used) files
+
+
+Registry Forensic--
+Registry keys have most last modified time-stamp
+It contains information about--
+1.System:-
+Computer name
+Dynamic disks
+Install Dates
+Last user logged in
+Mounted devices
+Windows OS product key
+Registered Owner
+Programs run automatically
+System's USB devices
+Recent documents
+Recent commands entered In windows run box
+Programs that run automatically
+
+2.Networking:-
+Local groups
+Local users
+Map network drive MRU
+Printers
+
+3.User Application data--
+Adobe products
+IM Contacts
+Search terms in google
+Kazaa data
+Windows media player data
+Word recent docs and user info
+Access,Excel,Outlook, Powerpoint recent files
+
+**Windows Registry can be a goldmine, lots of information,fairly difficult to "Clean" 
+
+4.CPU type
+5.Network interface information
+6.Installed software
+7.Installed Hardware
+
+
+Registry forensics Investigation:-
+1.Forensic search can reveal backups of registry--Intruders leave these behind when resetting registry in order not to damage the system
+2.Analyze restore point settings
+3.Rootkit enabler--Attacker can use AppInit_DLL key to run their own DLL
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows (App_Init DLL should be empty, otherwise any attacker might be running any infected DLL)
+4.Thumbs.db--It contains cached thumbnails of the images in the folder. Embedded data present in the thumbs.db file. The images may have been deleted from the directory but they may still be available in the thumbs.db cache!
+
+
+FTK Registry Viewer--This helps to view the registry in detail
+NTUSER.dat file---It records Last written time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 8:-	Network Forensics--
+OSI Model
+
+Security Tools-
+1.Firewall--North south	/ East west
+2.Application Layer firewalls--User/Application data
+3.Access Control--Who and what is accessing network
+4.IPS/IDS--Signature and some behaviour detection
+5.Honey Pot--Monitor traps
+6.Network Baselines--Tools used to verify normal and unknown traffic
+
+Security--
+1.Infrastructure security--Intrusion Prevention systems,Unified Threat Management
+2.Endpoint security--Endpoint protection and Anti-Virus,Endpoint Detection and Response
+3.Application Security--WAF and Application Security,Vulnerability Assesment
+4.Messaging Security
+5.Web Security
+6.IOT Security
+7.Transaction Security
+8.Security Operation and Incident Response--SIEM,Security Incident Response
+9.Threat Intelligence
+10.Mobile Security
+11.Data Security
+12.Risk and Compliance
+13.Specialized Threat Analysis and Protection
+14.Identify and Access Management
+15.Cloud Security
+
+
+Technology being used in Industry--
+Firewalls--
+1.Packet Filtering Firewall--Compare packet and either drop or forward
+2.Circuit level gateways--Monitor TCP handshake for trusted communication but don't inspect	packets
+3.Stateful inspection firewalls--Examine packet and TCP session
+4.Application level firewall--Combine packet filtering with circuit level for all ports and protocols(eg--Cisco Firepower(application level firewall of cisco)
+5.Multilayer inspection firewalls--Combine packet filtering with circuit level and retaining status assigned to packets by each firewall component for maximum control
+
+
+Application level firewall--eg--Cisco Firepower(application level firewall of cisco)
+
+Content Filtering--
+Signature Detection--Looking for known attack patterns
+Threat Detection--Looking for malicious behaviour
+Anomaly Detection--Looking for unknown or unusual behaviour
+
+IDS--Passive(can't block attacks) and can be inline or off mirror port
+IPS--Can block attacks and must be deployed inline
+
+
+Breach and Honeypots--
+Breach detection--Target malware that bypassed traditional security;target indicators of malware
+Honeypot--System setup to lure attack and monitored;designed to be noticed by attackers(vulnerable)
+
+
+Network access Control-
+Port Security--Manual enable port controls on switch per port
+Automated access control--Automatically adjust security, options: SNMP,802.1x,ARP Poisoning etc.
+Profiling--Examine traffic to fingerprint devices
+Posture--Evaluate endpoints for risk
+
+Netflow-Flow of data in the network
+
+Data Loss prevention--Data in motion, Data at rest
+
+
+
+Attack kill Chain----
+Recon->Weaponize->Deliver->Exploit->Install->Command and Control->Action
+Reconnaissance--
+Learning everything about the target
+1st step in attack and most time consuming
+More you know-better attack
+Find quickest and most effective approach
+
+Exploitation--
+Abuse vulnerability to achieve outcome
+Launching an attack
+Deliver Remote access tool(RAT),Ransomware,Gain root access,crash a system etc.
+Metasploit Framework for developing	and executing exploit code against a remote target machine
+
+
+Endpoint attacks--
+Trojan House--looks like something useful but hides malicious intent
+Malware--Malicious software
+Ransomware--Encrypt personal files and holds for ransomware
+Spyware--Software leaking sensitive data about host
+Botnet--Network of private computers infected with software and controlled without owner's knowledge
+
+
+Establishing Foothold--
+Obtain access to multiple systems
+If one foothold removed, others available
+Accomplished through exploitation and lateral movement also known as Pivoting
+
+Data Exfiltration--Moving data from the victim computer to attacker's machine
+Potentially encrypted(reverse SSH)
+Could break the data
+Send with some periods in the time
+
+Man in the middle attack--Wifi Pineapple(developed by hack5)
+
+Denial of Service--Interrupt services or slow down them(Slowloris tool)
+Hurt business
+Hides another network
+Reaction to something
+Protocol or volume
+DDoS--Using many computers
+
+
+
+
+Detecting Threats--To detect threat we need to see the traffic
+Inline--direct realtime live traffic
+SPAN Port--copy of traffic
+
+Packet Sniffing--
+Seen non-encrypted traffic
+VPN and other encryption protects privacy
+Bypass HTTPS with sslstrip
+Port security limits access of promiscuous data
+
+Historical data--
+1.PCAP--Logging network data
+example--listening to phonecalls
+
+2.Netflow--Logging network records
+Eg-Looking at details of phonecall
+
+
+Capturing and Analyzing traffic--
+1.Wireshark--Capture realtime or view pcap files
+2.TCPDump/WinDump--Dump data to file
+3.Snort--Intrusion Detection/prevention(Detect port scans, if any port scan is there-raise an alarm)
+4.Firepower--Enterprise Intrusion detection/prevention
+5.Netflow analyzer(Cisco)--Baseline and look for anomalies
+6.Stealthwatch--Netflow tool with security intelligence
+
+Port Scanning--Attackers typically scan an environment that they have breached
+You should be monitoring for recon activity within your environment
+
+
+
+Network logs--
+Computer security logs--
+OS Logs-Great for identifying or investigating suspicious activities
+Application Logs-List all events logged by programs
+Security Software Logs-Host security alarms
+
+Looking for Log Evidence--
+Security Devices(firewall,IPS etc.)
+Network devices(routers,switches,etc.)
+host devices(Laptops,phones etc.)
+Honeypot Logs
+Centralized Logging devices
+
+Syslog--Client/Server protocol for log messages
+Message in clear text
+
+Reading Firewall logs
+Reading network scanner logs
+Reading authentication logs
+Reading IPS logs
+Reading Webscan logs
+Reading Email Server logs
+
+**Automation makes the life much easier
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 9:-Email Forensics---
+Email system and Clients--SMTP Protocol and POP protocol
+
+Examining Email messages--
+Access victim's computer to recover the evidence
+Using the victim's email client--Find and copy evidence in the email, Access protected or encrypted material,Print emails
+Guide victim on the phone--open and copy email including headers
+Sometimes you have to deal with deleted emails
+Copying an email message to your system or send to your email id
+
+
+Email Forensic Tools--
+1.Email Dossier--Online tool to get details about the validity of an email address
+FortiGuard Labs--This website contains information about ip addresses
+2.Online email tracer
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 10--Reverse Malware Engineering
+
+Why malware analysis?
+Avoid Recurrence
+Define IOC
+Understand Impact
+Establish phase of attack-Kill chain
+Identify techniques and methods for new controls
+
+
+Malware Analysis--
+Downloaders
+Droppers
+Packers/Packed Malware
+Rootkits
+Embedded Shellcode
+Self defending Malware
+
+Types of Malware Analysis--
+Automated Analysis(execution them in sandbox)
+Static Analysis(Document Analysis)
+Behaviour analysis
+Code Analysis--OllyDBG,IDA pro
+
+
+Static Analysis--
+URLs,IP Address,user agent strings,Function calls(URL Download to file,Get Proc Address etc.)
+Tools--
+Strings,Static analysis of PE files,BinText, CFF Explorer
+
+Why attackers use PDF to transfer malware?
+Widespread use and adoption of PDFs
+Extremely broad attack surface(HTTP)
+We should focus on Embedded shellcode, embedded javascript etc.
+
+Tools-
+1.pdfid interview.pdf					//this tool helps in analysis of pdf file and tells which things are present in the file
+2.pdf-parser
+
+
+Dynamic Analysis--(Mainly it is done on sandbox systems)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lesson 11:-Forensic Case studies
+Investigating a laptop for HR--
+Make two bit copies of the laptop hard drive--Could use FTK Imager
+Validate copies using hash--Could use hashdeep
+Enable Write Block--Could use Digital Forensics Framework(DDF)
+Enumerate RAM--could use volatility	(only if the system is on)
+Enumerate Hard drive--Could use DDF
+Enumerate Browser--Could use Autopsy or Volatility
+
+
+Investigating Network Breach--
+Potential Indicators--
+Security tool alarms and logs
+Report of Unusual or malicious behaviour
+Identification of unauthorized traffic
+Network performance changes
+Communication from attacker or current events
+
+Steps-
+Identify logs
+and check other things which seems to be malicious
+
+
+
+Investigating hard drive from ebay-
+Run file Recovery--Could use foremost
+
+
+***Security is a journey, not a destination****
+
+
+
+
+
+
+
+
+********************************************************************************************************************
+
+#Digital Forensic:-
+The gathering and analysis of digital information in an authentic,accurate,complete form for presentation as evidence in a civil proceeding or a court of law
+
+Layman Terms--Looking at the information on a computer or digital device to determine what a person was doing in the "electronic world"
+
+Computer Forensics is NOT:-
+"Data Recovery"
+Something that can be done with the software alone
+Something that can be performed by anyone other than a trained and certified computer forensic practitioner
+
+Digital Evidence can potentially provide--Who? What? When? Where? Why? How?
+
+The computer Forensics and Electronic Discovery process includes information developed from:-Documents,Communications/email,databases,proprietary applications/Data
+All of these terms are called "Digital Artifcats"
+
+Objectives--
+Become aware of various types of "Digital incidents"
+Learn how to respond to a "Digital Incident"
+Conduct acquisition and authentication of digital evidencez
+Use forensic software to conduct a controlled analysis of digital evidence
+Record your findings in a digital examination log file
+Present your findings
+
+
+
+
+
+
+
+
+
+
+
+
+
+Computer Forensic Incidents--
+Identity thefts(SSN no.)
+Telecommunication Fraud(Cell phone abuse)
+Online auction fraud(eBay,yahoo)
+Trafficking
+Network intrusions(resource damage)
+Cyber Threats(e-mail harassments)
+Pirating of intellectual Property(music and movies)
+
+
+
+
+Computer Fraud--Conduct which involves the manipulation of a computer or computer date by whatever method, in order to dishonestly obtain money,property or some other advantage of value or to cause loss
+Theft of Information--Unauthorized obtaining of information from a computer(eg-hacking, taking unauthorized access of company records,customer list,trade secrets etc.)
+The 'salami fraud'--With this type of fraud the perpetrator carefully skims small sums from the balances of a large number of accounts in order to bypass the internal controls and escape detection
+
+
+Internal Threats to an Organization's computer infrastructure--
+Theft of proprietary data
+Using company servers to run a personal web based business
+Using company servers to distribute contraband(illegal items)
+Alteration of official records
+Execution of malicious code
+
+
+
+
+Investigative challenges--
+Rapidly changing storage mediums and capacities
+More GBs means more overall acquisition and analysis time
+updated the tools while investigation
+Digital Evidence Presentation is challenging
+
+
+
+
+
+
+
+
+
+
+
+
+
+Investigative Process--
+Assess the situation
+Acquire the evidence
+Analyze the evidence
+Manage the evidence
+Report the investigation
+Present findings in Court
+
+
+Prior to the investigation--
+Have a Work station and data recovery lab
+Build your team of investigators
+Review policies and Laws
+Notify decision makers
+Acquire Authorization
+Build an Investigation Toolkit
+Create the methodology
+
+
+Preparing for an investigation--
+Identify the type of data and information that you are looking for
+Once the machine is secured, obtain information about it, the peripherals and the network to which it is connected
+Ontain passwords to access the encrypted or password protected files
+Gather identifying information about those with whom the subject may have communicated
+
+Chain Custody--
+The chronological documentation or paper trail, showing the seizure, custody, transfer, analysis and disposition of evidence, physical or electronic
+
+Duplicate the data to preserve original data
+Verify the Integrity of Image--Match the hash of the original evidence and the forensic image
+Recover Lost data--IsoBuster, TestDisk and PhotoRec, Data Recovery wizard, Partition Recovery Software, SoftPerfect File Recovery,PC Inspector File Recovery
+Data Analysis--helps with sorting and analyzing large volumes of data. Examples--AccessData's Forensic Toolkit, Guidance Software's EnCase
+
+>Documentation and Report writing must be there
+
+
+
+
+
+
+
+
+OS Disk Storage concepts--
+Program Files--They contain executable files
+Data Files--These are those files that do not contain executable instructions for the computer,they include files containing support information used by programs. eg--Dynamic Link libraries(.dll)
+
+
+
+
+
+Digital Acquisition--The goal of digital evidence acquisition process is to duplicate the original digital evidence in a manner that protects and preserve
+
+
+
+4 Cardinal Rules for Digital Forensic--
+Never mishandle Evidence
+Never work on original data
+Never trust the subject's operating system
+Document Everything
+
+
+
+
+20 Basic Step for forensic examiner--
+1.Prepare the forensic lab environment
+2.Establish sterile examination media(Wipe the drives according to the organization and keep them ready for use)
+3.All forensic software must be licensed to the practitioner or the organization
+4.Physically examine the computer or digital device
+5.Initialize the BIOS and capture the CMOS information
+6.Create duplicate of the original digital evidence
+7.Logically examine evidence duplicates
+8.Examine Boot record data
+9.COnduct data recovery operations
+10.Audit all recovered files
+11.Audit and create a listing of all files subject to examination
+12.Examine unallocated and file slack space for digital evidence
+13.Examine all user created files and digital artifacts
+14.Conduct "keyword" searches of all apparent digital evidence
+15.Pursue any keyword "hits" and document same
+16.Audit and create printouts of any apparent digital evidence
+17.Examine executable files and run suspicious applications in a "stand-alone" environment
+18.Unlock and examine password protected files
+19.Create archives of all investigative materials to read-only media
+20.Write final investigative report
+
+
+
+
+
+Data files:-(AccessData FTK Image)--Software
+1.Active Data
+2.Archival Data
+3.Backup Data
+4.Residual Data--It is the information that appears to be gone or not visible to end-user, however it is still recoverable from the digital media(eg--evidence eliminator software)
+5.Temp Files
+6.Unallocated space
+7.Electronic Mail(Email)
+8.Background Data
+9.Metadata
+
+
+
+
+Digital Evidence--
+is invisible
+is easily altered or destroyed
+Requires precautions to prevent alteration
+Requires special tools and equipment
+Requires specialized training
+Requires special testimony
+
+
+A file signature is a unique identifying pattern found within a file which indicates the data type of the file in the question
+
+
+
+Forensic Analysis Report--
+Allows for the highly technical information to be introduced  in a concise and non-biased format
+It memorializes the analysis and results of a body evidence
+It is a written record of future potential testimony
+
+
+10 Laws of Good Report writing--
+The reader is the most important person
+Keep the report as short as possible
+Organize for the convenience of the report user
+All references should be correct in all details
+The writing should be accurate,concise
+The right diagram with the right labels should be in the right place for the reader
+Summaries give the whole picture
+Reports should be checked for technical errors, typing errors and inconsistency
+The report should look as good as it is 
+The reader is the most important person
+
+
+
+
+What can a criminal do with Cell Phones?
+They can be harassing or threatening
+Send virus and trojans to others
+Distribute images and videos
+Steal data
+Store and transmit personal and corporate information
+Send dangerous or offensive SMS or text images
+Clone SIM for criminal use
+
+
+Analyze information--
+Local information
+Subscriber and equipment identifiers
+Electronic Documents
+Data/time and other settings
+Instant messaging and Web Browsing
+Multimedia messages
+Phonebook information
+Calendar information
+Audio and Video Recordings
+Photos
+Text Messages
+Call Logs
+Email
+
+Tools-
+Oxygen Forensic Suite,BitPim,MOBILedit! Forensic
+
+
+
+Tools for the USB Forensic--
+Encase, FTK Imager, Knoppex, Data Doctor, Bad Copy pro
+
+
+
+
+
+
+
+
+Incident Handling--
+It is the preparation,detection,management and resolution of incidents or events that may occur in the information system
+
+Security incident--
+It is any security event that warrants activation of an incident response team to manage the event
+
+
+
+
+
+Personal Digital Assistant(PDA)
+
+
+
+
+
+
+
+
+
+
+Evidence must be :-
+preserved in a persistent state
+not allowed to unexpectedly change
+testable for changes
+reliable for use and presentation
+
+A forensic image--
+is a tamper evident container
+contains file,file system and media storage device data
+is created, read and written by software
+is not tamper-proof
+is testable for changes
+
+Inside a forensic image--
+Header
+Image data
+Metadata
+Cryptographic hash value	(To check if any changes occured)
+
+
+File Format--
+1.Raw Image file format--Exact copy of the hard drive
+Sector by Sector copy of digital media storage device or file system
+Acquired image is saved to a disk file
+Original data is stored unaltered
+Sectors are copied in order
+Source and target will have the same hash value
+No additional information stored in the raw file
+Common raw image file formats--.bin(binary), .dd(created by dd utility), .img(image), .iso(ISO9660 image), .raw(raw data)
+
+2.Apple disk image--it is used in Apple devices
+
+3.Encase Evidence File--most common file format
+
+
+Tools---
+1.libewf--Free and open source library
+Used to make tools for working with Encase Evidence image files
+Encase forensic by guidance Software
+Encase files use a closed, proprietary format
+libewf tools can create, acquire, convert and verify Encase files outside of Encase forensic
+
+eg--ewfacquire to copy media to files
+ewfinfo to show metadata
+ewfexport to convert EnCase to raw
+ewfverify to verify integrity
+
+
+2.Guymager--Acquires, burns, and performs device to device copying
+Hashing and verification operations
+Saves image files using the raw,EnCase and AFF formats
+Supports metadata input
+Fast imaging operation on multi-core companies
+Open Source and free to use
+
+
+3.dc3dd--Based on GNU dd
+Enhanced version of dd
+Maintained in parallel to dd
+Department of Defense Cyber crime center(DC3) dd
+Copies data from one location to another
+Performs data conversions on the fly
+
+
+4.afflib--Free and open source library
+Used to make tools for working with AFF image files
+afflib tools can create, convert, and verify AFF image files
+AFF is an alternative to the raw image and EnCase Evidence file formats
+
+
+5.dd--File copying and conversion tool
+dd originated on 1970s UNIX
+dd has many options not needed for digital forensics
+dd is not a forensic grade tool
+
+
+6.dcfldd--Enhanced version of dd
+Based on GNU dd code
+Department of defense computer forensic lab(DCFL) dd
+Copies data from one location to another
+Performs data conversion
+dcfldd enhancements over dd--Hashing on the fly,Multiple image file copies,Splitting files into multiple parts,Wiping and verifying	media,Progress indicator
+
+
+
+Hashing--
+1.MD(Message digest)
+MD2,MD4,MD5
+MD5 is used in digital forensic
+128 bit message digest
+Internet RFC 1321(1992)
+Free to use
+
+2.Secure Hash Algorithm(SHA)
+SHA-1, SHA-224, SHA-256, SHA-384, SHA-512
+SHA-256 and SHA-512 are used in digital forensics
+
+
+Tools used for hashing--
+1.Hashidentifier
+2.Hashdeep(md5deep,sha256deep)
+3.Sumtools(md5sum,sha256sum,sha512sum)
+4.rahash2
+
+
+
+Linux Distributions--
+1.Arch
+2.CentOS
+3.Debian GNU/Linux
+4.Fedora
+5.Gentoo
+6.Linux Mint
+7.openSuSE
+8.RedHat Enterprise
+9.Slackware
+10.Ubuntu
+
+Distributions are differentiated on the basis of--
+1.Tools/OS/Kernel
+2.GNU/Scientific/Programming/Package Managers
+3.Gnome/KDE/XFCE
+4.ServerOS/DesktopOS/Security/Mobile Devices/Embedded Systems
+
+
+
+#ends

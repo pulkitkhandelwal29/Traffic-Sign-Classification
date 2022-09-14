@@ -1,0 +1,161 @@
+#Anonymity
+
+>To get the public ip from kali linux---curl ipconfig.me
+(or from browser--what is my ip)
+
+>Use of Proxies are highly discouraged--There are no known HTTP(S) or SOCKS4(a)/5 proxies that offer an encrypted connection between itself and the user. Therefore, the Internet Service Provider or any man-in-the-middle [archive] can see connection details, including the destination IP address. If the destination server is not using SSL/TLS, then the entire content of traffic is vulnerable as well.(We use proxychains using tor relays so no worry)(If we used proxies manually then it is at high risk)(Same like in anonsurf)
+
+>Use of Macchanger to anonymize the NIC
+
+There are Different ways to Anonmyize in Kali Linux:-
+1.Anonsurf github repository
+and then proceed with ./installer.sh and then we can just
+anonsurf start 					//this will start the script using tor and proxies
+anonsurf change
+anonsurf stop
+
+2.Whonix(There is personal VM of it to anonymize Kali linux)
+
+
+3.Proxychains
+To enable proxies--/etc/proxychains.conf
+We need to uncomment "Dynamic chain"
+We need to uncomment "Proxy DNS"
+In the end add a line for socks5 127.0.0.1 9050
+and then save the file
+
+and service tor start							//it is there pre-installed in the kali linux
+proxychains firefox 				//to check proxies
+
+
+3. TOR(The onion router)
+We need to install tor browser from the official website  
+And tor service can be installed using the terminal 
+
+3.1 Hosting tor website--
+cd /etc/tor
+nano torrc
+and go to the hidden tor services
+and uncomment those 2 lines :-
+Hidden services dir		/other hidden services
+and then run "tor"
+
+3.2 TO get the onion website link--
+/var/lib/tor/other hidden services
+cat hostname						//will give the link
+service apache2 start				//will start the web server
+
+>If any error comes related to tor--go to browser>start tor browser
+edit it and then check for the condition to be run as root and change it
+
+3.3 Hosting Darknet website/Own onion----
+Goto Tor Browser -> Browser-> Data ->Tor ->torrc file
+
+In the file edit at the end of the line--
+HiddenServiceDir c:\Users\Gautam\hidden_service
+HiddenServicePort 80 127.0.0.1:80								//port no. and the local ip after xampp s running(all features)
+
+Make the html file in htdocs and start tor browser
+When you will start tor browser then in the "hidden_service" folder "hostname" file will be created and copy the hostname and let it run in the tor browser and the html file will be running and thus tor website is running.
+
+
+
+
+
+5. VPN for Linux
+Type "openvpn" in the terminal and with it the file of the openvpn book
+To connect to the open vpn i.e. vpnbook
+We need to download the course bundle
+Then extract it
+In the terminal,type--
+openvpn [any file name from the 4 file name]
+and it will ask for the authentication that can be copied from the website
+and for the initialization sequence completed
+ 
+
+
+
+
+
+**DNS**
+Domain Name server,ISP keeps the track of DNS and it is by default theirs or google
+It is impotant to change the DNS resolving IP address of the computer and it will lead to the anonymity
+Open DNS					//It keeps the browsing private
+Cloud fare New DNS			//1.1.1.1
+
+1.1 Changing DNS in kali linux---
+nano etc/resolv.conf							//configuration file of DNS
+
+This DNS configuration change is automatically done by anonsurf
+
+
+***************************************************************************************************************
+#Extra
+>To remain anonymous we need to place "proxychains" in front of the command so that our ip address is not revealed
+>We can set the proxy also in kali linux in the network tab							//we should avoid proxy and use vpn instead
+In proxy the ISP can see the traffic as it is not encrypted but in vpn the traffic is encrypted
+use tor to hide from isp 
+>using "macchanger" we can change the mac address
+>using tor to vpn is the safest as it confirms that there is no malicious users at the end of tor network		//first tor is connected to the network and then the vpn
+>but we can use in case we want to use vpn to tor
+>airvpn is best and we need ddns for being persistence in the connection
+>airvpn port forwarding and while other port forwarding can be done by router and not in mobile hotspot
+
+
+>anonymous:-
+tor over vpn is the best combination 
+hide your dns by /etc/dhcp/dhclient.conf
+have a look on the nameserver by /etc/resolv.conf
+/etc/proxychains.conf(dynamic chain)
+
+
+
+
+
+
+
+**Section for Dark Web**
+Deep web---
+90 percent of the oceans remain unexplored, unseen by human eyes
+Traffic in the deep websites has increased
+IT can ber accessed by search engines but it needs to have access
+It contain government databases
+Academic information,Medical Records,Legal Documents,competitor websites,usernames and passwords
+
+
+
+Darknet----
+Here we can buy gun,drugs,hitman,hacked paypal accounts etc.
+Drug trafficking sites,Private communications,Illegal information,Tor Encrypted websites
+
+
+Currency used in Darknet----(cryptocurrencies are untraceable)
+Bitcoin
+Litecoin
+Peercoin
+Primecoin
+Ripple
+Quark
+
+
+
+To trace information of IP address--
+cqcounter.com -> whois
+
+
+Using duck duck go to enable privacy
+
+Facebook over TOR----https://facebookcorewwwi.onion/
+
+Accessing email over tor---torbox3uiot6wchz.onion
+
+Darknet search engines---haystak
+
+Darknet Links---
+reddit.com
+torhiddenwiki.com
+
+
+How to sieze Darkweb websites---
+Either arrest that guy who is hosting the website or find out the vulnerability so that it can be hacked and bring down the website
+#ends

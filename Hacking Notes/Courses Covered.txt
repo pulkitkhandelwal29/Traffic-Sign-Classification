@@ -1,0 +1,95 @@
+#Courses Covered(all domains)
+1.The Complete Cyber Security Course  End Point Protection
+2.Udemy - Hacking in Practice Certified Ethical Hacking MEGA Course
+3.Muharrem aydin				//good teacher and has more courses.need to check it out
+4.Digital Forensics and Cyber Crime with Kali Linux	(Joseph Muniz and Aamir Lakhani)
+5.Python 3 Complete Masterclass - Make Your Job Tasks Easier!
+6.Complete Python Developer in 2020 Zero to Mastery(Andrew Neagoia)	(udemy)//main course that is covered (Nice teacher, have references of other courses of him as well)
+7.The Complete Python 3 Masterclass - From Beginner To Pro(saw the content of this course also, but not useful, just covering here only, a little bit of it)(one and the same thing,much boring)
+8.Introduction to Python and Hacking with Python(Amit Huddar)		//boring and not much useful, only topics are useful
+9.Python-for-offensive-security-practical-course	(By Hussam)
+10.The Modern Python 3 Bootcamp(udemy)
+11.Introduction to Machine Learning & Deep Learning in Python (udemy)
+12.Python 3 Complete Masterclass - Make Your Job Tasks Easier! (udemy)
+13.Udemy - Complete Machine Learning and Data Science Zero to Mastery	(by andrei neagoi and daniel) (amazing)
+14.Udemy - Machine Learning Practical 6 Real-World Applications
+15.Udemy - Complete Guide to TensorFlow for Deep Learning with Python (pierian data) (outdated)(somethings useful i kept into notes)
+16.Udacity - Data Scientist Nanodegree nd025 v1.0.0 (not providing the coding tutorials, wrote some important points that needs to be considered while learning particular thing)
+17.Udacity - Deep Learning Foundation v1.0.0 (not effective coding tutorials, wrote some important points that needs to be considered while learning particular thing)
+18. Udacity - Machine Learning Engineer Nanodegree nd009t v1.0.0 (same like Data scientist and Deep learning)
+19. NLP - Natural Language Processing with Python (pierian data) (udemy)--good course
+20. Udemy - Data Science Natural Language Processing (NLP) in Python (Lazy programmer) (okay not much, just got to know the topics, and wrote in the pierian data notes)
+21.AppliedAICourse - Applied Machine Learning Course //Too boring, important points written down(too much maths)
+22.Udemy - Complete 2020 Data Science & Machine Learning BootcampUdemy - Complete 2020 Data Science & Machine Learning Bootcamp		(appbrewery.co)(okay)
+23.Data Science A-Z™ Real-Life Data Science Exercises Included(Kirill Eremenko) (not much coding, boring)
+24.Machine Learning for Data Science (okay) (The Backyard Data scientist) (okay)
+25.Udemy - R Programming A-Z™ R For Data Science With Real Exercises! (okay-okay)
+26.Udemy - Machine Learning A-Z™ Hands-On Python & R In Data Science (good,but for me its okay)
+27.Udemy - Forex Trading A-Z™ - With LIVE Examples of Forex Trading(Kirill Ermenko) (okay)
+28.Udemy - Tableau 10 A-Z Hands-On Tableau Training For Data Science! (Kirill Ermenko)(Good)
+29.Udemy - Machine Learning A-Z  Become Kaggle Master (okay)
+30.Udemy - Python for Data Science and Machine Learning Bootcamp (good)
+31.Udemy - Python + SQL + Tableau Integrating Python, SQL, and Tableau(okay-okay) (365Datascience)
+32.Udemy - The Business Intelligence Analyst Course 2019 (okay)
+33.Udemy - Python for Computer Vision with OpenCV and Deep Learning(udemy) (pierian data)(good)
+34.Udemy - Master Computer Vision™ OpenCV4 in Python with Deep Learning(worse, only mini project topics are good)
+35.Udemy - Deep Learning Computer Vision™ CNN, OpenCV, YOLO, SSD & GANs(worse,not much understandable)
+36.Udemy - bug-bounty-hunting-offensive-approach-to-hunt-bugs(Vikas Choudhary)		(amazing)
+37.Udemy - Complete Python Web Course Build 8 Python Web Apps			
+38.Udemy - GitHub Ultimate Master Git and GitHub – Beginner to Expert (okay)
+39.Udemy - Python and Django Full Stack Web Developer Bootcamp (okay)
+40.Udemy - Data Science and Machine Learning Bootcamp with R  (Good)
+41.Udemy - Machine Learning, Data Science and Deep Learning with Python--Frank Klane (not good)
+42.Udemy - Python for Time Series Data Analysis (Nice)
+43.Udemy - Django 2.2 & Python  The Ultimate Web Development Bootcamp--Nick Walter (Amazing, project also uploaded on github)
+44.Udemy - The Data Science Course 2021: Complete Data Science Bootcamp 	(365 data science) (okay)
+45.Udemy - Machine Learning Practical 6 Real-World Applications (okay)
+46.Udemy - Complete Ethical Hacking Bootcamp 2021 - Zero to Mastery (Good)
+47.Bitcoin and Cryptocurrency Bootcamp by Colt Steele, Kevin Katz			(okay)
+48.Udemy - Spark and Python for Big Data with PySpark  (Good)
+49.Udemy - The Complete Mobile Ethical Hacking Course (codestars.com)
+50.Udemy - Linux Mastery Master the Linux Command Line in 11.5 Hours (Okay)
+51.Udemy - Docker Mastery with Kubernetes +Swarm from a Docker Captain (okay)
+52.Udemy - MongoDB - The Complete Developer's Guide 2020 (good)
+53.Udemy - Learn Python By Doing - Build 4 Real World Django Applications (worst)
+54.Udemy - Django Ecommerce Build Advanced Django Web Application (Amazing)
+55.Udemy - Web Scraping for Data Science - Python & Selenium - Basics (Okay)
+56. Udemy - Web Security & Bug Bounty Learn Penetration Testing in 2022 (okay)
+57. Udemy - Blockchain A-Z™ Learn How To Build Your First Blockchain (okay)
+58. Udemy - Learn Flutter and Dart to create Android and IOS apps (Good)
+59. The Complete SQL Bootcamp 2022: Go from Zero to Hero (Good)
+
+#Blogs:
+krebsonsecurity.com
+www.hackerstrom.co.uk
+www.securitymagazine.com
+www.securityfocus.com
+blog.windowssecurity.com
+www.hackersjournals.com
+www.zdnet.com/topic/security
+www.cybercrime.gov
+http://ung.edu/cyber
+http://blog.pluralsight.com/learning-path-ethical-hacking					//Dale meredith  www.dalemeredith.com
+Kevin Mitnick								//need to read about it and also DEFCON
+Dr. Chaos security blog
+DEFCON talk "Now you See Me,Now you Don't"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

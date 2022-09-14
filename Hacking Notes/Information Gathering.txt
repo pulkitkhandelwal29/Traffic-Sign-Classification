@@ -1,0 +1,358 @@
+#Footprinting
+Don't waste so much time in academic education,it's ordinary
+Waste your time for your skill, it can make you extraordinary
+
+#Two types of Footprinting:
+Passive footprinting--using public information
+Active footprinting--Social Engineering to the employees
+
+
+#Footprinting techniques
+Looking for people on the internet..and find out more and more information
+Know about the company more			//job providing sites likes monster
+Get the details from the social websites also like facebook, twitter
+Netcraft
+Maltego
+Google dorking
+whois
+cqcounter.com/whois
+truecaller
+osintframework.com
+whois cnn.com						//terminal command
+robtex.com
+mxtoolbox.com
+Search for the exploited service like drupal in shodan
+
+#Using Maltego
+To gather information we need to use "Maltego"
+We need to initialize it using a new graph
+and then use the transform i.e. paterva and under this we can search for the information we want
+We can also gather information on the specific person and also on the company or an entity
+We should build an attack strategy based on the gathered info
+If any entity is not added, then we can go to Entities>Manage entities and select from there accordingly
+Gather as much as information we can gather, and try to establish a relation so that it is easy to make an attack strategy
+
+
+#Scanning Network
+"Sparta" tool is an information gathering tool which helps in scanning the networks
+"nmap"
+
+#OS fingerprinting tool 
+>xprobe2
+>nmap
+
+>Find out the nameservers,mail servers of targets--(important)
+we can get DNS records
+host -t ns megacorp.one							//name servers
+host -t mx megacorp.one							//mail servers
+host -l megacorp.one ns2-megacorp.one			//this will fetch the ip address of that particular name server
+
+>www.exploit-db.com								//have a lot of exploit database
+
+
+#Scanning Devices and port discovery
+>netdiscover	-r 192.168.1.1/24				//checking all the connected devices(using CIDR notation)
+>nmap										//port discovery tool
+port 135									//remote procedure call(msrpc)
+port 139									//netbios-ssn
+>"enum4linux" 								//tool used for scanning the host
+
+#Enumerate Directory Structure
+using owasp dirbuster tool where we can find out the different web pages available in website
+worldlist directory:--/usr/share/dirbuster/wordlists
+>For discovering sensitive files, we can use "dirb"....
+syntax:-dirb [target/directory]
+
+#Finding out the Hash Used
+"hash identifier" 							//tool used to know which hash is used in particular thing
+
+#Searching for specific exploit
+we can search for the specific expolit using "searchsploit" in the terminal in the parrot OS
+syntax---searchsploit trans2open
+
+
+#Google Dorks							//Using advanced operators to define searches
+site:www.lepide.com						//the sites will appear where the lepide is there in the site name
+intitle:admin							//the "admin" title sites will appear
+inurl:login.php							//the sites will appear where the login.php is there in the url
+filetype:jpg xls						//all the sites having these type of files
+intitle:"index of/admin" site:www.anything.com
+filetype:pdf "Not for public release"
+
+
+#Theharvester
+theharvester is used to harvest the information 
+theharvester -d lenovo.com -l 500 -b google	  //terminal command to find information about lenovo.com from google till 500 searches
+
+#Enumeration
+Enumeration in information security is the process of extracting user names, machine names, network resources, and other services from a system. All the gathered information is used to identify the vulnerabilities or weak points in system security and then tries to exploit it.
+Technique usually conducted internally
+Requires an internet connection
+attacker directly queries there
+
+
+Possible weakness for successful enumeration--
+Email/business cards
+Brute force active directory
+DNS zone transfers
+SNMP
+Windows groups
+Default passwords
+
+
+DNS(Resolution from name to ip) Enumeration:-
+Record Lookup
+cache snooping
+Google lookup
+Reverse lookup
+Zone walking			//knowing about the internal zone network and subdomains
+zone transfers			//transfering of data of dns into another dns server
+
+DNS records--
+A						//hostname resolved to ip
+AAA						//instead of ip4 it is ipv6
+CName					//it is an alias of A record
+MX						//mail exchange records
+NS						//nameservers 
+SOA						//Start of authority(primary record)
+PTR						//reverse lookup
+SRV						//service records. what machine is running which service
+
+
+What can we learn from DNS--
+Every single computer in network and its services running
+Server names
+Workstations
+Which services are running on server
+
+
+SNMP--Simple network management protocol
+
+Security of SNMP--
+Version 1			//simple/basic
+Version 2			//same as v1 but enhancements
+Version 3			//restricted user access,more privacy,data encryption,More complex to configure,need to disable v1/v2
+
+Data collected from SNMP--
+Routing tables,file shares,configuration settings,arp tables,traffic statistics
+
+MIB(Management Information Base)
+Is a virtual database that have description of network objects
+
+
+
+
+
+
+SMTP(The protocol used for mail)
+Uses MX records of DNS
+
+What can we collect from SMTP--
+Collection of names list
+Collection of Valid users
+
+
+
+
+
+
+NTP(Network Time protocol)
+Synchronizing time across devices
+Extremely important to directory services
+
+What can we learn from NTP--
+List of hosts
+IP address
+System Names
+Operating systems
+
+
+
+
+
+LDAP(Lightweight directory access protocol)
+Microsoft Active directory
+This stores users accounts
+
+
+What can we get from LDAP--
+Group names
+User names
+Account info
+System names
+
+
+DNS Enumeration--
+nslookup
+dnsrecon
+
+NTP Enumeration--
+"ntptrace" tool
+"ntpdc" tool
+
+NEtbios enumeration--
+Netbios Enumerator GUI tool of windows
+Superscan(same)
+
+
+
+
+
+Defend Enumeration--
+Default configuration and Netbios:
+Change it
+Be aware of your pockets
+Turn of SMB
+
+
+SNMP:
+Turn it off if not needed
+Version 3
+Group policy "additional restrictions for anonymous connections"
+Block port 161 tcp/udp
+IPSec filtering and this allows the encryption between the agent and the server
+Limit access to null sessions
+
+
+LDAP:
+Separate email names and logon names as the usernames
+Use SSL en encrypt LDAP
+Encrypt drives that store LDAP
+
+
+NTP:
+Watch your ports
+Understand what software is installed
+Check your master NTP
+
+SMTP:
+Disable open relays
+Drop Unknown Receipents
+Never include email server info in your email/posts
+
+
+
+
+
+Defend Footprinting---
+Do your own recon
+lock ports via firewalls
+Check services on webservers
+Prevent search engines from caching
+Disable directory listing
+Configure internal and External DNS separately
+Restrict input types(!;><)
+Educate employees		"There is no patch for human stupidity"
+Use encryption on files and folder and passwords
+Avoid cross linking				//we providing path to the other website for information
+
+
+
+Recon pentesting--
+Information Leaking related to organization (everything..gather as much as you can)
+
+
+What should be on the report--
+Data found via search engines:
+Employee details
+Login pages
+Intranet portals
+Technology platforms
+
+Data found via website:
+Operating system
+File system structure
+Contact info
+CMS info
+
+Data found via public search:
+Contact info
+Birthday dates
+Emails
+Photos
+
+Data found via email:
+Ip address(headers)
+GPS location
+Authentication systems
+
+Data found via competitive intel:			//small details are necessary
+Financial info
+Projects planned
+
+Data found via google:
+Vulnerabilities
+Error message --sensitive data
+File exposed
+Pages with network and sensitive data(data from HR)
+
+Data found via whois:
+Domain names
+DNS servers
+
+
+
+
+#Footpringting				//refer to the main file
+#Scanning Tools--
+NMAP
+HPING3
+Nexpose
+Wireshark
+Maltego
+
+
+
+4. Reconnaissance (Information Gathering)
+*Active information gathering
+>ping , nslookup
+*Passive Information gathering
+>http://ipinfo.info/html/ip_checker.php, whois
+
+>Whatweb -- tool in kali linux
+eg-- whatweb 192.168.1.1-192.168.1.255 --aggression 3 -v  --no-errors
+
+>Gathering emails using Harvester and Hunter.io (paid one--in free one only 10 emails)
+theHarvester
+
+**There are many tools online, download using git clone. (RedHawk--another tool online)
+
+
+
+
+
+
+#ends
+
+
+>Reconnaissance and Information Gathering
+* Ip address - ping www.google.com , nslookup www.google.com, whois www.google.com
+* web scanner - whatweb --help (whatweb www.google.com -v) 			//verbose for better display
+* home scan using whatweb - whatweb 192.168.1.1-192.168.1.192 --aggression 3 -v
+* Gather emails using harvester - theHarvester --help (theHarvester -d www.google.com -b all) //sometimes it does not work great
+* Gather emails using hunter.io - website to search (not free)
+* Information gathering tools github (search it on github and find the tool and install it on kali linux)
+* Finding usernames with Sherlock (github) - python3 sherlock.py
+
+
+
+
+
+10.Information Gathering--
+1.Passive recon--Getting information without actively participating with the target
+Target validation-WHOIS,nslookup,dnsrecon
+Finding subdomains-Google Fu,dig,Nmap,Sublist3r,Bluto,crt.sh etc.
+Fingerprinting-Nmap,Wappalyzer,Whatweb,Builtwith,Netcat
+Data Breaches-HaveIBeenPawned, Breach-Parse, WeLeakInfo etc.
+2.Identify our target-Bugcrowd
+3.Email address gathering--hunter.io
+4.Breached Credentials--weleakinfo.com
+5.Discovering subdomains--theharvester		//gathers information based on different search engines
+						--sublist3r(better)			//apt install sublist3r
+						--crt.sh(amazing)			--owasp amass(github)
+						--tomnomnom httprobe	//takes a list of website and checks whether the website is live or not
+6.Identify website technology--builtwith.com(website)		--wappalyzer(firefox extension)    --whatweb(kali linux)
+7.Burpsuite--good interception tool		(burpsuite pro automatically tells vulnerabilities)
+8.Gogle dorking--	site:tesla.com -www									
+					site:tesla.com filetype:pdf				//best thing to search,google dorking
+9.Utilizing social media--badges,software,team photos					

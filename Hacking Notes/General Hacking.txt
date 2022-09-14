@@ -1,0 +1,284 @@
+#Hacking using Tools
+
+>DDOS attack can be performed by "Xerxes"					//gihub repository
+syntax---./xerxes www.site.com 80
+xerxes is using c so we need to compile it
+gc xerxes.c -o xerxes	
+
+>Best keylogger(python)
+Beelogger---keylogger				//github repository
+./install.sh
+python bee.py
+
+
+>QuasarRAT							//github repository (best RAT) 
+execute the "release" file and this will create a folder Bin and everythig lies there
+We can do almost everything we want
+
+>Fsociety hacking tools				//github repository
+Scripts used in the MR.Robot web series and a complete package
+chmod +x install.sh
+
+>"Setoolkit" 						//Credential harvester(Social Engineering)
+
+
+https://www.youtube.com/user/PrivateSplat/videos				//have a look(Python scripting videos)
+SSTec Tutorials					//have a look
+
+>Covering Traces						//Disposable VM's,one virtual machine per engagement.It also helps in client 
+									differentiation..Easy data destruction
+
+>DDOS Attacks					//Slowloris tool,LOIC tool
+>strings [image name].gif 		//display the information of image hidden behind it
+>exiftool						//to find out the hidden image data information	(best tool)
+>WinMD5 						//helps to know the integrity of the data by calculating the hash value of the original exe and 
+								comparing it with the infected exe files
+>zemana antilogger				//helps to encrypt the keystrokes in your computer and does not allow keylogger to capture the 
+								keystrokes
+>www.hijackthis.de				//lets you detect malware and adware on windows
+>hybrid-analysis.com				//sandbox online
+>Trojans do not replicate itself while the virus replicate itself
+
+>Email can be traced using "show original" feature inside the mail and then we can copy the IP address to get the full details
+>Steganography using "xiao tool" to send the message in the secret manner 
+>To execute any file which can contain virus use, "sandboxie" and we can run any of the file in it
+>To find a lost mobile we can do it using gmail account and google find my device
+>actual keylogger 							//its good
+>Fight against phishing page---
+www.phishtank.com							//both websites can be used to get information about phishing page
+www.phishing.org
+
+>We can also use the Hyper -V instead of the virtual machine
+>We can use "netcat" to contact between the different OS
+>c:/Windows/system32/config 				//here all the hashes are kept in the encrypted manner(SAM file)
+>The purpose of a rootkit is that hide the backdoor and give the attacker the root level access
+
+>If the apt command file gets locked--
+
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock
+
+After that, reconfigure the packages:
+sudo dpkg --configure -a
+
+>findmyhash									//hash decoding
+>"fake name generator" 						//to get fake names
+>"entropay.com" 							//to allow virtual debit cards
+>tempmail 									//for the temporary email
+>spoofcard.com   							//for the spoofing of call and text
+>https://www.receive-sms-online.info 		//for the different countries numbers(india also)
+>privnote									//self destructing note
+>pixlr 										//for doing photoshoping online
+>To go for phishing the website and get the submitted data we can go to "gophish.com"
+>httrack website copier						//website copier
+>https://archive.org						//To look the older versions of the website
+
+
+>Linux autostart locations-
+/etc/profile.d
+/etc/profile
+/etc/bash.bashrc
+
+Each user account has individual configuration files in there home directory
+~/.bashrc
+~/.bash_profile
+~/.config/autostart
+
+
+>Anti-virus services-
+Firewalls, Application Controls, Whitelisting, Parental Controls, Encryption, Vulnerability Scanning, Url Blockers, Anti-spam, Content Filtering, Secure deletion, Browser History deletion, Credit Monitoring, IPS/IDS, Traffic Monitoring, Virtual Keyboardz
+
+>Concept of Exploit-
+Exploit(noun)-A piece of software that takes advantage of a vulnerability, an attack on a computer system
+Exploit Results-Gaining control of a system,Privelege escalation,Denial of services
+Exploit(verb)-The act of successfully making such an attack
+Vulnerability-A flaw or weakness that could result in security breach
+
+>LM(Lan Manager)-128 bit,Character set(142), Max length(14), password is split into two 7 char chunks, Case insensitive(All upercases), Dramatically easy to crack
+>NTLM-128 bit,Character set(65,536), Max length(256), based on the entire password, case sensitive,Relatively secure
+
+>Ports-
+FTP(21), SSH(22), Telnet(23), SMTP(25), DNS(53,UDP), TFTP(69,UDP), DHCP(67-68,UDP) , HTTP(80), POP3(110), NTP(123,UDP) , Netbios(139), IMAP(143), SNMP(161-162,UDP), HTTPS(443), SMB-microsoftDS(445), RSH(514), Vmware(902), MSSql(1433), Oracle(1521), Mysql(3306), RDP(3389), VNC(5900), Proxy(8080), Application Server(8081)
+
+>Recon Flow-
+Get Permission->Determine the scope->Recon via whois->Recon via DNS->Recon network ranges->Recon via search engines->Recon via website->Recon via email->Recon via competitive intel->Recon via google hacking->Recon via Social engineering->Recon via social networks->Compile your findings
+
+>SIEM(Security information and event management software)		//Alien Vault Open source SIEM(OSSIM)(Free version available)
+
+>We can check the intergrity of the person by searching for its photo on Google images and see that the person is real or fake
+
+>In hacking always remember to clear the event logs so that evidence is cleared
+
+>Social engineering can be done using phishing and the information can be collected using "maltego"--tool used for gathering information.Also the "social engineering toolkit" can be used to perform social engineering
+
+>cyberthreat live map of kaspersky
+
+>If it wasn't hard, everyone would do it
+"Hard" is what makes "it" great
+By Tom Hanks(League of their own)
+
+>Practise builds Knowledge, knowledge builds confidence
+With great power, comes great responsibilites
+
+>Cookies value are stored in the application>cookies and these are the value contained in base64 format
+
+>We should check for the details in the task manager of the service running and then open file location and check the properties of the file and its copyright
+
+>netstat -ab					//Tells about the open ports that are listening and its services assosciated
+
+>Make virus ------Tera bit virus maker
+Make Worm--------Internet Worm maker thing
+
+>Dynamic analysis testing with "Netsparker" tool
+
+>Pivoting and Port Forwarding works together..Rememeber if we want to get into the subnet which we are not directly accessible but we can go to that using relay
+
+>Stealing token for privelege escalation--
+steal_token [pid] 							//here pid should be running as admin
+
+>Hypervisor--a hypervisor or virtual machine monitor is a piece of computer software,firmware or hardware that creates and runs virtual machines
+
+>To download the android VM we need to go to www.android-x86.org/download
+
+>snacking---looking around workstation to get passwords
+
+>>Sniffing the network can be done using wireshark, We can find the particular packet that is sent over the network by using the feature available and can display the packet based on the string that we want.	
+
+>If the password is stored in the browser, then we can inspect element and change the password to the text as when the site will be opened which the password is stored in the browser, then the password automatically gets filled in the text box and then we can perform the above attack
+
+>netstat -tnlp 							//states each and every detail of listening ports
+
+>Silkroad--Biggest market place for drugs on the dark network
+
+>shodan.io				//Place for searching IOT domains
+
+>It is still an issues as More and more devices are going online and more device = More hacking opportunities
+
+
+>Ithihaas ratna nahi, rachna hai
+
+Quick Hack(sagar):-
+
+booting kali linux from the live usb
+hiding your ip through vpn
+phishing using xampp server
+DOS attack using loic(low orbit ion cannon) tool
+social engineering using email spoofer(it can be detected using experience)
+footprinting using sitemap.xml (eg--tech.in/sitemap.xml)
+Understanding the structure of database using cpanel and phpmyadmin
+sql injection basic tutorial
+disposable email using https://www.guerrillamail.com/inbox
+disposable mobile number using smsreceivefree website and many others
+doing research on your own and learn yourself
+
+
+
+Tech Master(sagar):-
+
+Social engineering using fake mailer (eg emikez)
+Doxing--Searching information about a particular individual(it can be done using searching on the google and many social platforms)
+Finding admin panel using bruteforce and also through script
+Catching newbie using clicky plugin where the visitor comes and we can get to know from which ip is he visiting
+Finding vulnerability of wordpress using wpscan 
+Hacking webserver using hydra tool where the wordlist is provided and it checks through each password and tries to login
+Learning about MITM(man in the middle) and also using android app "cspolit"
+Getting wordlist from the website as this is assumed that he might have used the password in the website(cewl tool)
+
+Steganography is an art to hide something into something and produce the required result.
+it is done using "cat" tool---cat image.jpg video.zip > final.jpg	--it will hide the video into image and produce the final output as image
+To extract the data from the image steganographed we need to just go to terminal---unzip final.jpg and this will show the mp4 video 
+
+
+
+
+Hackstars(sagar)--
+Wifi jamming			//lets you jam the wifi by sending the de-auth packets
+KATANA framework can also be used for many types of predefined scripts
+byethost.com		//lets you free web hosting
+shell is a piece of code that lets you provide access of the server
+Cloud Computing in hacking-Quick Deployment and we can access from our web browser,Scalability
+
+
+
+UDEMY ULTIMATE WI FI HACKING AND SECURITY SERIES TUTORIAL----
+Ultimate wifi hacking tool and its series:---
+
+why windows not for hacking:-(reasons)
+windows doesn't provide source code for drivers
+limited operating system support
+gui is the reason for limitation
+
+why linux:-
+linux open source
+based on cui
+ability to code your own tools and exploits
+
+
+
+
+
+
+#Apps
+termux						//app that allows to work same as kali linux
+hacker keyboard				//app that have all the keys that are there,on the desktop
+termunx:api					//app that helps in interaction with other apps on the android
+use auxiliary/gather/search_email_collector		//helps you gather valid email address
+SoftEther VPN client		//good and open source vpn
+
+#Github
+hammer						//(cyweb) repository for ddos attack (it's good)
+IPGeolocation				//(maldevel) used for finding location
+RED_HAWK					// for web scanning
+weeman 						// for phishing attack	
+instahack					// brute force attack
+anonsurf					// lets you remain anonymous	
+katoolin					// We can download all the kali linux tools on any version of the linux using
+Email Bomber				//(zanyarjamal) used for email bombing
+virtual host discovery		// (jobertabma) It helps to know how many other websites are hosted on the same web server
+Sublist3r					// (aboul3la)	enumerate subdomains
+Macroshop					// it can include macro to inject the payload
+Zlogger						//Keylogger
+
+#ends
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

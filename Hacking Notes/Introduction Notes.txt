@@ -1,0 +1,270 @@
+1.Why Pentesting?
+>Work from home
+>High Salaries
+>Good Benefits/Work life balance
+>Mentally simulating
+>Legal B&E
+
+
+
+2.Technical Skills--
+>Linux(Kali/Parrot)
+>Networking(OSI model,Protocols, etc.)
+>Scripting skills(python,bash)
+>Solid Hacking Methodology
+>Tool Familiarity(Metasploit,Burp suite,Nessus etc.)
+
+3.Preferred-
+>Active Directory
+>Wireless attacks
+>Owasp top 10
+>Coding skills(Python,Bash etc.)
+
+
+4.Soft skills needed-
+>Strong desire to learn
+>Non-complacency
+>Social/people skills
+>Preservance
+>Blog/Twitter etc.
+
+
+
+5.Note keeping--
+>Keepnote
+>Onenote
+>cherry tree
+>Greenshot		//screen capture tool(good tool)		//we can capture the image by selecting it and then use it or open in Greenshot imaging tool, awesome to use.
+
+
+
+
+
+
+
+
+6.Networking Refresher--
+6.1 Ip Address--(Layer 3 address)
+ifconfig			//kali linux ip address
+ipv4 address(inet)
+ipv6 address(inet6)
+
+6.2 MAC address--Layer 2 address			//Physical address. Media access control
+Mac address(ether)
+
+6.3 TCP vs UDP
+*Common ports and Protocols
+TCP--
+>FTP-21
+>SSH-22
+>Telnet-23
+>SMTP-25
+>DNS-53
+>HTTP-80/ HTTPS-443
+>POP3-110
+>SMB-139+145				//Server Message Block
+>IMAP-143
+
+UDP--
+>DNS-53
+>DHCP-67,68
+>TFTP-69
+>SNMP-161
+
+6.4 Subnetting
+
+
+
+
+
+
+
+
+
+
+7.Introduction to linux--
+1.Exploring Kali linux--cherry tree(note making)
+2.Navigating the file system--How to access the files in the system(ls,pwd,mkdir,locate,updatedb,passwd,man ls)
+3.User privileges(adduser,cat /etc/passwd,cat /etc/shadow,su john)
+4.Common Network commands--(ifconfig,arp -a,netstat -ano,route)
+5.Viewing,Creating and Editing files(echo "hey">hey.txt, echo "hey again">>hey.txt(appending), touch file.txt,nano file.txt, gedit file.txt(GUI tool))
+6.Starting and stopping services-(service apache2 start,python -m SimpleHTTPServer 8080(This lets you spin the web server to get a different location, we do not need to put everything on the var/www/ location), service apache2 stop, systemctl enable postgresql (autostart/startup)
+7.Installing and Updating Tools (apt update && apt upgrade, apt install python-pip,	git clone [link])
+8.Scripting with Bash(cat ip.txt | grep "64 bytes" | cut -d " " -f 4) | tr -d ":"	//Have the ping statement in the file, then we use grep to get the line and then cut on the basis of delimmeter "space" and then selecting the field 4 and then again trimming the semicolon from the statement to get just the IP address
+
+Bash script example--
+#!/bin/bash					//declares that we are running a bash script
+if ["$1"==""]
+then 
+echo "You forgot an IP address"
+echo "Syntax: ./ipsweep.sh 192.168.1"
+
+else
+for ip in 'seq 1 254':do
+ping -c 1 $1.$ip | grep "64 bytes" | cut -d " " -f 4) | tr -d ":"			//1 takes the input from the user as parameter
+done
+
+To run this file(chmod 777 ipsweep.sh)
+./ipsweep.sh 192.168.1				//we need to provide the input without typing the last octet
+
+
+//Providing whole list of IP address to nmap--
+for ip in $(cat iplist.txt): do nmap -sS -p 80 -T4 $ip & done				//type of one liner on terminal itself
+
+
+
+
+
+
+
+
+9.The ethical hacker methodology--
+Five stages--
+1.Reconnaissance(Active and passive)
+2.Scanning and Enumeration(Nmap,Nessus,Nikto etc.)
+3.Gaining access(Exploitation)
+4.Maintaining access
+5.Covering tracks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
