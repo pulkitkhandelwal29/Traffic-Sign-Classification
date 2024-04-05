@@ -1,0 +1,299 @@
+// Bug Bounty Hunting (ZSecurity)
+
+#Use PortSwigger Lab to practise..No need to install vm
+
+1. Information Disclosure Vulnerabilities
+Falls under Cryptographic Failure OWASP category
+#PortSwigger provides labs to practise for OWASP bugs
+
+
+1.1 Using Robots.txt
+>website.com/robots.txt				(robots.txt contains all those path which should not be traversed by search engines)
+You will see a lot of disallowed directories, traverse to them and see if there is any information disclosure
+
+
+1.2 Discovering Endpoints
+#FeroxBuster tool automatically finds the hidden paths, by providing a domain name and wordlist
+https://github.com/epi052/feroxbuster
+>feroxbuster -u [website_name] -w [wordlist]
+#Good wordlist - https://github.com/danielmiessler/SecLists
+
+
+1.3 HTTP status codes
+300 - Request got redirected to another destination but it is a success
+400 - Request s bad request (Web server can't or doesn't want to respond to request)
+200 - Request successfull
+500 - Request will not be executed by the machine
+
+#Whenever you get a barrier while finding bug, read the technology and try to implement it to find bug
+
+
+1.4 HTTP GET Request
+Whatever value you give to the website like ProductID=1 in the URL, it is sent to the server and the response comes accordingly.
+But if we change the value to any other code, the website can misbehave and code can be runned on server
+
+
+1.5 HTTP POST method
+Whatever request is sent through post, we can't see. We can see if we use Burpsuite proxy
+
+
+
+
+
+
+
+2. Broken Access Control
+It contains Path Traversal vulnerability, CSRF, IDOR etc.
+Access / modify data beyond limits
+Eg - Modifying the data that does not belong to you..it belongs to different user
+
+
+2.1 Cookie Manipulation
+Try to 'sign in' in the website and then you will see a lot more features to gain access control
+Maybe you log in as different user and then using cookie manipulation bug, you can be logged in as Admin
+#Match and Replace feature of Burpsuite is very handy, it checks the string in the intercept and replaces with what we want
+eg - Admin=False to Admin=True (everytime Admin=False appears in intercepting request)
+
+
+2.2 Accessing Private user data
+Create two accounts in the website you logged in..and if you are able to access data of another account using one account. it means you have found a bug of Broken Access control
+
+
+2.3 IDOR
+Insecure Direct Object Reference
+You are able to view the direct object even if it is not yours
+Should display the file to us only if we own it, if we are able to view of others...then IDOR
+
+
+2.4 Privilege Escalation using Burp Repeater
+Repeater can pass the request and see the reponse accordingly
+
+
+2.5 HTTP TRACE
+Instead of GET or POst in the request, we type TRACE and server tells us whether the specific header is changed in the process
+Useful when we are not able to know by which header for eg - website is knowing that I am not admin 
+
+
+
+
+
+
+
+3. Path Directory Traversal
+Part of Broken Access Control
+Traversing the path which you are not allowed to
+Eg - filename=img1.jpg 			//but instead of img1.jpg,we put /etc/passwd
+
+
+3.1 Bypassing Absolute path restriction
+If there is restriction on getting absolute path, try traversing back one by one directory
+../../../etc/passwd
+
+
+3.2 Bypassing Hard Coded Extensions
+If the filepath only takes images extension, then we can do ../../../etc/passwd%00.jpg
+Here %00 is like the comment which will comment the later words
+
+
+3.3 Bypassing Filtering
+Giving different images with the same request gives a hint that a calling filename can be vulnerable
+If the filter is like they remove ../, then to bypass it we can just double it like ....//....//etc/passwd, it will become after filtering ../../etc/passwd
+
+
+3.4 Bypassing Hard Coded Paths
+If already the path given is /var/www/images/57.jpg, the path is hardcoded
+Now we will just continue with the path but will traverse back
+/var/www/images/../../../etc/passwd
+
+
+3.5 Bypassing Advanced Filtering
+You might have to use multiple tricks to bypass path traversal
+If there is a filtering of /, then we can url encode it using burpsuite
+select the string like / , right click on it and Convert selection and url and url encode. It will be encoded i.e. %2f
+Trying to tell the web browser that we want / only but we have written in a different way
+..%2f..%2f..%2fetc%2fpasswd
+If the filter is advanced, we will still not be able to see the password, as it might be doing url decode at backend.
+To bypass it we will encode %2f - double encode it.
+
+
+3.6 Bypassing Extreme Filtering
+We will automate the process by passing this request to intruder and tell intruder which variable to work on under $$
+We will use the cheatsheet and pass to the intruder payloads and start attack
+As soon as the attack gets over, we will check the status, and where there is 200 it means it returned something and we will see the response accordingly
+There are preloaded payloads in the intruder...check them too.
+
+
+
+
+
+
+
+4. Client Side Request Forgery
+Part of Broken Access Control
+We login as one user and for eg - change email
+so we will copy the form from the html and giving the action as the email change page and save it as csrf.html 
+
+Now login from the another user and now run csrf.html and change the email
+if it changes, it means that the email was changed by the forged request by the complete different user.
+
+
+
+
+
+5. oAuth 2.0 vulnerabilities
+It is the authentication to a website via gmail id etc.
+
+5.1 Exploiting a linking OAuth2.0 flow through CSRF
+
+
+5.2 Exploiting a login OAuth 2.0 flow through CSRF
+
+
+
+
+
+
+
+
+
+6. OS Command Injection
+It helps to run commands
+; helps to run command executing both command like uname;pwd		//It will run both command 
+
+6.1 Blind Command Injection
+Here the vulnerability is there but you can't see the response, thus creating a blind injection
+Eg - If we write pwd, it will not show the response even if the machine has implemented the code
+To check if the machine is executing code, we can use sleep command and the response will come after specified seconds
+https://hackersonlineclub.com/command-injection-cheatsheet/
+
+
+6.2 Discovering Asychronous Blind Command injection
+Server might be running the command but it is running on different thread and the output that is shown is in main thread.
+To discover it, we can ping any server that we control and check the logs that whether the ping request is made by the website at backend
+Using Burpsuite Collaborator to exploit asynchronous blind command injection
+
+
+
+
+
+
+
+
+7. XSS
+
+7.1 Discovering HTML injection
+try to inject html code and if it is working then there is a hint that there might be xss
+Always view page source / inspect element to know what website is working if code is not implemented
+
+
+7.2 XSS
+#Wappalyzer tells the technologies being implemented on the website
+and using that we can get XSS like website has angular jss implemented 1.7.7 version. We can google for xss for this version
+
+
+7.3 XSS - Bypassing
+We will check that the strig we entered is shown somewhere while inspecting element
+' - ca be written as &apos
+Try every method to bypass
+Maybe you need to encode it, decode it or pass different characters
+
+Xss cheatsheet - https://portswigger.net/web-security/cross-site-scripting/cheat-sheet
+
+Using cheatsheet we can put all the tags in the intruder to check which works or not
+
+
+
+7.4 CSP - Content Security Policy
+If this is implemeted, 	we can get to know that whatever we type in the search box, it is kept as it is, like string. Code does not know what to do of it either to display it or run it so it is just taken as string.
+If we want to override the CSP, we can go for (script-src-elem 'unsafe-inline')
+Google it for more information
+
+
+
+
+
+
+
+
+
+8. SQL Injection
+Try to visualise what's happening at the background
+
+Orderby clause helps to obtain no. of columns in the database
+union helps to run two select statements in one query
+SQL injection cheatsheet
+https://portswigger.net/web-security/sql-injection/cheat-sheet
+
+
+8.1 Blind SQL Injection
+In blind, we will not able to view the output but we can ask yes/no question and if answer is yes, page will not be broken but if answer is no, page will be broken
+
+
+8.2 Time based sql injection
+It is blind only, but we try to sleep the machine so that page responds late, ad thus we get to know that sql is being able to execute on database
+Check the cheatsheet for time delays sql statement
+Conditional time delays can be like that if the condition matches, sleep for 10 seconds and if not, then do not sleep at all
+
+In time delay sql injection when trying to bruteforce password of administrator user same like Blind sql injection, in burpsuite everything is same but in 'Resource Pool', we will create new resource pool with maximum concurrent request to 1.
+Now start the attack, and to see the time response taken by each statement, we will click on results and then response received. It will show the time taken by each statement.
+
+
+
+
+
+
+
+9. SSRF 
+Server Side Request Forgery
+Part of Broken Access Control
+
+
+9.1 Bypassing Security
+Try changing cases, encoding			//for blacklist (it contains list of words)
+
+
+9.2 Blind SSRF
+
+
+
+
+
+
+10. XXE Injection
+XML External Entity
+
+
+
+
+
+11. Live Bug Hunting
+Understanding the mentality while finding bug
+www.bugbountytraining.com
+
+>Check the functionality of website like a normal user
+>Check robots.txt
+>Keep Documenting for later on (eg - what needs to be test later, what is covered etc.)
+>Check all the parameters that has = sign (/profile.php?id=)
+>LazySec plugin to find all hidden elements in the website
+
+
+
+
+
+12. Participating in Bug Bounty Programs
+>Good platforms are - HackerOne, bug-bounty.com, integriti, bugcrowd
+
+
+#ends
+
+
+
+
+
+
+
+
+
+
+
+
